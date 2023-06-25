@@ -1,0 +1,26 @@
+﻿<header class="d-flex flex-row justify-content-between align-items-center sticky-top">
+    <div class="logo-header ">
+        <img src="~/Content/Images/logo.png" />
+    </div>
+    <nav>
+        <ul class="d-flex flex-row">
+            <li>
+                @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
+            </li>
+            <li><a href="">About Us</a></li>
+            <li>
+                @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })
+            </li>
+            <li>
+                <a href=""></a><span class="material-symbols-outlined">
+                    shopping_bag
+                </span>
+            </li>
+            <li>
+                <a href=""></a><span class="material-symbols-outlined">
+                    person
+                </span>
+            </li>
+        </ul>
+    </nav>
+</header>

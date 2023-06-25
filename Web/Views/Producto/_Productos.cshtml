@@ -1,0 +1,91 @@
+﻿
+@model IEnumerable<Infraestructure.Models.Producto>
+
+
+<div class="mt-5">
+
+    <h1 id="producto-titulo" class="producto-titulo text-center" style=" color: var(--gray-nav) !important; font-size: 2.3rem !important;">Nuestros productos</h1>
+
+    <div class="row d-flex flex-row justify-content-between mt-5">
+
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Filtros</h5>
+
+                    <div class="mb-3">
+                        <label for="precio">Precio:</label>
+                        <select class="form-select" id="precio">
+                            <option value="">Todos los precios</option>
+                            <option value="0-10">$0 - $10</option>
+                            <option value="10-50">$10 - $50</option>
+                            <option value="50-100">$50 - $100</option>
+                            <option value="100+">$100 o más</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="categoria">Categoría:</label>
+                        <div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="categoria" id="categoria-todos" value="" checked>
+                                <label class="form-check-label" for="categoria-todos">Todos</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="categoria" id="categoria-medicamentos" value="medicamentos">
+                                <label class="form-check-label" for="categoria-medicamentos"> Medicamentos </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="categoria" id="categoria-alimentos" value="alimentos">
+                                <label class="form-check-label" for="categoria-alimentos">Alimentos</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="categoria" id="categoria-suministros" value="suministros">
+                                <label class="form-check-label" for="categoria-suministros">Suministros</label>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <!-- Agrega más filtros según sea necesario -->
+
+                    <button type="button" class="btn btn-primary">Aplicar filtros</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-9 d-flex flex-row flex-wrap justify-content-between align-items-center">
+ 
+
+            @foreach (var item in Model)
+            {
+                <div class="col-md-3 ">
+                    <div class="card carta-sombra" style="max-width:210px">
+                        <img src="data:image/png;base64,@Convert.ToBase64String(item.Imagen)"
+                             alt="Imagen @Html.DisplayFor(modelItem => item.Descripcion)" class="zoom-img" />
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold text-black"> @Html.DisplayFor(modelItem => item.Descripcion) </h5>
+
+                                <p class="card-text">Precio: $@Html.DisplayFor(modelItem => item.Precio)</p>
+                                <div class="btn-group d-flex" role="group">
+                                    <button type="button" class="btn btn flex-grow-0" style="background: var(--color-secondary) ">
+                                        <span class="material-symbols-outlined text-white">shopping_bag</span>
+                                    </button>
+                                    @*<button type="button" class="btn  text-white btn flex-grow-1" style="background: var(--color-secondary-variant) ">Detalles</button>*@
+                                   
+                                    
+                                    <a href="@Url.Action("Details","Producto",new {id= item.Id})" class="btn  text-white btn flex-grow-1 pt-2" style="background: var(--color-secondary-variant) ">Detalles</a>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+
+</div>

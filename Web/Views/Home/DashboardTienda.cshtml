@@ -1,0 +1,20 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutTienda.cshtml";
+}
+
+
+@model IEnumerable<Infraestructure.Models.Producto>
+
+@using Infraestructure.Models
+
+@{
+    // Convertir el modelo a IEnumerable<Producto>
+    IEnumerable<Producto> modeloProductos = Model as IEnumerable<Producto>;
+}
+
+
+@*<div class="">
+
+    @Html.Partial("~/Views/Producto/_ProductoTienda.cshtml", modeloProductos)
+
+</div>*@
