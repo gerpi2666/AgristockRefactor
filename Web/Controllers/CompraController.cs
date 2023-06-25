@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Infraestructure.Models;
+using ApplicationCore.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,13 +13,20 @@ namespace Web.Controllers
         // GET: Compra
         public ActionResult Index()
         {
-            return View();
+
+            IServiceCompra _ServiceCompra = new ServiceCompra();
+            ViewBag.compras = _ServiceCompra.GetCompras();
+            IEnumerable<Compra> compras = _ServiceCompra.GetCompras();
+            return View(compras);
         }
 
         // GET: Compra/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            IServiceCompra _ServiceCompra = new ServiceCompra();
+            Compra compra=_ServiceCompra.GetCompraById(id);
+           
+            return View(compra);
         }
 
         // GET: Compra/Create

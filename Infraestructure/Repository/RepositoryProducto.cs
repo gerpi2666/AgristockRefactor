@@ -12,6 +12,7 @@ namespace Infraestructure.Repository
 {
     public class RepositoryProducto : IRepositoryProducto
     {
+
         public Producto GetProductoID(int id)
         {
             try
@@ -21,7 +22,7 @@ namespace Infraestructure.Repository
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
                     producto = ctx.Producto.Find(id);
-                    producto = ctx.Producto.Where(p => p.Id == id).Include("Categoria").Include("Tienda").FirstOrDefault();
+                    producto = ctx.Producto.Where(p => p.Id == id).Include("Categoria").Include("Tienda").Include("ChatProducto").FirstOrDefault();
                 }
                 return producto;
             }
@@ -38,6 +39,7 @@ namespace Infraestructure.Repository
                 throw;
             }
         }
+
 
         public IEnumerable<Producto> GetProductos()
         {
