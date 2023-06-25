@@ -216,6 +216,15 @@ b {
     color: var(--color-warning);
 }
 
+
+.te_s_hr_line {
+    background-color: black;
+    height: 1px;
+    border: none;
+    margin: 1rem 0 !important;
+}
+
+
 .aside {
     height: 100vh;
     background: grey;
@@ -313,15 +322,97 @@ aside .sidebar div {
             margin-left: 1rem;
         }
 
-aside .sidebar .message-count {
-    background: var(--color-danger);
-    color: white;
-    padding: 2px 10px;
-    font-size: 11px;
-    border-radius: var(--border-radius-l);
+/* =========================== DETALLE DEL PRODUCTO ======================= */
+
+.details span {
+    font-size: 1.75rem !important;
+    font-weight: 500;
+    line-height: 1.2;
 }
 
-/* MAIN */
+.detail-descrip {
+    font-size: 0.9375rem !important;
+}
+
+
+.details p i {
+    font-style: normal;
+}
+
+.details p i {
+    font-size: 1rem !important;
+}
+
+.details p b {
+    font-size: 1rem !important;
+}
+
+.precio {
+    font-size: 1.5rem !important;
+}
+
+.button-productos {
+    background-color: white;
+    color: green;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 2px solid var(--color-primary) !important;
+    border-radius: 4px;
+}
+
+    .button-productos:hover {
+        background-color: var(--color-primary);
+        color: white;
+    }
+
+.logo-detail {
+    width: 100px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.custom-list {
+    list-style: none;
+    padding: 0;
+}
+
+    .custom-list li {
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
+        position: relative;
+        font-size:1rem;
+    }
+
+    .custom-list li span {
+        margin-right: 0.5rem !important;
+    }
+
+        .custom-list li:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: -5px;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 70%;
+            background-color: gray;
+        }
+
+.material-symbols-outlined {
+    font-size: 18px; /* Ajusta el tamaño del icono según tus necesidades */
+    margin-right: 5px; /* Ajusta el espacio entre el icono y el texto según tus necesidades */
+}
+
+.slogan-detail {
+    line-height: 180%;
+    font-size: 1rem !important;
+    color: var(--gray-nav) !important;
+    padding-bottom: 10rem !important;
+}
+/* ==================================== MAIN  ====================================*/
 main {
     margin-top: 1.4rem;
 }
@@ -397,7 +488,24 @@ main {
 
 
     .card img{
-        height:250px;
+        height:250px !important;
+    }
+
+.imagen-detalle {
+    width: 400px;
+    height: 430px;
+}
+
+.nombre-detalle {
+    font-size: 2rem !important;
+}
+
+.zoom-img-detail {
+    transition: transform 0.3s; /* Transición suave del efecto de zoom */
+}
+
+    .zoom-img-detail:hover {
+        transform: scale(1.1); /* Aplica el zoom al pasar el mouse sobre la imagen */
     }
 
 .zoom-img {
@@ -409,6 +517,8 @@ main {
     .zoom-img:hover {
         transform: scale(1.1); /* Aplica el zoom al pasar el mouse sobre la imagen */
     }
+
+
 
     .btn-group {
         margin: 0 auto;
