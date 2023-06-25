@@ -2,6 +2,7 @@
 using Infraestructure.Utils;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,7 @@ namespace Infraestructure.Repository
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
                     compra = ctx.Compra.Find(id);
+                    compra = ctx.Compra.Where(l => l.Id == id).Include(u=>u.DetalleCompra).FirstOrDefault();    
 
                 }
                 return compra;
@@ -47,7 +49,7 @@ namespace Infraestructure.Repository
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    Compras = ctx.Compra.ToList<Compra>();
+                    Compras = ctx.Compra.Include("DetalleCompra").ToList<Compra>();
 
                 }
                 return Compras;
