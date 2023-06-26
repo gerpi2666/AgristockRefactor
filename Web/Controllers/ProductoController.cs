@@ -28,7 +28,9 @@ namespace Web.Controllers
 
         public ActionResult ProductoAdmin()
         {
-            return View();
+            IServiceProducto _ServiceProducto = new ServiceProducto();
+            IEnumerable<Producto> lista = _ServiceProducto.GetProductos();
+            return View(lista);
         }
 
         // GET: Producto/Details/5

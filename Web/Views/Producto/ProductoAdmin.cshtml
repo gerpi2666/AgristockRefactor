@@ -1,37 +1,58 @@
-﻿@{
-    ViewBag.Title = "";
-}
+﻿@model IEnumerable<Infraestructure.Models.Producto>
 
 @{
+    ViewBag.Title = "ProductoAdmin";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <div class="content">
+
+    <h1 id="producto-titulo" class="producto-titulo text-center mb-5" style=" color: var(--gray-nav) !important; font-size: 2.3rem !important;">Productos</h1>
+
     <div class="card">
-        <div class="card-header">
-            Pdoductos
-        </div>
+
         <div class="card-body">
 
             <div class="row">
                 <div class="col-sm-12">
 
                     @*<table class="table table-bordered" id="tb_empleados">*@
-                    <table class="display" id="tb_empleados" style="width:100%">
+
+                    <table class="display" id="tb_producto" style="width:100%">
                         <thead>
                             <tr>
-                                <th>IdEmpleado</th>
                                 <th>Nombre</th>
-                                <th>Cargo</th>
-                                <th>Oficina</th>
-                                <th>Salario</th>
-                                <th>Telefono</th>
-                                <th>Fecha Ingreso</th>
+                                <th>Codigo</th>
+                                <th>Precio</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(model => item.Nombre)</td>
+                                    <td>@Html.DisplayFor(model => item.Id)</td>
+                                    <td>@Html.DisplayFor(model => item.Precio)</td>
+                                    <td>@Html.DisplayFor(model => item.Estado)</td>
+                                    <td>
+                                        <a href="@Url.Action("Details","Producto",new {id= item.Id})" class="btn  text-white btn flex-grow-1 pt-2" style="background: var(--color-secondary-variant) ">
+                                            <span class="material-symbols-outlined">
+                                                edit
+                                            </span>
+                                        </a>
+                                        <a href="@Url.Action("Details","Producto",new {id= item.Id})" class="btn  text-white btn flex-grow-1 pt-2" style="background: red ">
+                                            <span class="material-symbols-outlined">
+                                                delete
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
+
                     </table>
 
                 </div>
@@ -42,12 +63,3 @@
     </div>
 
 </div>
-@section Scripts{
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('#tb_empleados').DataTable();
-        });
-    </script>
-}

@@ -71,10 +71,7 @@
                                 <button type="button" class="btn" style="background: var(--color-danger) ">
                                     <span class="material-symbols-outlined text-white">edit</span>
                                 </button>
-                                <button type="button" class="btn  text-white" style="background: var(--color-secondary-variant) ">Detalles</button>
-                                @*<button type="button" class="btn bg-primary">
-                                        <span class="material-symbols-outlined text-white">info</span>
-                                    </button>*@
+                                <a href="@Url.Action("Details","Producto",new {id= item.Id})" class="btn  text-white btn flex-grow-1 pt-2" style="background: var(--color-secondary-variant) ">Detalles</a>
                             </div>
                         </div>
                     </div>

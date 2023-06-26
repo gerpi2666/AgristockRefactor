@@ -72,7 +72,7 @@
                         <div class="card-body">
                             <h5 class="card-title"> @Html.DisplayFor(modelItem => item.Descripcion) </h5>
                             <div class="btn-group d-flex" role="group">
-                                <button type="button" class="btn  text-white flex-grow-1" style="background: var(--color-secondary-variant) ">Detalles</button>
+                                <a href="@Url.Action("Details","Producto",new {id= item.Id})" class="btn  text-white btn flex-grow-1 pt-2" style="background: var(--color-secondary-variant) ">Detalles</a>
                                 <button type="button" class="btn flex-grow-0" style="background: var(--color-danger) ">
                                     <span class="material-symbols-outlined text-white">edit</span>
                                 </button>

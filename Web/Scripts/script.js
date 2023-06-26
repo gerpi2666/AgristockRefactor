@@ -64,4 +64,10 @@ function getAnswer(question) {
 }
 
 
+    $(document).ready(function () {
+        $('#tb_empleados').DataTable();
+        });
+
+
+
 

@@ -80,42 +80,6 @@
                             </ul>
 
 
-                            @*<div class="accordion w-100" id="basicAccordion">
-
-            @foreach (var item in Model.ChatProducto)
-            {
-                if (item == null)
-                {
-                    <h1>Vacio, nulo</h1>
-                }
-                else
-                {
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse"
-                                    data-mdb-target="#basicAccordionCollapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                @Html.DisplayFor(x => item.Mensaje)
-                            </button>
-                        </h2>
-                        <div id="basicAccordionCollapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                             data-mdb-parent="#basicAccordion" style="">
-                            <div class="accordion-body">
-                                <strong>This is the second item's accordion body.</strong> It is hidden by default,
-                                until the collapse plugin adds the appropriate classes that we use to style each
-                                element. These classes control the overall appearance, as well as the showing and
-                                hiding via CSS transitions. You can modify any of this with custom CSS or overriding
-                                our default variables. It's also worth noting that just about any HTML can go within
-                                the <code>.accordion-body</code>, though the transition does limit overflow.
-                            </div>
-                        </div>
-                    </div>
-                }
-
-
-            }
-
-        </div>*@
-
                         <div class="chat-container">
                             <div class="chat-header">
                                 <h2>Chat de Preguntas y Respuestas</h2>
