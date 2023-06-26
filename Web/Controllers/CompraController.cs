@@ -31,7 +31,7 @@ namespace Web.Controllers
             Compra compra=_ServiceCompra.GetCompraById(id);
             foreach (var item in compra.DetalleCompra)
             {
-                subtotal += (double)item.SubTotal*(double) item.Cantidad;
+                subtotal += (double)item.Producto.Precio*(double) item.Cantidad;
                 tiedaNombre = item.Producto.Tienda.NombreProveedor;
 
             }
@@ -49,7 +49,7 @@ namespace Web.Controllers
         public ActionResult CompraCliente()
         {
             IServiceCompra _ServiceCompra = new ServiceCompra();
-            IEnumerable<Compra> compra = _ServiceCompra.GetComprasByCliente(4);
+            IEnumerable<Compra> compra = _ServiceCompra.GetComprasByCliente(5);
 
             return View(compra);
         }
@@ -57,7 +57,7 @@ namespace Web.Controllers
         public ActionResult CompraTienda()
         {
             IServiceCompra _ServiceCompra = new ServiceCompra();
-            IEnumerable<Compra> compra = _ServiceCompra.GetComprasByTienda(1);
+            IEnumerable<Compra> compra = _ServiceCompra.GetComprasByTienda(3);
 
             return View(compra);
         }
