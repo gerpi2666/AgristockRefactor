@@ -41,6 +41,7 @@ namespace Infraestructure.Repository
         }
 
 
+        //Productos que los clientes ven al momento de la compra
         public IEnumerable<Producto> GetProductos()
         {
             try
@@ -70,6 +71,8 @@ namespace Infraestructure.Repository
             }
         }
 
+
+        //Productos asociados a una tienda
         public IEnumerable<Producto> GetProductosByTienda(int id)
         {
             try

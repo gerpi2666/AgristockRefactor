@@ -13,9 +13,7 @@ namespace Web.Controllers
         // GET: Tienda
         public ActionResult Index()
         {
-            IServiceProducto _ServiceProducto = new ServiceProducto();
-            IEnumerable<Producto> lista = _ServiceProducto.GetProductosByTienda(5);
-            return View(lista);
+            return View();
         }
 
 
