@@ -22,17 +22,33 @@
                 <h3 class="card-title">Observaciones</h3>
 
                 @*<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>*@
-                <p class="card-text">
+            <p class="card-text">
 
-                        <ol>
-                            <li>@Html.DisplayFor(m => Model.Observaciones)</li>
-                            @if (Model.Estado == 3)
-                            {
-                                <li>Estado: <span class="text-success fw-bold">Entregado</span></li>
-                            }
+                <ol>
+                    <li>Fecha y hora del pedido: @Html.DisplayFor(m => Model.FechaHora)</li>
+                    <li>Cliente: @Html.DisplayFor(m => Model.Usuario.Nombre)</li>
 
-                        </ol>
-                </p>
+
+                    <li>Tienda: @ViewBag.tiendaNombre</li>
+
+                    @foreach (var item in Model.Usuario.MetodoPago)
+                    {
+                        if (Model.IdMetodoPago == item.Id)
+                        {
+                            <li>Metodo de pago: @Html.DisplayFor(m => item.TipoPago) @Html.DisplayFor(m => item.NumCuenta)</li>
+                        }
+
+                    }
+                    <li>Direccion de entrega: @Html.DisplayFor(m => Model.Direccion)</li>
+
+                    <li>Obervaciones: @Html.DisplayFor(m => Model.Observaciones)</li>
+                    @if (Model.Estado == 3)
+                    {
+                        <li>Estado: <span class="text-success fw-bold">Entregado</span></li>
+                    }
+
+                </ol>
+            </p>
 
             </div>
         </div>
@@ -42,22 +58,32 @@
         <table class="table table-striped w-100">
             <thead>
                 <tr>
-                    <td>Cod. Producto</td>
+                    <td>Pruducto</td>
                     <td>Nombre</td>
+                    <td>Precio</td>
                     <td>Cantidad</td>
                 </tr>
 
             </thead>
             <tbody>
-                        @foreach (var item in Model.DetalleCompra)
-                        {
-                            if (item.Producto == null)
-                            {
-                            <td>pepepepepep</td>
-                        }
-                    }
+                @foreach (var item in Model.DetalleCompra)
+                {
+                    <tr>
+
+                        <td>
+                            <img style="width:100px; height:100px;" src="data:image/png;base64,@Convert.ToBase64String(item.Producto.Imagen)" alt="Imagen @Html.DisplayFor(modelItem => item.Producto.Nombre)" class="zoom-img" />
+                        </td>
+
+                        <td><strong>@Html.DisplayFor(m => item.Producto.Nombre)</strong><br />@Html.DisplayFor(a => item.Producto.Descripcion)</td>
+                        <td>
+                            <span>@Html.DisplayFor(m => item.Producto.Precio)</span>
+                        </td>
+                        <td>@Html.DisplayFor(m => item.Cantidad)</td>
+                    </tr>
+                }
             </tbody>
-            </table>
+
+        </table>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class=" container-fluid card w-100" style="width: 18rem;">
@@ -66,13 +92,9 @@
                     <p class="card-text">
                         <span>
                             <ol>
-                                @foreach (var item in Model.DetalleCompra)
-                                {
-                                    <li>Subtotal:  @Html.DisplayFor(i => item.SubTotal)</li>
-                                    <li>I.V.A:  @Html.DisplayFor(i => item.Iva)</li>
-                                    <li><span class="fw-bold"><strong>Total:  </strong>@Html.DisplayFor(i => item.Total)</span></li>
-                                }
-
+                                <li>Subtotal: @ViewBag.subtotal</li>
+                                <li>I.V.A: @ViewBag.IVA</li>
+                                <li><span class="fw-bold"><strong>Total:  </strong>@ViewBag.total</span></li>
 
 
                             </ol>
