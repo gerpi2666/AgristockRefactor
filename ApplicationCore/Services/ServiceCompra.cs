@@ -21,5 +21,17 @@ namespace ApplicationCore.Services
             IRepositoryCompra repository = new RepositoryCompra();
             return repository.GetCompras();
         }
+
+        public IEnumerable<Compra> GetComprasByCliente(int idCliente)
+        {
+            IRepositoryCompra repository = new RepositoryCompra();
+            return repository.GetComprasByCliente(idCliente);
+        }
+
+        public IEnumerable<Compra> GetComprasByTienda(int idTienda)
+        {
+            IRepositoryCompra repository = new RepositoryCompra();
+            return repository.GetComprasByTienda(idTienda);
+        }
     }
 }

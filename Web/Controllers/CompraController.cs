@@ -23,16 +23,43 @@ namespace Web.Controllers
         // GET: Compra/Details/5
         public ActionResult Details(int id)
         {
+            double subtotal = 0;
+            double total = 0;
+            double IVA = 0;
+            string tiedaNombre = "";
             IServiceCompra _ServiceCompra = new ServiceCompra();
             Compra compra=_ServiceCompra.GetCompraById(id);
-           
+            foreach (var item in compra.DetalleCompra)
+            {
+                subtotal += (double)item.SubTotal*(double) item.Cantidad;
+                tiedaNombre = item.Producto.Tienda.NombreProveedor;
+
+            }
+            IVA = subtotal*0.13;
+            total = IVA + subtotal;
+            ViewBag.subtotal = subtotal;
+            ViewBag.total = total;
+            ViewBag.IVA = IVA; 
+            ViewBag.tiendaNombre=tiedaNombre;
+
             return View(compra);
         }
 
         // GET: Compra/Create
-        public ActionResult Create()
+        public ActionResult ComprasCliente()
         {
-            return View();
+            IServiceCompra _ServiceCompra = new ServiceCompra();
+            IEnumerable<Compra> compra = _ServiceCompra.GetComprasByCliente(4);
+
+            return View(compra);
+        }
+
+        public ActionResult ComprasTienda()
+        {
+            IServiceCompra _ServiceCompra = new ServiceCompra();
+            IEnumerable<Compra> compra = _ServiceCompra.GetComprasByTienda(1);
+
+            return View(compra);
         }
 
         // POST: Compra/Create
