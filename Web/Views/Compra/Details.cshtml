@@ -8,7 +8,8 @@
 
 <div class="content">
     @*<h1>Pedido # @Html.DisplayFor(m => Model.Id)</h1>*@
-    <h1 id="producto-titulo" class=" mb-3 mt-5" style="!important; font-size: 1.8rem !important;">Detalle del pedido</h1>
+    <h1 id="producto-titulo" class="mb-3 mt-5" style="font-size: 1.8rem !important;">Detalle del pedido</h1>
+
 
     <ul class="d-flex text-decoration-none custom-pedido-list">
         <li><span class="material-symbols-outlined"> </span>Orden @Html.DisplayFor(m => Model.Id)        .</li>
@@ -22,33 +23,33 @@
                 <h3 class="card-title">Observaciones</h3>
 
                 @*<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>*@
-            <p class="card-text">
+                <p class="card-text">
 
-                <ol>
-                    <li>Fecha y hora del pedido: @Html.DisplayFor(m => Model.FechaHora)</li>
-                    <li>Cliente: @Html.DisplayFor(m => Model.Usuario.Nombre)</li>
+                    <ol>
+                        <li>Fecha y hora del pedido: @Html.DisplayFor(m => Model.FechaHora)</li>
+                        <li>Cliente: @Html.DisplayFor(m => Model.Usuario.Nombre)</li>
 
 
-                    <li>Tienda: @ViewBag.tiendaNombre</li>
+                        <li>Tienda: @ViewBag.tiendaNombre</li>
 
-                    @foreach (var item in Model.Usuario.MetodoPago)
-                    {
-                        if (Model.IdMetodoPago == item.Id)
+                        @foreach (var item in Model.Usuario.MetodoPago)
                         {
-                            <li>Metodo de pago: @Html.DisplayFor(m => item.TipoPago) @Html.DisplayFor(m => item.NumCuenta)</li>
+                            if (Model.IdMetodoPago == item.Id)
+                            {
+                                <li>Metodo de pago: @Html.DisplayFor(m => item.TipoPago) @Html.DisplayFor(m => item.NumCuenta)</li>
+                            }
+
+                        }
+                        <li>Direccion de entrega: @Html.DisplayFor(m => Model.Direccion)</li>
+
+                        <li>Obervaciones: @Html.DisplayFor(m => Model.Observaciones)</li>
+                        @if (Model.Estado == 3)
+                        {
+                            <li>Estado: <span class="text-success fw-bold">Entregado</span></li>
                         }
 
-                    }
-                    <li>Direccion de entrega: @Html.DisplayFor(m => Model.Direccion)</li>
-
-                    <li>Obervaciones: @Html.DisplayFor(m => Model.Observaciones)</li>
-                    @if (Model.Estado == 3)
-                    {
-                        <li>Estado: <span class="text-success fw-bold">Entregado</span></li>
-                    }
-
-                </ol>
-            </p>
+                    </ol>
+                </p>
 
             </div>
         </div>
@@ -84,24 +85,24 @@
             </tbody>
 
         </table>
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class=" container-fluid card w-100" style="width: 18rem;">
-                <div class="card-body">
-                    <h3 class="card-title">Desglose del costo</h3>
-                    <p class="card-text">
-                        <span>
-                            <ol>
-                                <li>Subtotal: @ViewBag.subtotal</li>
-                                <li>I.V.A: @ViewBag.IVA</li>
-                                <li><span class="fw-bold"><strong>Total:  </strong>@ViewBag.total</span></li>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class=" container-fluid card w-100" style="width: 18rem;">
+            <div class="card-body">
+                <h3 class="card-title">Desglose del costo</h3>
+                <p class="card-text">
+                    <span>
+                        <ol>
+                            <li>Subtotal: @ViewBag.subtotal</li>
+                            <li>I.V.A: @ViewBag.IVA</li>
+                            <li><span class="fw-bold"><strong>Total:  </strong>@ViewBag.total</span></li>
 
 
-                            </ol>
-                        </span>
-                    </p>
+                        </ol>
+                    </span>
+                </p>
 
-                </div>
             </div>
         </div>
     </div>
+</div>

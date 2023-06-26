@@ -46,7 +46,7 @@ namespace Web.Controllers
         }
 
         // GET: Compra/Create
-        public ActionResult ComprasCliente()
+        public ActionResult CompraCliente()
         {
             IServiceCompra _ServiceCompra = new ServiceCompra();
             IEnumerable<Compra> compra = _ServiceCompra.GetComprasByCliente(4);
@@ -54,7 +54,7 @@ namespace Web.Controllers
             return View(compra);
         }
 
-        public ActionResult ComprasTienda()
+        public ActionResult CompraTienda()
         {
             IServiceCompra _ServiceCompra = new ServiceCompra();
             IEnumerable<Compra> compra = _ServiceCompra.GetComprasByTienda(1);

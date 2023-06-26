@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Infraestructure.Models.Compra>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutTienda.cshtml";
+}
+
+
+
+<div class="content">
+    <h1 id="producto-titulo" class="producto-titulo text-center mb-5" style=" color: var(--gray-nav) !important; font-size: 2.3rem !important;">Pedidos</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th># Pedido</th>
+                <th>Fecha del Pedido</th>
+                @*<th>Observaciones</th>
+                    <th>Direccion de entrega</th>*@
+                <th>Estado</th>
+
+                <th>Detalle</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(model => item.Id)</td>
+                    <td>@Html.DisplayFor(model => item.FechaHora)</td>
+                    @*<td>@Html.DisplayFor(model => item.Observaciones)</td>
+                        <td>@Html.DisplayFor(model => item.Direccion)</td>*@
+                    @if (item.Estado == 3)
+                    {
+                        <td><span class="text-success">Entregado</span></td>
+
+                    }
+                    @if (item.Estado == 2)
+                    {
+                        <td>En camino</td>
+
+                    }
+                    @if (item.Estado == 1)
+                    {
+                        <td>Preparando Pedido</td>
+                    }
+
+                    <td><a href="@Url.Action("Details", "Compra", new {id=item.Id})" class="btn btn-info text-white">Detalle</a></td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

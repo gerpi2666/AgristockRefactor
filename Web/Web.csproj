@@ -231,10 +231,11 @@
     <Content Include="Views\Producto\_Productos.cshtml" />
     <Content Include="Views\Producto\_ProductoTienda.cshtml" />
     <Content Include="Views\Producto\Details.cshtml" />
-    <Content Include="Views\Compra\Index.cshtml" />
+    <Content Include="Views\Compra\CompraCliente.cshtml" />
     <Content Include="Views\Compra\Details.cshtml" />
     <Content Include="Views\Compra\DetailsTienda.cshtml" />
     <Content Include="Views\Producto\ProductoAdmin.cshtml" />
+    <Content Include="Views\Compra\CompraTienda.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

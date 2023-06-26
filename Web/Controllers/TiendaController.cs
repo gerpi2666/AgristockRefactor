@@ -18,6 +18,8 @@ namespace Web.Controllers
             return View(lista);
         }
 
+
+
         // GET: Tienda/Details/5
         public ActionResult Details(int id)
         {
