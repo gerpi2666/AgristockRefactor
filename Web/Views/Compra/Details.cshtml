@@ -6,75 +6,80 @@
 }
 
 
-<div class="container-lg row">
-    <h1>Pedido # @Html.DisplayFor(m => Model.Id)</h1>
+<div class="content">
+    @*<h1>Pedido # @Html.DisplayFor(m => Model.Id)</h1>*@
+    <h1 id="producto-titulo" class=" mb-3 mt-5" style="!important; font-size: 1.8rem !important;">Detalle del pedido</h1>
+
+    <ul class="d-flex text-decoration-none custom-pedido-list">
+        <li><span class="material-symbols-outlined"> </span>Orden @Html.DisplayFor(m => Model.Id)        .</li>
+        <li><span class="material-symbols-outlined"> </span>Ordenado el  @Html.DisplayFor(m => Model.FechaHora)</li>
+    </ul>
+
     <div class="col-lg-4 col-md-4 col-sm-12">
 
-        <div class=" container-fluid card w-100" style="width: 18rem;">
+        <div class=" card w-100" style="background: var(--color-background)">
             <div class="card-body">
-                <h3 class="card-title">Detalles del pedido</h3>
+                <h3 class="card-title">Observaciones</h3>
 
                 @*<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>*@
                 <p class="card-text">
-                    <span>
+
                         <ol>
-                            <li>Fecha y hora del pedido: @Html.DisplayFor(m => Model.FechaHora)</li>
-                            <li>Obervaciones: @Html.DisplayFor(m => Model.Observaciones)</li>
+                            <li>@Html.DisplayFor(m => Model.Observaciones)</li>
                             @if (Model.Estado == 3)
                             {
                                 <li>Estado: <span class="text-success fw-bold">Entregado</span></li>
                             }
 
                         </ol>
-                    </span>
                 </p>
-             
+
             </div>
         </div>
 
     </div>
-    <div class="col-lg-8 col-md-8 col-sm-12">
+    <div class="col-lg-12 col-md-12 col-sm-12 mt-5">
         <table class="table table-striped w-100">
             <thead>
                 <tr>
-                    <td>Producto</td>
+                    <td>Cod. Producto</td>
                     <td>Nombre</td>
                     <td>Cantidad</td>
                 </tr>
 
             </thead>
             <tbody>
-                @foreach (var item in Model.DetalleCompra)
-                {
-                    if (item.Producto==null)
-                    {
-                        <td>pepepepepep</td>
-                    }
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12">
-        <div class=" container-fluid card w-100" style="width: 18rem;">
-            <div class="card-body">
-                <h3 class="card-title">Desglose del costo</h3>
-                <p class="card-text">
-                    <span>
-                        <ol>
-                            @foreach (var item in Model.DetalleCompra)
+                        @foreach (var item in Model.DetalleCompra)
+                        {
+                            if (item.Producto == null)
                             {
-                                <li>Subtotal:  @Html.DisplayFor(i => item.SubTotal)</li>
-                                <li>I.V.A:  @Html.DisplayFor(i=> item.Iva)</li>
-                                <li><span class="fw-bold"><strong>Total:  </strong>@Html.DisplayFor(i=> item.Total)</span></li>
-                            }
+                            <td>pepepepepep</td>
+                        }
+                    }
+            </tbody>
+            </table>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class=" container-fluid card w-100" style="width: 18rem;">
+                <div class="card-body">
+                    <h3 class="card-title">Desglose del costo</h3>
+                    <p class="card-text">
+                        <span>
+                            <ol>
+                                @foreach (var item in Model.DetalleCompra)
+                                {
+                                    <li>Subtotal:  @Html.DisplayFor(i => item.SubTotal)</li>
+                                    <li>I.V.A:  @Html.DisplayFor(i => item.Iva)</li>
+                                    <li><span class="fw-bold"><strong>Total:  </strong>@Html.DisplayFor(i => item.Total)</span></li>
+                                }
 
 
 
-                        </ol>
-                    </span>
-                </p>
-               
+                            </ol>
+                        </span>
+                    </p>
+
+                </div>
             </div>
         </div>
     </div>
-</div>

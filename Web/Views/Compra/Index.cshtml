@@ -7,17 +7,18 @@
 
 
 
-<div class="container-lg">
-    <h2>Listado De Pedidos</h2>
+<div class="content">
+    <h1 id="producto-titulo" class="producto-titulo text-center mb-5" style=" color: var(--gray-nav) !important; font-size: 2.3rem !important;">Pedidos</h1>
+
     <table class="table table-striped">
         <thead>
             <tr>
                 <th># Pedido</th>
-                <th>fecha del Pedido</th>
-                <th>Observaciones</th>
-                <th>Direccion de entrega</th>
+                <th>Fecha del Pedido</th>
+                @*<th>Observaciones</th>
+                    <th>Direccion de entrega</th>*@
                 <th>Estado</th>
-               
+
                 <th>Detalle</th>
             </tr>
         </thead>
@@ -27,8 +28,8 @@
                 <tr>
                     <td>@Html.DisplayFor(model => item.Id)</td>
                     <td>26/08/200</td>
-                    <td>@Html.DisplayFor(model => item.Observaciones)</td>
-                    <td>@Html.DisplayFor(model => item.Direccion)</td>
+                    @*<td>@Html.DisplayFor(model => item.Observaciones)</td>
+                        <td>@Html.DisplayFor(model => item.Direccion)</td>*@
                     @if (item.Estado == 3)
                     {
                         <td><span class="text-success">Entregado</span></td>
@@ -44,7 +45,7 @@
                         <td>Preparando Pedido</td>
                     }
 
-                    <td><a href="@Url.Action("Details", "Compra", new {id=item.Id})" class="btn btn-info">Detalle</a></td>
+                    <td><a href="@Url.Action("Details", "Compra", new {id=item.Id})" class="btn btn-info text-white">Detalle</a></td>
 
                 </tr>
             }

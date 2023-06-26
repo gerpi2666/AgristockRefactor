@@ -30,4 +30,38 @@ if (closeBtn) {
 });
 
 
+function sendMessage() {
+    var userInput = document.getElementById('user-input');
+    var chatBody = document.getElementById('chat-body');
+
+    var question = userInput.value;
+    var answer = getAnswer(question);
+
+    var questionElement = document.createElement('p');
+    questionElement.textContent = question;
+    questionElement.classList.add('chat-message');
+
+    var answerElement = document.createElement('p');
+    answerElement.textContent = answer;
+    answerElement.classList.add('chat-message');
+
+    chatBody.appendChild(questionElement);
+    chatBody.appendChild(answerElement);
+
+    userInput.value = '';
+}
+
+function getAnswer(question) {
+    // Aquí puedes implementar la lógica para obtener la respuesta según la pregunta
+    // Puedes usar condicionales, llamadas a APIs, etc.
+
+    // Ejemplo básico:
+    if (question.toLowerCase().includes('hola')) {
+        return '¡Hola! ¿En qué puedo ayudarte?';
+    } else {
+        return 'Lo siento, no puedo responder esa pregunta.';
+    }
+}
+
+
 

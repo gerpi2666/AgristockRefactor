@@ -81,10 +81,32 @@ nav ul {
     padding-top: 1rem;
 }
 
-    nav ul li a {
-        color: var(--gray-nav);
-        font-size: 17px;
-    }
+body > header > nav > ul > li:nth-child(1) > a {
+    font-size: 17px;
+    color: var(--gray-nav);
+}
+
+body > header > nav > ul > li:nth-child(2) > a {
+    font-size: 17px;
+    color: var(--gray-nav);
+}
+
+body > header > nav > ul > li:nth-child(3) > a {
+    font-size: 17px;
+    color: var(--gray-nav);
+}
+
+
+body > header > nav > ul > li:nth-child(4) > a > span {
+    color: var(--gray-nav);
+    font-size: 24px;
+    color: green;
+}
+
+body > header > nav > ul > li:nth-child(5) > a > span {
+    color: var(--gray-nav);
+    font-size: 24px;
+}
 
 .producto-titulo {
     color: var(--gray-nav) !important;
@@ -412,6 +434,106 @@ aside .sidebar div {
     color: var(--gray-nav) !important;
     padding-bottom: 10rem !important;
 }
+
+
+/*===================================== CHAT ====================================*/
+.chat-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+    overflow: hidden;
+    margin-top: 2rem;
+}
+
+.chat-header {
+    background-color: #f1f1f1 !important;
+    padding: 10px !important;
+}
+
+    .chat-header h2 {
+        margin: 0 !important ;
+        font-size: 18px !important;
+    }
+
+.chat-body {
+    padding: 10px !important;
+    min-height: 100px !important;
+    max-height: 400px !important;
+    overflow-y: scroll !important;
+}
+
+.chat-message {
+    margin-bottom: 10px !important;
+}
+
+    .chat-message p {
+        margin: 0 !important;
+        padding: 8px !important;
+        border-radius: 5px !important;
+    }
+
+.chat-input {
+    display: flex !important;
+}
+
+    .chat-input input[type="text"] {
+        flex-grow: 1 !important;
+        padding: 8px !important;
+        border: none !important;
+        border-radius: 5px 0 0 5px !important;
+    }
+
+    .chat-input input[type="submit"] {
+        padding: 8px 15px !important;
+        background-color: #4CAF50 !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-radius: 0 5px 5px 0 !important;
+        cursor: pointer !important;
+    }
+
+/*===================================== Tabla de pedidos ===========================*/
+
+.table {
+    font-family: poppins, sans-serif !important;
+}
+
+    .table thead th,
+    .table tbody td {
+        font-family: poppins, sans-serif !important;
+        font-size: 14px;
+    }
+
+/* ================================== Detalle del pedido ======================== */
+
+.custom-pedido-list {
+    list-style: none;
+    padding: 0;
+}
+
+    .custom-pedido-list li {
+        display: flex;
+        align-items: center;
+        margin-right: 9px;
+        position: relative;
+        font-size: 1rem;
+    }
+
+
+
+        .custom-pedido-list li:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: -5px;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 70%;
+            background-color: gray;
+        }
+
 /* ==================================== MAIN  ====================================*/
 main {
     margin-top: 1.4rem;

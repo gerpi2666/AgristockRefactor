@@ -14,7 +14,7 @@
         <div class="row g-3">
             <div class="col">
                 <div class=" mb-3" style="max-width: auto;">
-                    <div class="row g-0 d-flex flex-row">
+                    <div class="row g-0 d-flex align-items-start">
                         <div class="col-md-6 d-flex justify-content-center align-items-center">
                             <img src="data:image/jpeg;charset=utf-8;base64,@Convert.ToBase64String(Model.Imagen)"
                                  alt="Libro @Html.DisplayFor(model => model.Nombre)"
@@ -44,8 +44,8 @@
                                 </p>
 
                                 @*<p class="card-text">
-            <i class="fa-solid fa-circle-user"></i> <b>@Html.DisplayNameFor(model => model.Tienda):</b>    @Html.DisplayFor(model => model.Tienda.NombreProveedor)
-        </p>*@
+                <i class="fa-solid fa-circle-user"></i> <b>@Html.DisplayNameFor(model => model.Tienda):</b>    @Html.DisplayFor(model => model.Tienda.NombreProveedor)
+            </p>*@
                                 <p class="card-text">
                                     <i class="fa-solid fa-bookmark"></i> <b>@Html.DisplayNameFor(model => model.Categoria):</b> @Html.DisplayFor(model => model.Categoria.nombre)
                                 </p>
@@ -60,13 +60,14 @@
                                     <img src="~/Content/Images/logo.png" />
                                 </div>
                                 <div class="col-md-10">
-                                    <span class="slogan-detail mb-3" style="margin-bottom:5rem">Producimos y comercializamos la marca 
-                                    <b class="fw-bold">@Html.DisplayFor(model => model.Tienda.NombreProveedor)</b> 
-                                    para los productos de mayor producción agropecuaria, productos destinados para fincas y granjas donde se esperan rendimientos de mercado.
+                                    <span class="slogan-detail mb-3" style="margin-bottom:5rem">
+                                        Producimos y comercializamos la marca
+                                        <b class="fw-bold">@Html.DisplayFor(model => model.Tienda.NombreProveedor)</b>
+                                        para los productos de mayor producción agropecuaria, productos destinados para fincas y granjas donde se esperan rendimientos de mercado.
                                     </span>
                                     <button style="margin-top:1rem">
 
-                                    @Html.ActionLink("Ver productos", "Index", "Home", null, new { @class = "button-productos" })
+                                        @Html.ActionLink("Ver productos", "Index", "Home", null, new { @class = "button-productos" })
                                     </button>
                                 </div>
                             </div>
@@ -79,19 +80,11 @@
                             </ul>
 
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="accordion w-100" id="basicAccordion">
+                            @*<div class="accordion w-100" id="basicAccordion">
 
             @foreach (var item in Model.ChatProducto)
             {
-                if (item==null)
+                if (item == null)
                 {
                     <h1>Vacio, nulo</h1>
                 }
@@ -101,7 +94,7 @@
                         <h2 class="accordion-header" id="headingTwo">
                             <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse"
                                     data-mdb-target="#basicAccordionCollapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                               @Html.DisplayFor(x=> item.Mensaje)
+                                @Html.DisplayFor(x => item.Mensaje)
                             </button>
                         </h2>
                         <div id="basicAccordionCollapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
@@ -121,8 +114,62 @@
 
             }
 
-        </div>
+        </div>*@
 
+                        <div class="chat-container">
+                            <div class="chat-header">
+                                <h2>Chat de Preguntas y Respuestas</h2>
+                            </div>
+                            <div class="chat-body" id="chat-body">
+                                <!-- Aquí se mostrarán las preguntas y respuestas -->
+                            </div>
+                            <div class="chat-input">
+                                <input type="text" id="user-input" placeholder="Escribe tu pregunta...">
+                                <input type="submit" value="Enviar" onclick="sendMessage()">
+                            </div>
+                        </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
+
 </div>
+
+<script>
+    function sendMessage() {
+        var userInput = document.getElementById('user-input');
+        var chatBody = document.getElementById('chat-body');
+
+        var question = userInput.value;
+        var answer = getAnswer(question);
+
+        var questionElement = document.createElement('p');
+        questionElement.textContent = question;
+        questionElement.classList.add('chat-message');
+
+        var answerElement = document.createElement('p');
+        answerElement.textContent = answer;
+        answerElement.classList.add('chat-message');
+
+        chatBody.appendChild(questionElement);
+        chatBody.appendChild(answerElement);
+
+        userInput.value = '';
+    }
+
+    function getAnswer(question) {
+        // Aquí puedes implementar la lógica para obtener la respuesta según la pregunta
+        // Puedes usar condicionales, llamadas a APIs, etc.
+
+        // Ejemplo básico:
+        if (question.toLowerCase().includes('hola')) {
+            return '¡Hola! ¿En qué puedo ayudarte?';
+        } else {
+            return 'Lo siento, no puedo responder esa pregunta.';
+        }
+    }
+</script>

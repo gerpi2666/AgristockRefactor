@@ -5,21 +5,24 @@
     <nav>
         <ul class="d-flex flex-row">
             <li>
-                @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
-            </li>
-            <li><a href="">About Us</a></li>
-            <li>
-                @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })
+                @Html.ActionLink("Inicio", "Index", "Home", null, new { @class = "nav-link" })
             </li>
             <li>
-                <a href=""></a><span class="material-symbols-outlined">
-                    shopping_bag
-                </span>
+                @Html.ActionLink("Nosotros", "About", "Home", null, new { @class = "nav-link" })
             </li>
             <li>
-                <a href=""></a><span class="material-symbols-outlined">
-                    person
-                </span>
+                @Html.ActionLink("Contacto", "Contact", "Home", null, new { @class = "nav-link" })
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "Compra")" class="icon-link">
+                    @Html.Raw("<span class='material-symbols-outlined icon-large'>shopping_bag</span>")
+                </a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("Index", "Compra")" class="icon-link">
+                    @Html.Raw("<span class='material-symbols-outlined icon-large'>person</span>")
+                </a>
             </li>
         </ul>
     </nav>
