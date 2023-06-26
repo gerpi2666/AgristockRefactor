@@ -233,6 +233,8 @@
     <Content Include="Views\Producto\Details.cshtml" />
     <Content Include="Views\Compra\Index.cshtml" />
     <Content Include="Views\Compra\Details.cshtml" />
+    <Content Include="Views\Compra\ComprasCliente.cshtml" />
+    <Content Include="Views\Compra\ComprasTienda.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

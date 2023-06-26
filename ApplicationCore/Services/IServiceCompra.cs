@@ -10,6 +10,9 @@ namespace ApplicationCore.Services
     public interface IServiceCompra
     {
         IEnumerable<Compra> GetCompras();
+        IEnumerable<Compra> GetComprasByCliente(int idCliente);
+        IEnumerable<Compra> GetComprasByTienda(int idTienda);
+
         Compra GetCompraById(int id);
     }
 }
