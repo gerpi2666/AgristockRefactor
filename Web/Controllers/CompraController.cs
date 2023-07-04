@@ -56,7 +56,7 @@ namespace Web.Controllers
 
         public ActionResult CompraTienda(int? idTienda)
         {
-            ViewBag.idTienda = 1;
+            ViewBag.idTienda =1;
             IServiceCompra _ServiceCompra = new ServiceCompra();
             IEnumerable<Compra> compra = _ServiceCompra.GetComprasByTienda(1);
 

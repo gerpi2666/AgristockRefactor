@@ -12,6 +12,7 @@ namespace Infraestructure.Repository
 {
     public class RepositoryProducto : IRepositoryProducto
     {
+      
 
         public Producto GetProductoID(int id)
         {
@@ -100,5 +101,38 @@ namespace Infraestructure.Repository
             }
         }
 
+
+        public async Task Delete(int id)
+        {
+            try
+            {
+                Producto producto = null;
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    producto = await ctx.Producto.FindAsync(id);
+                    if (producto != null)
+                    {
+                        producto.Borrado = true;
+                        await ctx.SaveChangesAsync();
+                    }
+                }
+               
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
+
+      
     }
 }

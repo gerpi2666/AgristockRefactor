@@ -28,5 +28,12 @@ namespace ApplicationCore.Services
             return repository.GetProductosByTienda(id);
         }
 
+        public async Task Delete(int id) {
+
+            IRepositoryProducto repository = new RepositoryProducto();
+             await repository.Delete(id);
+
+        }
+
     }
 }
