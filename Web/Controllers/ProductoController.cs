@@ -35,7 +35,11 @@ namespace Web.Controllers
             IEnumerable<Producto> lista = _ServiceProducto.GetProductos();
             return View(lista);
         }
-
+         private Usuario getUser(int id)
+        {
+            IServiceUsuario serviceUsuario = new ServiceUsuario();
+            return serviceUsuario.GetUsuarioById(id);
+        }
         // GET: Producto/Details/5
         public ActionResult Details(int id)
         {

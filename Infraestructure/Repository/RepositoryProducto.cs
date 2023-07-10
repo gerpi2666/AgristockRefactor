@@ -23,7 +23,10 @@ namespace Infraestructure.Repository
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
                     producto = ctx.Producto.Find(id);
-                    producto = ctx.Producto.Where(p => p.Id == id).Include("Categoria").Include("Tienda").Include(c=>c.ChatProducto).Include(d=>d.ChatProducto.Select(x=>x.Mensaje)).FirstOrDefault();
+                    producto = ctx.Producto.Where(p => p.Id == id).Include("Categoria")
+                        .Include("Tienda").Include(c=>c.ChatProducto)
+                        .Include(p => p.ChatProducto.Select(cp => cp.Mensaje.Select(m => m.Usuario)))
+                        .Include(d=>d.ChatProducto.Select(x=>x.Mensaje)).FirstOrDefault();
                 }
                 return producto;
             }
