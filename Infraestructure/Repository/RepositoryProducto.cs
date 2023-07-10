@@ -133,6 +133,37 @@ namespace Infraestructure.Repository
             }
         }
 
-      
+        public async Task<Producto> Crear(Producto product)
+        {
+            int rows1 = 0;
+            try
+            {
+                Producto producto = null;
+                if (product != null)
+                {
+                    producto = product;
+                    using (MyContext ctx = new MyContext())
+                    {
+                        ctx.Configuration.LazyLoadingEnabled = false;
+                        ctx.Producto.Add(producto);
+                        rows1 = await ctx.SaveChangesAsync();
+                    }
+                }
+               
+                return producto;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
     }
 }

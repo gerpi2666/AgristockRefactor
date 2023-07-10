@@ -2,6 +2,7 @@
 using Infraestructure.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -50,9 +51,41 @@ namespace Web.Controllers
         }
 
         // GET: Producto/Create
-        public ActionResult Create()
+       
+        
+        private SelectList ListaCategorias(int id=0)
         {
+            IServiceCategoria _ServiceCategoria = new ServiceCategoria();
+            IEnumerable<Categoria> lista = _ServiceCategoria.GetCategorias();
+            return new SelectList(lista,"Id","Nombre",id);
+        }
+        
+        public async Task<ActionResult> Create(Producto producto, HttpPostedFileBase imagen)
+        {
+            IServiceCategoria _ServiceCategoria = new ServiceCategoria();
+            ViewBag.Categorias = ListaCategorias();
+            MemoryStream target = new MemoryStream();
+
+            if (imagen != null)
+            {
+                imagen.InputStream.CopyTo(target);
+                producto.Imagen = target.ToArray();
+                ModelState.Remove("Imagen");
+                producto.IdProveedor = 2;
+                producto.IdCategoria = 1;
+            }
+           
+
+            if(ModelState.IsValid)
+                {
+                IServiceProducto _ServiceProducto = new ServiceProducto();
+                await _ServiceProducto.Crear(producto);
+            }
+
+
+            
             return View();
+
         }
 
         public ActionResult DetalleVendedor()

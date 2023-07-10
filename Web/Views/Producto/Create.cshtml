@@ -1,0 +1,176 @@
+﻿@model Infraestructure.Models.Producto
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutTienda.cshtml";
+}
+
+<h2>Create</h2>
+
+
+<div class="container">
+    @using (Html.BeginForm("Create", "Producto", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="col-md-6">
+                <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="" class="d-block w-100" alt="Imagen">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div>
+                <input type="file" class="form-control mt-3" id="Imagen" name="Imagen" multiple>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+                </div>
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Marca, htmlAttributes: new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Marca, new { @class = "form-control" })
+                </div>
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Precio, htmlAttributes: new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Precio, new { @class = "form-control" })
+                </div>
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "form-label" })
+                    @Html.DropDownListFor(model => model.Estado, new SelectList(new[] { "Nuevo", "Usado", "Seminuevo" }), new { @class = "form-control" })
+                </div>
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Categoria, htmlAttributes: new { @class = "form-label" })
+
+                    @Html.DropDownListFor(model => model.Categoria,
+                      (SelectList)ViewBag.Categorias,
+                      "Categorias",
+                      htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Stock, htmlAttributes: new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Stock, new { @class = "form-control", type = "number", min = "0" })
+                </div>
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "form-label" })
+                    @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control", rows = "4" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <input type="submit" value="Guardar" onclick="" class="btn btn-success w-100" />
+            </div>
+            <div class="col-6">
+                <input type="button" value="Descartar" onclick="descartar()" class="btn btn-danger w-100" />
+            </div>
+        </div>
+    }
+</div>
+
+
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<div class="modal fade" id="zoomModal" tabindex="-1" aria-labelledby="zoomModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img id="zoomImage" src="" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css">
+<style>
+    .carousel-item img {
+        cursor: pointer;
+    }
+
+    .modal-dialog {
+        max-width: 60%;
+        max-height:60%;
+        margin: 1.75rem auto;
+    }
+</style>le>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var imagenes = JSON.parse(localStorage.getItem("imagenes")) || [];
+        if (imagenes.length > 0) {
+            var carouselItems = "";
+            for (var i = 0; i < imagenes.length; i++) {
+                carouselItems += "<div class='carousel-item " + (i === 0 ? "active" : "") + "'>" +
+                    "<img src='" + imagenes[i] + "' class='d-block w-100' alt='Imagen'>" +
+                    "</div>";
+            }
+            $(".carousel-inner").html(carouselItems);
+        }
+
+        $("#carouselExample").carousel({
+            interval: 1000
+        });
+
+        $(".carousel-item img").on("click", function () {
+            var imageUrl = $(this).attr("src");
+            $("#zoomImage").attr("src", imageUrl);
+            $("#zoomModal").modal("show");
+        });
+
+        $("#Imagen").on("change", function (e) {
+            var files = e.target.files;
+            var imagenesCargadas = [];
+            for (var i = 0; i < files.length; i++) {
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    var imagenUrl = event.target.result;
+                    imagenesCargadas.push(imagenUrl);
+                    localStorage.setItem("imagenes", JSON.stringify(imagenesCargadas));
+                    var carouselItems = "";
+                    for (var j = 0; j < imagenesCargadas.length; j++) {
+                        carouselItems += "<div class='carousel-item " + (j === 0 ? "active" : "") + "'>" +
+                            "<img src='" + imagenesCargadas[j] + "' class='d-block w-100' alt='Imagen'>" +
+                            "</div>";
+                    }
+                    $(".carousel-inner").html(carouselItems);
+                };
+                reader.readAsDataURL(files[i]);
+            }
+        });
+
+
+    });
+
+    function limpiarLocalStorage() {
+        localStorage.removeItem("imagenes");
+    }
+
+    function descartar() {
+        localStorage.removeItem("imagenes");
+        document.getElementById("Nombre").value = "";
+        document.getElementById("Marca").value = "";
+        document.getElementById("Precio").value = "";
+        document.getElementById("Estado").value = "";
+        document.getElementById("Stock").value = "";
+        document.getElementById("Descripcion").value = "";
+    }
+
+
+
+</script>
