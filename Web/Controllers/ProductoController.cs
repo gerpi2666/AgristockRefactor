@@ -2,7 +2,10 @@
 using Infraestructure.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -32,7 +35,11 @@ namespace Web.Controllers
             IEnumerable<Producto> lista = _ServiceProducto.GetProductos();
             return View(lista);
         }
-
+         private Usuario getUser(int id)
+        {
+            IServiceUsuario serviceUsuario = new ServiceUsuario();
+            return serviceUsuario.GetUsuarioById(id);
+        }
         // GET: Producto/Details/5
         public ActionResult Details(int id)
         {
@@ -48,69 +55,68 @@ namespace Web.Controllers
         }
 
         // GET: Producto/Create
-        public ActionResult Create()
+       
+        
+        private SelectList ListaCategorias(int id=0)
         {
+            IServiceCategoria _ServiceCategoria = new ServiceCategoria();
+            IEnumerable<Categoria> lista = _ServiceCategoria.GetCategorias();
+            return new SelectList(lista,"Id","Nombre",id);
+        }
+        
+        public async Task<ActionResult> Create(Producto producto, HttpPostedFileBase imagen)
+        {
+            IServiceCategoria _ServiceCategoria = new ServiceCategoria();
+            ViewBag.Categorias = ListaCategorias();
+            MemoryStream target = new MemoryStream();
+
+            if (imagen != null)
+            {
+                imagen.InputStream.CopyTo(target);
+                producto.Imagen = target.ToArray();
+                ModelState.Remove("Imagen");
+                producto.IdProveedor = 2;
+                producto.IdCategoria = 1;
+            }
+           
+
+            if(ModelState.IsValid)
+                {
+                IServiceProducto _ServiceProducto = new ServiceProducto();
+                await _ServiceProducto.Crear(producto);
+            }
+
+
+            
             return View();
+
         }
 
-        // POST: Producto/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult DetalleVendedor()
         {
-            try
-            {
-                // TODO: Add insert logic here
+            IServiceProducto _ServiceProducto = new ServiceProducto();
+            Producto producto = null;
+            //if (id == null)
+            //{
+            //    return RedirectToAction("Index");
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            //}
+            producto = _ServiceProducto.GetProductoById(1);
+            return View(producto);
         }
 
-        // GET: Producto/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            IServiceProducto _ServiceProducto = new ServiceProducto();
+            await _ServiceProducto.Delete(id.Value);
+
+            return RedirectToAction("Index");
         }
 
-        // POST: Producto/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Producto/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Producto/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

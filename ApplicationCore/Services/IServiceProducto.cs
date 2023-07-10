@@ -12,5 +12,8 @@ namespace ApplicationCore.Services
         IEnumerable<Producto> GetProductos();
         IEnumerable<Producto> GetProductosByTienda(int id);
         Producto GetProductoById(int id);
+        Task Delete(int id);
+        Task<Producto> Crear(Producto producto);
+
     }
 }

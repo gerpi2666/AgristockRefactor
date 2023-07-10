@@ -89,10 +89,19 @@
                             </div>
                             <div class="chat-input">
                                 <input type="text" id="user-input" placeholder="Escribe tu pregunta...">
+                                @foreach (var chat in Model.ChatProducto)
+                                {
+                                    foreach (var mensaje in chat.Mensaje)
+                                    {
+                                       
+                                        <h1>@Html.DisplayFor(o => mensaje.Usuario.Nombre)</h1>
+                                    }
+                                }
                                 <input type="submit" value="Enviar" onclick="sendMessage()">
+
                             </div>
                         </div>
-
+                           
                         </div>
                     </div>
                 </div>

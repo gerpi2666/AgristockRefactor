@@ -28,19 +28,19 @@ namespace Web.Controllers
             double IVA = 0;
             string tiedaNombre = "";
             IServiceCompra _ServiceCompra = new ServiceCompra();
-            Compra compra=_ServiceCompra.GetCompraById(id);
+            Compra compra = _ServiceCompra.GetCompraById(id);
             foreach (var item in compra.DetalleCompra)
             {
-                subtotal += (double)item.Producto.Precio*(double) item.Cantidad;
+                subtotal += (double)item.Producto.Precio * (double)item.Cantidad;
                 tiedaNombre = item.Producto.Tienda.NombreProveedor;
 
             }
-            IVA = subtotal*0.13;
+            IVA = subtotal * 0.13;
             total = IVA + subtotal;
             ViewBag.subtotal = subtotal;
             ViewBag.total = total;
-            ViewBag.IVA = IVA; 
-            ViewBag.tiendaNombre=tiedaNombre;
+            ViewBag.IVA = IVA;
+            ViewBag.tiendaNombre = tiedaNombre;
 
             return View(compra);
         }
@@ -54,10 +54,11 @@ namespace Web.Controllers
             return View(compra);
         }
 
-        public ActionResult CompraTienda()
+        public ActionResult CompraTienda(int? idTienda)
         {
+            ViewBag.idTienda =1;
             IServiceCompra _ServiceCompra = new ServiceCompra();
-            IEnumerable<Compra> compra = _ServiceCompra.GetComprasByTienda(3);
+            IEnumerable<Compra> compra = _ServiceCompra.GetComprasByTienda(1);
 
             return View(compra);
         }

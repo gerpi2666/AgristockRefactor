@@ -28,5 +28,18 @@ namespace ApplicationCore.Services
             return repository.GetProductosByTienda(id);
         }
 
+        public async Task Delete(int id)
+        {
+
+            IRepositoryProducto repository = new RepositoryProducto();
+            await repository.Delete(id);
+
+        }
+
+        public async Task<Producto> Crear(Producto producto)
+        {
+            IRepositoryProducto repository = new RepositoryProducto();
+            return await repository.Crear(producto);
+        }
     }
 }

@@ -14,41 +14,52 @@
         <thead>
             <tr>
                 <th># Pedido</th>
-                <th>Fecha del Pedido</th>
+                <th>Producto</th>
                 @*<th>Observaciones</th>
                     <th>Direccion de entrega</th>*@
                 <th>Estado</th>
 
-                <th>Detalle</th>
+                <th>Cantidad</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>@Html.DisplayFor(model => item.Id)</td>
-                    <td>@Html.DisplayFor(model => item.FechaHora)</td>
-                    @*<td>@Html.DisplayFor(model => item.Observaciones)</td>
-                        <td>@Html.DisplayFor(model => item.Direccion)</td>*@
-                    @if (item.Estado == 3)
+
+                foreach (var detalle in item.DetalleCompra)
+                {
+                    if (detalle.Producto.IdProveedor == ViewBag.idTienda)
                     {
-                        <td><span class="text-success">Entregado</span></td>
+                        <tr>
 
+                            <td>@Html.DisplayFor(m => item.Id)</td>
+
+                            <td>
+                                <img style="width:100px; height:100px;" src="data:image/png;base64,@Convert.ToBase64String(detalle.Producto.Imagen)" alt="Imagen @Html.DisplayFor(modelItem => detalle.Producto.Nombre)" class="zoom-img" />
+                            </td>
+                            @if (item.Estado == 3)
+                            {
+                                <td><span class="text-success fw-bold">Entregado</span></td>
+                            }
+                            @if (item.Estado == 2)
+                            {
+                                <td><span class="text-warning fw-bold">En progreso</span></td>
+
+                            }
+                            @if (item.Estado == 1)
+                            {
+                                <td><span class="text-danger fw-bold">Pendiente</span></td>
+
+                            }
+
+                            <td>@Html.DisplayFor(o => detalle.Cantidad)</td>
+                        </tr>
                     }
-                    @if (item.Estado == 2)
-                    {
-                        <td>En camino</td>
+                }
 
-                    }
-                    @if (item.Estado == 1)
-                    {
-                        <td>Preparando Pedido</td>
-                    }
 
-                    <td><a href="@Url.Action("Details", "Compra", new {id=item.Id})" class="btn btn-info text-white">Detalle</a></td>
-
-                </tr>
             }
+
         </tbody>
     </table>
 
