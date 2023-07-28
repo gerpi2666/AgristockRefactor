@@ -1,0 +1,48 @@
+﻿@model Infraestructure.Models.Tienda
+
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<div class="view-container">
+
+    <!-- Formulario de registro -->
+    @using (Html.BeginForm("Save", "Tienda"))
+    {
+        @Html.AntiForgeryToken()
+        <div class="container-form register">
+            <div class="information">
+                <div class="info-childs">
+                    <img src="" alt="">
+                    <h2>Únete a nuestro equipo de vendedores</h2>
+                    <p>Conviértete en un vendedor destacado y amplía tus horizontes de negocio.</p>
+
+                </div>
+            </div>
+            <div class="form-information">
+                <div class="form-information-childs">
+                    <h2 class="mb-4">Afiliación</h2>
+
+                    <form action="">
+
+                        <label>
+                            <i class='bx bx-user'></i>
+                            @*<input type="text" placeholder="Nombre completo">*@
+
+                            @Html.EditorFor(model => model.NombreProveedor, new { htmlAttributes = new { @class = "", placeholder = "Nombre del proveedor" } })
+                            @Html.ValidationMessageFor(model => model.NombreProveedor, "", new { @class = "text-danger" })
+
+                        </label>
+
+                        <input type="submit" value="Crear cuenta">
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+
+
+</div>

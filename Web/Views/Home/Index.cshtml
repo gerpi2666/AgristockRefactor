@@ -24,6 +24,34 @@
     </div>
 
 
+
+
+    @* Información usuario *@
+    @{
+        string nombre = "";
+        string email = "";
+        Infraestructure.Models.Usuario oUsuario;
+        //Validar si existe en la sesión
+        if (Session["User"] != null)
+        {
+            oUsuario = (Infraestructure.Models.Usuario)Session["User"];
+            if (oUsuario != null)
+            {
+                nombre = $"{oUsuario.Nombre}";
+                email = oUsuario.Correo;
+            }
+
+        }
+    }
+
+    @if (Session["User"] != null)
+    {
+        <h2 id="producto-titulo" class="producto-titulo text-center" style="color: var(--color-secondary-variant) !important; font-size: 2.6rem !important; margin-top: 1.8rem ">¡Bienvenido @nombre!</h2>
+    }
+
+
+
+
     @Html.Partial("~/Views/Producto/_Productos.cshtml", modeloProductos)
 
 </div>

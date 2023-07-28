@@ -10,6 +10,10 @@ namespace ApplicationCore.Services
    public interface IServiceDireccion
     {
         IEnumerable<Direccion> GetDirecciones();
-        Direccion GetDireccionById(int id);
+        List <Direccion> GetDireccionById(int id);
+
+        Direccion Save(Direccion direccion, Usuario usuario);
+
+        //Provincia Save(Provincia provincia);
     }
 }

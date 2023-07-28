@@ -1,0 +1,140 @@
+﻿@model Infraestructure.Models.Usuario
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+
+<div class="view-container">
+
+    <!-- Formulario de registro -->
+    @using (Html.BeginForm("Save", "Usuario"))
+    {
+        @Html.AntiForgeryToken()
+        <div class="container-form register hide">
+
+            <div class="information">
+                <div class="info-childs">
+                    <div class="logo">
+                        <img src="~/Content/Images/logoWhite.png" />
+                    </div>
+                    <h2>Bienvenido</h2>
+                    <p>Compra de forma inteligente. Inicia sesión y encuentra lo que necesitas.</p>
+                    <input type="button" value="Iniciar Sesion" id="sign-in">
+                </div>
+            </div>
+
+            <div class="form-information">
+                <div class="form-information-childs">
+                    <h2>Crear Cuenta</h2>
+                    <div class="icons">
+                        <i class='bx bxl-google'></i>
+                        <i class='bx bxl-facebook-circle'></i>
+                        <i class='bx bxl-linkedin'></i>
+                    </div>
+                    <form action="">
+                        <label>
+                            <i class='bx bx-user'></i>
+                            @*<input type="text" placeholder="Nombre completo">*@
+
+                            @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "", placeholder = "Nombre completo" } })
+                            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+
+                        </label>
+                        <label>
+                            <i class='bx bx-data'></i>
+                            @*<input type="text" placeholder="Identificación">*@
+
+                            @Html.EditorFor(model => model.Identificacion, new { htmlAttributes = new { @class = "", placeholder = "Identificación" } })
+                            @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
+                        </label>
+                        <label>
+                            <i class='bx bxs-phone'></i>
+                            @*<input type="text" placeholder="Teléfono">*@
+                            @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "", placeholder = "Teléfono" } })
+                            @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+                        </label>
+                        <label>
+                            <i class='bx bx-envelope'></i>
+                            @*<input type="email" placeholder="Correo Electrónico">*@
+                            @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "", placeholder = "Correo Electrónico" } })
+                            @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
+                        </label>
+                        <label>
+                            <i class='bx bx-lock-alt'></i>
+                            @*<input type="password" placeholder="Contraseña">*@
+                            @Html.EditorFor(model => model.Contrasena, new { htmlAttributes = new { @class = "", placeholder = "Contraseña", type = "password" } })
+
+                            @Html.ValidationMessageFor(model => model.Contrasena, "", new { @class = "text-danger" })
+                        </label>
+
+                        <div class="div-check">
+                                @Html.CheckBoxFor(model => model.Vendedor, new { @class = "checkbox" })
+                                <label for="Vendedor">
+                                    Soy Vendedor
+                                </label>
+                            </div>
+
+                        <input type="submit" value="Crear Cuenta">
+                    </form>
+
+                   
+                </div>
+            </div>
+        </div>
+
+    }
+    <!-- formulario de inicio de sesión -->
+    @using (Html.BeginForm("Login", "Login"))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <div class="container-form login ">
+            <div class="information">
+                <div class="info-childs">
+                    <div class="logo">
+                        <img src="~/Content/Images/logoWhite.png" />
+                    </div>
+                    <h2>¡Hola de nuevo!</h2>
+                    <p>Compra de forma inteligente. Registrate y encuentra lo que necesitas.</p>
+                    <input type="button" value="Registrarse" id="sign-up">
+                </div>
+            </div>
+            <div class="form-information">
+                <div class="form-information-childs">
+                    <h2>Iniciar Sesión </h2>
+                    <div class="icons">
+                        <i class='bx bxl-google'></i>
+                        <i class='bx bxl-facebook-circle'></i>
+                        <i class='bx bxl-linkedin'></i>
+                    </div>
+                    <p>o Inicia Sesión con una cuenta</p>
+                    <form action="">
+                        <label>
+                            <i class='bx bx-envelope'></i>
+                            @*<input type="email" placeholder="Correo Electrónico">*@
+
+
+                            @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "", placeholder = "Correo Electrónico" } })
+                            @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
+
+                        </label>
+                        <label>
+                            <i class='bx bx-lock-alt'></i>
+                            @*<input type="password" placeholder="Contraseña">*@
+
+                            @Html.EditorFor(model => model.Contrasena, new { htmlAttributes = new { @class = "", placeholder = "Contraseña", type = "password" } })
+
+                            @Html.ValidationMessageFor(model => model.Contrasena, "", new { @class = "text-danger" })
+
+                        </label>
+                        <input type="submit" value="Iniciar Sesión">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>

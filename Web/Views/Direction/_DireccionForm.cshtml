@@ -1,0 +1,59 @@
+﻿
+@model Infraestructure.Models.Direccion
+
+
+
+    <!-- Formulario de registro -->
+    @using (Html.BeginForm("Save", "Direction"))
+    {
+        @Html.AntiForgeryToken()
+        <div class=".container-form-direciones register">
+
+            <div class="form-direction-information mb-5">
+                <div class="form-direction-information-childs">
+                    <form action="">
+
+                        <label>
+                            <i class='bx bx-user'></i>
+                            @Html.DropDownList("Provincia",
+                                (List<SelectListItem>)ViewBag.ListaProvincias,
+                                "Seleccione una provincia",
+                                new { @class = "form-control", id = "IdProvincia", onchange = "cargarCantones()" })
+
+                        </label>
+                        <label>
+                            <i class='bx bxs-phone'></i>
+                            @Html.DropDownList("Canton", Enumerable.Empty<SelectListItem>(), "", new { @class = "form-control", id = "IdCanton", onchange = "cargarDistritos()" })
+                        </label>
+
+
+                        <label>
+                            <i class='bx bxs-phone'></i>
+                            @Html.DropDownList("Distrito", Enumerable.Empty<SelectListItem>(), "", new { @class = "form-control", id = "IdDistrito" })
+                        </label>
+
+                        <label>
+                            <i class='bx bx-user'></i>
+                            @Html.EditorFor(model => model.CodPostal, new { htmlAttributes = new { @class = "", placeholder = "Código postal" } })
+                            @Html.ValidationMessageFor(model => model.CodPostal, "", new { @class = "text-danger" })
+                        </label>
+
+                        <label>
+                            <i class='bx bx-user'></i>
+                            @Html.EditorFor(model => model.DireccionExacta, new { htmlAttributes = new { @class = "", placeholder = "Dirección exacta" } })
+                            @Html.ValidationMessageFor(model => model.DireccionExacta, "", new { @class = "text-danger" })
+
+                        </label>
+
+                        <span>
+                            <input type="submit" value="Agregar dirección" class="button-productos mt-2">
+                        </span>
+
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+

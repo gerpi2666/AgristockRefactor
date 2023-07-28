@@ -81,31 +81,18 @@ nav ul {
     padding-top: 1rem;
 }
 
-body > header > nav > ul > li:nth-child(1) > a {
-    font-size: 17px;
-    color: var(--gray-nav);
+body > header > nav > ul > li > a {
+    font-size: 17px !important;    
+    color: var(--gray-nav) !important;    
 }
 
-body > header > nav > ul > li:nth-child(2) > a {
-    font-size: 17px;
-    color: var(--gray-nav);
+.icon-large {
+    color: var(--gray-nav) !important;
+    font-size: 24px !important;
 }
 
-body > header > nav > ul > li:nth-child(3) > a {
-    font-size: 17px;
-    color: var(--gray-nav);
-}
-
-
-body > header > nav > ul > li:nth-child(4) > a > span {
-    color: var(--gray-nav);
-    font-size: 24px;
-    color: green;
-}
-
-body > header > nav > ul > li:nth-child(5) > a > span {
-    color: var(--gray-nav);
-    font-size: 24px;
+.icon-compra {
+    color: green !important;
 }
 
 .producto-titulo {
@@ -213,6 +200,12 @@ p {
 b {
     color: var(--color-dark);
 }
+
+hr {
+    border: 1px solid var(--color-dark) !important; /* Establece un borde visible */
+    margin: 1rem 0 !important; /* Agrega margen arriba y abajo para separarlo de otros elementos */
+}
+
 
 .primary {
     color: var(--color-primary);
@@ -813,4 +806,417 @@ main {
     --color-info-dark: #edeffd;
     --color-primary: #ffd23f;
     --color-secondary: #ffd23f;
+}
+
+/*ggggggggggggggggggggggggggggggggggggggggggg*/
+
+
+#chat-bubble {
+    position: fixed;
+    bottom: 40px;
+    right: 170px;
+    z-index: 999;
+}
+
+#chat-icon {
+    position: relative;
+    width: 55px;
+    height: 55px;
+    background-color: var(--color-secondary-variant);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1;
+}
+
+    #chat-icon span {
+        width: 100% !important;
+        height: 100% !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 25px !important;
+        color: white;
+        box-sizing: border-box;
+    }
+
+#unread-count {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    color: white;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#chat-window {
+    display: none;
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 300px;
+    max-height: 400px;
+    margin-bottom: 2rem;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    transform: translateX(-50%);
+}
+
+    #chat-window label {
+        display: block;
+        padding: 10px;
+        background-color: var(--color-secondary-variant);
+        color: white;
+        font-weight: bold;
+        border-radius: 5px 5px 0 0;
+    }
+
+
+#chat-messages {
+    height: 260px;
+    padding: 10px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+    font-size: 18px;
+}
+
+#message-input {
+    width: 70%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+#send-button {
+    padding: 8px 12px;
+    margin-top: 10px;
+    margin-left: 10px; /* Agrega un margen izquierdo para separarlo del campo de entrada */
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+
+    #send-button:hover {
+        background-color: #45a049;
+    }
+
+#unread-count {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    color: white;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilos adicionales para los mensajes */
+
+.message div{
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    font-size: 14px;
+
+}
+
+/*    .message {
+        display: inline-block !important;
+    }*/
+
+.sender {
+    background-color: green !important;
+    color: white;
+    text-align: right;
+    justify-content:end !important;
+}
+
+.receiver {
+    background-color: lightgray !important;
+    color: black;
+    text-align: left;
+}
+
+
+/* ========================= Login Css  =====================*/
+.view-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url(Images/granjaLogin.jpg);
+    background-size: cover;
+}
+
+.container-form {
+    min-width: 900px;
+    max-width: 900px;
+    height: 570px;
+    display: flex;
+    border-radius: 20px;
+    transition: all 1s ease;
+    margin: 10px;
+    box-shadow: 0 5px 7px rgba(0, 0, 0, 0.1);
+}
+
+.container-form-direciones {
+    min-width: 900px;
+    max-width: 900px;
+    height: 570px;
+    display: flex;
+}
+
+    .information {
+        width: 40%;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        background-color: var(--color-secondary-variant);
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+    }
+
+.info-childs {
+    width: 100%;
+    padding: 0 30px;
+}
+
+    .info-childs h2 {
+        font-size: 2.5rem !important;
+        color: #fff;
+    }
+
+    .info-childs p {
+        margin: 8px 0 15px 0;
+        color: #fff;
+    }
+
+    .info-childs input {
+        background-color: transparent !important;
+        outline: none !important;
+        border: solid 2px #fff !important;
+        border-radius: 20px;
+        padding: 10px 20px;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .info-childs input:hover {
+            background-color: var(--color-warning) !important;
+            border: solid 2px var(--color-warning) !important;
+            color: #fff !important;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+        }
+
+.form-information {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    text-align: center;
+    background-color: #f8f8f8;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.form-direction-information {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 30%;
+    text-align: center;
+    background-color: #f8f8f8;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+    .form-information-childs {
+        padding: 0 30px;
+        width: 65%;
+    }
+
+
+
+.form-information > div > h2 {
+    color: #414141 !important;
+    font-size: 2.5rem !important;
+}
+
+.icons {
+    margin: 15px 0;
+}
+
+    .icons i {
+        border-radius: 50%;
+        padding: 15px;
+        font-size: 1.3rem;
+        cursor: pointer;
+        margin: 0 10px !important;
+        color: #9191bd;
+        /*   border: solid thin var(--color-danger) !important; */
+        transition: background-color 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+    }
+
+        .icons i:hover {
+            background-color: var(--color-warning);
+            color: #fff;
+        }
+
+form {
+    margin: 30px 0 0 0;
+}
+
+    form label {
+        display: flex;
+        align-items: center !important;
+        margin-bottom: 15px !important;
+        border-radius: 20px !important;
+        padding: 0 10px;
+        background-color: #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+    }
+
+
+        form label input[type="text"],
+        form label input[type="email"],
+        form label input[type="password"] {
+            width: 100% !important;
+            padding: 10px;
+            background-color: #fff;
+            border: none;
+            outline: none;
+            border-radius: 20px;
+            color: #333;
+        }
+
+.div-check {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    color: #333;
+}
+
+    .div-check label {
+        margin: 0 !important;
+        box-shadow: none !important;
+        color: #7a7a7a !important;
+    }
+
+.checkbox {
+    appearance: auto !important;
+}
+
+form label i {
+    color: #a7a7a7;
+}
+
+div.form-information > div > input[type=submit] {
+    background-color: var(--color-secondary) !important;
+    color: #fff !important;
+    border-radius: 20px !important;
+    border: none !important;
+    padding: 10px 15px !important;
+    cursor: pointer !important;
+    margin-top: 15px !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+}
+div.form-information > div > input[type=submit]:hover {
+        background-color: var(--color-warning) !important;
+    }
+
+
+
+
+
+.hide {
+    /* se posiciona detras del otro formulario */
+    position: absolute;
+    /* lo translado arriba */
+    transform: translateY(-300%);
+}
+
+
+/* ======================= Perfil usuario  =================*/
+.icon-user{
+    font-size: 15rem;
+}
+
+.contenedor-perfil {
+    background-color: var(--color-info-light);
+    width: 100% !important;
+    box-shadow: var(--box-shadow);
+    padding: 1rem !important;
+}
+/* ======================= media query para Login  =================*/
+@media screen and (max-width: 768px) {
+    .view-container {
+        font-size: 12px !important;
+    }
+
+    .container-form {
+        min-width: 450px !important;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    .view-container {
+        font-size: 10px !important;
+        justify-content: center;
+        align-items: start;
+    }
+
+    .container-form {
+        height: auto;
+        margin-top: 30px;
+        flex-direction: column;
+    }
+
+    .information {
+        width: 100%;
+        padding: 20px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        border-bottom-left-radius: 0px;
+    }
+
+    .form-information {
+        width: 100%;
+        padding: 20px;
+        border-bottom-left-radius: 20px;
+        border-top-right-radius: 0;
+    }
+
+        .form-information > div > h2 {
+            color: #414141 !important;
+            font-size: 2rem !important;
+        }
 }

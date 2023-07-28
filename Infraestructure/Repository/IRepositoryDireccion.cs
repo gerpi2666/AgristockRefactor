@@ -10,6 +10,12 @@ namespace Infraestructure.Repository
    public interface IRepositoryDireccion
     {
         IEnumerable<Direccion> GetDirecciones();
-        Direccion GetDireccionById(int id);
+        List<Direccion> GetDireccionById(int id);
+
+        Direccion Save(Direccion direccion, Usuario usuario);
+
+        //Provincia GetProvinciaById(int id);
+
+        //Provincia SaveProvincia(Provincia provincia);
     }
 }

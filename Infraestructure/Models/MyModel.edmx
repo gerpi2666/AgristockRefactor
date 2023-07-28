@@ -137,7 +137,6 @@ advertencia 6002: La tabla o vista 'AgriStock.dbo.Mensaje' no tiene definida nin
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdUsuario" Type="int" />
           <Property Name="NombreProveedor" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="Direccion" Type="nvarchar" MaxLength="1000" Nullable="false" />
           <Property Name="Activo" Type="bit" />
           <Property Name="Borrado" Type="bit" />
         </EntityType>
@@ -149,8 +148,8 @@ advertencia 6002: La tabla o vista 'AgriStock.dbo.Mensaje' no tiene definida nin
           <Property Name="Identificacion" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Telefono" Type="nvarchar" MaxLength="15" Nullable="false" />
-          <Property Name="Correo" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="Contrasena" Type="nvarchar" MaxLength="20" />
+          <Property Name="Correo" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Contrasena" Type="nvarchar" MaxLength="100" />
           <Property Name="Activo" Type="bit" />
           <Property Name="Borrado" Type="bit" />
         </EntityType>
@@ -585,7 +584,6 @@ advertencia 6002: La tabla o vista 'AgriStock.dbo.Mensaje' no tiene definida nin
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdUsuario" Type="Int32" />
           <Property Name="NombreProveedor" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Direccion" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Activo" Type="Boolean" />
           <Property Name="Borrado" Type="Boolean" />
           <NavigationProperty Name="ChatProducto" Relationship="Self.FK_MensajeProducto_VendedorServicio" FromRole="Tienda" ToRole="ChatProducto" />
@@ -601,8 +599,8 @@ advertencia 6002: La tabla o vista 'AgriStock.dbo.Mensaje' no tiene definida nin
           <Property Name="Identificacion" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Telefono" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Correo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Contrasena" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Correo" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Contrasena" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Activo" Type="Boolean" />
           <Property Name="Borrado" Type="Boolean" />
           <NavigationProperty Name="Compra" Relationship="Self.FK_Compra_Usuario1" FromRole="Usuario" ToRole="Compra" />
@@ -1012,7 +1010,6 @@ advertencia 6002: La tabla o vista 'AgriStock.dbo.Mensaje' no tiene definida nin
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
                 <ScalarProperty Name="NombreProveedor" ColumnName="NombreProveedor" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="Borrado" ColumnName="Borrado" />
               </MappingFragment>

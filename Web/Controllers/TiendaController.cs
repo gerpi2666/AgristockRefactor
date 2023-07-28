@@ -25,69 +25,39 @@ namespace Web.Controllers
         }
 
         // GET: Tienda/Create
-        public ActionResult Create()
+        public ActionResult Save(Tienda tienda)
         {
-            return View();
+            IServiceTienda _ServiceTienda = new ServiceTienda();
+            IServiceUsuario _ServiceUsuario = new ServiceUsuario();
+
+            if (ModelState.IsValid)
+            {
+                Usuario oUsuario = (Infraestructure.Models.Usuario)Session["User"];
+                Usuario usuario1 = _ServiceUsuario.GetUsuarioById(oUsuario.Id);
+
+                tienda.IdUsuario = oUsuario.Id;
+                Tienda oTienda = _ServiceTienda.SaveProveedor(tienda);
+
+                
+                //session creada para crud de tienda sin pasar por la tabla usuario
+                Session["Tienda"] = oTienda;
+
+                return RedirectToAction("Login", "Login", usuario1);
+
+            }
+                return RedirectToAction("Index", "Home");
+
         }
 
-        // POST: Tienda/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
+      
         // GET: Tienda/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Tienda/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
-        // GET: Tienda/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
 
-        // POST: Tienda/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

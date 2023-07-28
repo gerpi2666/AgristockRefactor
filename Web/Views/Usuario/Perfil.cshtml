@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewBag.Title = "Perfil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="content">
+
+    <h1 id="perfil" class="producto-titulo text-center" style="color: var(--color-secondary-variant) !important; font-size: 3rem !important; margin-top: 1.8rem ">Mi Perfil</h1>
+    
+    <div class="d-flex flex-column mt-4">
+
+        <div class="d-flex contenedor-perfil mb-3">
+            <i class='bx bxs-user icon-user'></i>
+
+            <div class="d-flex flex-column align-content-start justify-content-center mx-3">
+                @{
+                    string nombre = "";
+                    string correo = "";
+                    string telefono = "";
+                    Infraestructure.Models.Usuario oUsuario;
+                    //Validar si existe en la sesión
+                    if (Session["User"] != null)
+                    {
+                        oUsuario = (Infraestructure.Models.Usuario)Session["User"];
+                        if (oUsuario != null)
+                        {
+                            nombre = $"{oUsuario.Nombre}";
+                            correo = oUsuario.Correo;
+                            telefono = oUsuario.Telefono;
+
+                        }
+
+                    }
+                }
+                @if (Session["User"] != null)
+                {
+                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.8rem !important;"><b>@nombre</b> </span>
+                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.5rem !important;">@correo</span>
+                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.5rem !important;"><b>Tel.</b>  @telefono</span>
+                }
+
+                <span class="mt-4">
+                    @Html.ActionLink("Editar perfil", "Index", "Home", null, new { @class = "button-productos", id = "btnAgregarDireccion" })
+                </span>
+
+
+            </div>
+            <div>
+
+
+            </div>
+        </div>
+
+        <hr />
+        <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.8rem !important; font-weight:500">Dirección</span>
+
+
+        @{
+            
+            if (ViewBag.UsuarioDirecciones != null && ViewBag.UsuarioDirecciones.Count > 0)
+            {
+
+
+                foreach (var direccion in ViewBag.UsuarioDirecciones)
+                {
+                    
+                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><b>Provincia: </b> @direccion.Provincia</span>
+                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><b>Cantón: </b> @direccion.Canton</span>
+                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><b>Distrito: </b> @direccion.Distrito</span>
+                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><b>Código postal: </b> @direccion.CodPostal</span>
+                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><b>Dirección exacta: </b> @direccion.DireccionExacta</span>
+                }
+
+
+
+            }
+            else
+            {
+                <span id="no-direcion" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.5rem !important;">No hay direcciones agregadas</span>
+
+                <span>
+                    <input type="button" value="Agregar dirección" class="button-productos mt-3" id="btnToggleForm">
+                </span>
+
+                <div id="direccionForm" class="direccion-form" style="display: none;">
+                    @Html.Partial("~/Views/Direction/_DireccionForm.cshtml")
+                </div>
+            }
+
+        }
+
+
+
+
+
+
+
+    </div>
+</div>
+        
+

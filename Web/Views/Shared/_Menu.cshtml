@@ -7,23 +7,142 @@
             <li>
                 @Html.ActionLink("Inicio", "Index", "Home", null, new { @class = "nav-link" })
             </li>
+
+            @if (Session["User"] != null)
+            {
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                       href="#" role="button" aria-haspopup="true"
+                       aria-expanded="false">Perfil</a>
+
+
+                    <div class="dropdown-menu">
+
+                        @if (Session["User"] != null)
+                        {
+                            <div class="d-flex justify-content-center align-items-center w-100 p-2">
+                                <span class="material-symbols-outlined"> assignment_ind</span>
+                                <a href="@Url.Action("Perfil", "Usuario")" class="dropdown-item"> Perfil</a>
+                            </div>
+                        }
+
+
+                        @if (Session["User"] != null)
+                        {
+
+                            Infraestructure.Models.Usuario oUsuario;
+
+                            List<Infraestructure.Models.Perfil> lista = new List<Infraestructure.Models.Perfil>();
+
+                            //Validar si existe en la sesión
+                            oUsuario = (Infraestructure.Models.Usuario)Session["User"];
+                            if (oUsuario != null)
+                            {
+                                lista = oUsuario.Perfil.ToList();
+                            }
+
+                            if (lista != null)
+                            {
+                                int flat = 0;
+                                foreach (var item in lista)
+                                {
+                                    //if (item.Descripcion == "Vendedor")
+                                    // si la bandera solo cuenta 1 quiere decir que el usuario es solo Cliente
+                                    // si cuenta 2 es Cliente y Vendedor a la vez
+
+                                    if (item.Descripcion == "Cliente")
+                                    {
+                                        flat++; // Incrementa el contador solo si el elemento actual es "Vendedor"
+                                        continue; // Salta al siguiente elemento sin ejecutar el código restante
+                                    }
+
+                                    if (item.Descripcion == "Vendedor")
+                                    {
+                                        flat++; // Incrementa el contador solo si el elemento actual es "Vendedor"
+                                        continue; // Salta al siguiente elemento sin ejecutar el código restante
+                                    }
+
+                                }
+                                if (flat == 1)
+                                {
+
+                                    <div class="d-flex justify-content-center align-items-center w-100 p-2">
+                                        <span class="material-symbols-outlined"> add</span>
+                                        <a href="@Url.Action("AfiliarseForm", "Login")" class="dropdown-item"> Afiliarse</a>
+                                    </div>
+                                }
+                                if (flat == 2)
+                                {
+
+                                    <div class="d-flex justify-content-center align-items-center w-100 p-2">
+                                        <span class="material-symbols-outlined"> dashboard</span>
+                                        <a href="@Url.Action("DashboardTienda", "Home")" class="dropdown-item"> Dashboard</a>
+                                    </div>
+                                }
+                            }
+
+
+
+
+
+                        }
+
+
+
+                    </div>
+                </li>
+
+            }
+
+
+
             <li>
                 @Html.ActionLink("Nosotros", "About", "Home", null, new { @class = "nav-link" })
             </li>
             <li>
                 @Html.ActionLink("Contacto", "Contact", "Home", null, new { @class = "nav-link" })
             </li>
+
+
+
+
             <li>
                 <a href="@Url.Action("CompraCliente", "Compra")" class="icon-link">
-                    @Html.Raw("<span class='material-symbols-outlined icon-large'>shopping_bag</span>")
+                    @Html.Raw("<span class='material-symbols-outlined icon-large icon-compra'>shopping_bag</span>")
                 </a>
             </li>
 
-            <li>
-                <a href="@Url.Action("Index", "Compra")" class="icon-link">
-                    @Html.Raw("<span class='material-symbols-outlined icon-large'>person</span>")
-                </a>
-            </li>
+
+
+
+
+            @*si hay log se muestra el icono que llevará al perfil y si no hay log aún se mostrará un icono que llevará a Log In*@
+            @if (Session["User"] == null)
+            {
+                <li>
+                    <a href="@Url.Action("Index", "Login")" class="icon-link">
+                        @Html.Raw("<span class='material-symbols-outlined icon-large'>person</span>")
+                    </a>
+                </li>
+            }
+
+
+
+            @if (Session["User"] != null)
+            {
+                <li>
+                    <a href="@Url.Action("Logout", "Login")" class="icon-link">
+                        @Html.Raw("<span class='material-symbols-outlined icon-large'>logout</span>")
+                    </a>
+                </li>
+            }
+
+
+
+
+
+
         </ul>
     </nav>
 </header>

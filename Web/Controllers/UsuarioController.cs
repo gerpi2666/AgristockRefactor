@@ -1,89 +1,116 @@
-﻿using System;
+﻿using ApplicationCore.Services;
+using Infraestructure.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
+using System.Net.Http;
+using System.Reflection;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Web.Security;
+
 
 namespace Web.Controllers
 {
     public class UsuarioController : Controller
     {
         // GET: Usuario
-        public ActionResult Index()
+        [HttpGet]
+        public async Task<ActionResult> Perfil()
         {
+            ViewBag.ListaProvincias = await ListaProvinciasAsync();
+            Usuario usuario = Session["User"] as Usuario;
+            if (usuario != null)
+            {
+            ViewBag.UsuarioDirecciones = GetDirecciones(usuario.Id);
+            }
             return View();
         }
 
-        // GET: Usuario/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
 
-        // GET: Usuario/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
 
-        // POST: Usuario/Create
+
+        //guardar un usuario
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Save(Usuario usuario)
         {
+            IServiceUsuario _ServiceUsuario = new ServiceUsuario();
+
             try
             {
-                // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+
+                    Usuario oUsuario = _ServiceUsuario.Save(usuario);
+
+                    Session["User"] = oUsuario;
+
+                    if (usuario.Vendedor == true)
+                    {
+                        return RedirectToAction("AfiliarseForm", "Login");
+                    }
+                    else
+                    {
+                        if (oUsuario != null)
+                        {
+
+                            Usuario usuario1 = _ServiceUsuario.GetUsuarioById(oUsuario.Id);
+                            return RedirectToAction("Login", "Login", usuario1);
+                        }
+                    }
+                }
+
+                return RedirectToAction("Index", "Home");
+
             }
-            catch
+            catch (DbEntityValidationException ex)
             {
-                return View();
+                // Capturar errores de validación y mostrar detalles
+                foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                {
+                    foreach (var validationError in entityValidationErrors.ValidationErrors)
+                    {
+                        Console.WriteLine($"Entity: {entityValidationErrors.Entry.Entity.GetType().Name}, Property: {validationError.PropertyName}, Error: {validationError.ErrorMessage}");
+                    }
+                }
+                throw;
             }
         }
 
-        // GET: Usuario/Edit/5
-        public ActionResult Edit(int id)
+        private async Task<List<SelectListItem>> ListaProvinciasAsync()
         {
-            return View();
+            string provinciasJsonUrl = "https://ubicaciones.paginasweb.cr/provincias.json";
+            Dictionary<int, string> provinciasDictionary;
+
+            using (var httpClient = new HttpClient())
+            {
+                string json = await httpClient.GetStringAsync(provinciasJsonUrl);
+                provinciasDictionary = JsonConvert.DeserializeObject<Dictionary<int, string>>(json);
+            }
+
+            // Convertir el diccionario a una lista de SelectListItem
+            List<SelectListItem> provinciasList = provinciasDictionary
+                .Select(kvp => new SelectListItem
+                {
+                    Value = kvp.Key.ToString(), // Aquí, el valor será el nombre de la provincia
+                    Text = kvp.Value   // Y el texto a mostrar también será el nombre de la provincia
+                })
+                .ToList();
+
+            return provinciasList;
         }
 
-        // POST: Usuario/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public List<Direccion> GetDirecciones(int id)
         {
-            try
-            {
-                // TODO: Add update logic here
+            IServiceDireccion _ServiceDireccion = new ServiceDireccion();
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            List<Direccion> direcciones = _ServiceDireccion.GetDireccionById(id);
 
-        // GET: Usuario/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Usuario/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return direcciones;
         }
     }
 }

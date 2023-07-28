@@ -1,0 +1,1 @@
+﻿public enum Perfil { Administrador = 1, Cliente = 2, Vendedor = 3 }

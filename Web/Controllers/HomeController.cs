@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using Web.Security;
 
 namespace Web.Controllers
 {
@@ -12,11 +14,17 @@ namespace Web.Controllers
     {
         public ActionResult Index()
         {
+            if (TempData.ContainsKey("mensaje"))
+            {
+                ViewBag.NotificationMessage = TempData["mensaje"];
+            }
             IServiceProducto _ServiceProducto = new ServiceProducto();
             IEnumerable<Producto> lista = _ServiceProducto.GetProductos();
             return View(lista);
         }
 
+
+        [CustomAuthorize((int)Perfil.Administrador, (int)Perfil.Vendedor)]
         public ActionResult DashboardTienda()
         {
             return View();

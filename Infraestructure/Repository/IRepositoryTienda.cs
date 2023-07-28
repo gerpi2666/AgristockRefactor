@@ -11,5 +11,6 @@ namespace Infraestructure.Repository
     {
         IEnumerable<Tienda> GetTiendas();
         Tienda GetTiendaById(int id);
+        Tienda SaveProveedor(Tienda tienda);
     }
 }

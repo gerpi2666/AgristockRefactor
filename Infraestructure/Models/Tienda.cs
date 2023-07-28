@@ -25,7 +25,6 @@ namespace Infraestructure.Models
         public int Id { get; set; }
         public Nullable<int> IdUsuario { get; set; }
         public string NombreProveedor { get; set; }
-        public string Direccion { get; set; }
         public Nullable<bool> Activo { get; set; }
         public Nullable<bool> Borrado { get; set; }
     

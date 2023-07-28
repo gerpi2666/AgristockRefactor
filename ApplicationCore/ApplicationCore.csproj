@@ -50,6 +50,7 @@
     <Compile Include="Services\IServiceMetodoPago.cs" />
     <Compile Include="Services\IServicePerfil.cs" />
     <Compile Include="Services\IServiceProducto.cs" />
+    <Compile Include="Services\IServiceTienda.cs" />
     <Compile Include="Services\IServiceUsuario.cs" />
     <Compile Include="Services\ServiceCategoria.cs" />
     <Compile Include="Services\ServiceChatProducto.cs" />
@@ -59,7 +60,9 @@
     <Compile Include="Services\ServiceMetodoPago.cs" />
     <Compile Include="Services\ServicePerfil.cs" />
     <Compile Include="Services\ServiceProducto.cs" />
+    <Compile Include="Services\ServiceTienda.cs" />
     <Compile Include="Services\ServiceUsuario.cs" />
+    <Compile Include="Utils\Cryptography.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Infraestructure\Infraestructure.csproj">

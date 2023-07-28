@@ -9,6 +9,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@*@{
+        string currentUser = HttpContext.Current.User.Identity.Name;
+        bool isCurrentUserSender = // Lógica para determinar si el usuario actual es el emisor del mensaje
+    }*@
+
+
 <div>
     <div class="content">
         <div class="row g-3">
@@ -19,7 +25,7 @@
                             <img src="data:image/jpeg;charset=utf-8;base64,@Convert.ToBase64String(Model.Imagen)"
                                  alt="Libro @Html.DisplayFor(model => model.Nombre)"
                                  class="img-fluid rounded-start imagen-detalle " />
-  
+
                         </div>
 
 
@@ -44,8 +50,8 @@
                                 </p>
 
                                 @*<p class="card-text">
-                <i class="fa-solid fa-circle-user"></i> <b>@Html.DisplayNameFor(model => model.Tienda):</b>    @Html.DisplayFor(model => model.Tienda.NombreProveedor)
-            </p>*@
+                                        <i class="fa-solid fa-circle-user"></i> <b>@Html.DisplayNameFor(model => model.Tienda):</b>    @Html.DisplayFor(model => model.Tienda.NombreProveedor)
+                                    </p>*@
                                 <p class="card-text">
                                     <i class="fa-solid fa-bookmark"></i> <b>@Html.DisplayNameFor(model => model.Categoria):</b> @Html.DisplayFor(model => model.Categoria.nombre)
                                 </p>
@@ -80,31 +86,115 @@
                             </ul>
 
 
-                        <div class="chat-container">
-                            <div class="chat-header">
-                                <h2>Chat de Preguntas y Respuestas</h2>
-                            </div>
-                            <div class="chat-body" id="chat-body">
-                                <!-- Aquí se mostrarán las preguntas y respuestas -->
-                            </div>
-                            <div class="chat-input">
-                                <input type="text" id="user-input" placeholder="Escribe tu pregunta...">
-                                @foreach (var chat in Model.ChatProducto)
-                                {
-                                    foreach (var mensaje in chat.Mensaje)
-                                    {
-                                       
-                                        <h1>@Html.DisplayFor(o => mensaje.Usuario.Nombre)</h1>
-                                    }
-                                }
-                                <input type="submit" value="Enviar" onclick="sendMessage()">
+                            @*<div class="chat-container">
+                                    <div class="chat-header">
+                                        <h2>Chat de Preguntas y Respuestas</h2>
+                                    </div>
+                                    <div class="chat-body" id="chat-body">
 
-                            </div>
-                        </div>
-                           
+                                        <div class="d-flex flex-row gap-5">
+                                            @foreach (var chat in Model.ChatProducto)
+                                            {
+                                                foreach (var mensaje in chat.Mensaje)
+                                                {
+
+                                                    <h3>@Html.DisplayFor(o => mensaje.Usuario.Nombre)</h3>
+                                                    <h3>@Html.DisplayFor(o => mensaje.Mensaje1)</h3>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="chat-input">
+
+                                        <input type="text" id="user-input" placeholder="Escribe tu pregunta...">
+
+                                        <input type="submit" value="Enviar" onclick="sendMessage()">
+
+                                    </div>
+
+
+                                </div>*@
+
                         </div>
                     </div>
                 </div>
+
+                @*<div id="chat-bubble">
+                        <div id="chat-icon">
+                            <span class="material-symbols-outlined">
+                                chat
+                            </span>
+                            <div id="unread-count">0</div>
+                        </div>
+                        <div id="chat-window">
+                            <div id="chat-messages"></div>
+                            <input type="text" id="message-input" placeholder="Escribe tu mensaje...">
+                            <button id="send-button">Enviar</button>
+                        </div>
+                    </div>*@
+                <div id="chat-bubble">
+                    <div id="chat-icon">
+                        <!--<img src="chat-icon.png">-->
+                        <span class="material-symbols-outlined">
+                            chat
+                        </span>
+                        <div id="unread-count">0</div>
+                    </div>
+                    <div id="chat-window">
+                        <label class="text-center">@Html.DisplayFor(model => model.Tienda.NombreProveedor)</label>
+
+                        <div id="chat-messages">
+
+                            <div class="d-flex flex-column gap-1 ">
+                                @foreach (var chat in Model.ChatProducto)
+                                {
+                                    //Mensaje del cliente
+                                    foreach (var mensaje in chat.Mensaje)
+                                    {
+                                        <div class="d-flex gap-2 message justify-content-end">
+                                            <div class="d-flex flex-column sender">
+                                                <h4>Tú</h4>
+                                                <h4>@Html.DisplayFor(o => mensaje.Mensaje1)</h4>
+                                            </div>
+                                        </div>
+
+                                    }
+
+                                    //Respuesta de la tienda
+                                    foreach (var mensaje in chat.Mensaje)
+                                    {
+                                      if (!string.IsNullOrEmpty(mensaje.Respuesta))
+                                                {
+                                        <div class="d-flex gap-2 message ">
+                                            <div class="d-flex flex-column receiver">
+                                                    <h4>Tienda</h4>
+                                                    <h4>@Html.DisplayFor(o => mensaje.Respuesta)</h4>
+                                                </div>
+                                        </div>
+                                      }
+                                    }
+
+                                }
+                            </div>
+
+                            @*<div class="d-flex gap-2 message sender">
+                <div class="d-flex flex-column">
+                    <h4>Maikel</h4>
+                    <h4>JAJAJ</h4>
+                </div>
+            </div>*@
+
+                        </div>
+                        <div class="pb-2">
+                            <input type="text" id="message-input" placeholder="Escribe tu mensaje...">
+                            <button id="send-button">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
             </div>
         </div>
     </div>
@@ -113,36 +203,63 @@
 </div>
 
 <script>
-    function sendMessage() {
-        var userInput = document.getElementById('user-input');
-        var chatBody = document.getElementById('chat-body');
 
-        var question = userInput.value;
-        var answer = getAnswer(question);
+    /////////////////////////////
 
-        var questionElement = document.createElement('p');
-        questionElement.textContent = question;
-        questionElement.classList.add('chat-message');
 
-        var answerElement = document.createElement('p');
-        answerElement.textContent = answer;
-        answerElement.classList.add('chat-message');
+    let chatIcon = document.getElementById('chat-icon');
+    let chatWindow = document.getElementById('chat-window');
+    let messageInput = document.getElementById('message-input');
+    let sendButton = document.getElementById('send-button');
+    let unreadCount = document.getElementById('unread-count');
 
-        chatBody.appendChild(questionElement);
-        chatBody.appendChild(answerElement);
+    let unreadMessages = 0;
 
-        userInput.value = '';
-    }
+    chatIcon.addEventListener('click', function (event) {
+        event.stopPropagation(); // Evita que el clic en el icono cierre la ventana
 
-    function getAnswer(question) {
-        // Aquí puedes implementar la lógica para obtener la respuesta según la pregunta
-        // Puedes usar condicionales, llamadas a APIs, etc.
-
-        // Ejemplo básico:
-        if (question.toLowerCase().includes('hola')) {
-            return '¡Hola! ¿En qué puedo ayudarte?';
+        if (chatWindow.style.display === 'block') {
+            chatWindow.style.display = 'none';
         } else {
-            return 'Lo siento, no puedo responder esa pregunta.';
+            chatWindow.style.display = 'block';
+            unreadMessages = 0;
+            unreadCount.innerText = unreadMessages;
         }
-    }
+    });
+
+    document.addEventListener('click', function (event) {
+        if (!chatWindow.contains(event.target) && event.target !== chatIcon) {
+            chatWindow.style.display = 'none';
+        }
+    });
+
+
+    sendButton.addEventListener('click', function () {
+        let message = messageInput.value;
+        if (message.trim() !== '') {
+            let messageContainer = document.createElement('div');
+            messageContainer.classList.add('d-flex', 'gap-2', 'message', 'justify-content-end');
+
+            let messageContent = document.createElement('div');
+            messageContent.classList.add('d-flex', 'flex-column', 'sender');
+
+            let messageTitle = document.createElement('h4');
+            messageTitle.innerText = 'Tú';
+
+            let messageText = document.createElement('h4');
+            messageText.innerText = message;
+
+            messageContent.appendChild(messageTitle);
+            messageContent.appendChild(messageText);
+            messageContainer.appendChild(messageContent);
+
+            document.getElementById('chat-messages').appendChild(messageContainer);
+            messageInput.value = '';
+            unreadMessages++;
+            unreadCount.innerText = unreadMessages;
+        }
+    });
+
+
+
 </script>

@@ -65,5 +65,34 @@ namespace Infraestructure.Repository
                 throw;
             }
         }
+
+        public Tienda SaveProveedor(Tienda tienda)
+        {
+            int retorno = 0;
+            // objeto que verifica si la tienda ya existe
+            Tienda otienda = null;
+
+
+                using (MyContext ctx = new MyContext())
+                { 
+                    ctx.Configuration.LazyLoadingEnabled = false;
+
+                    if (otienda == null)
+                    {
+                        tienda.Activo = true;
+                        tienda.Borrado = false;
+
+                        ctx.Tienda.Add(tienda);
+                    }
+                retorno = ctx.SaveChanges();
+            }
+
+            if (retorno >= 0)
+                otienda = GetTiendaById(tienda.Id);
+
+            return otienda;
+
+
+        }
     }
 }
