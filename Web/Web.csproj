@@ -261,6 +261,7 @@
     <Content Include="Views\Login\UnAuthorized.cshtml" />
     <Content Include="Views\Usuario\Perfil.cshtml" />
     <Content Include="Views\Direction\_DireccionForm.cshtml" />
+    <Content Include="Views\Direction\_Direcciones.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

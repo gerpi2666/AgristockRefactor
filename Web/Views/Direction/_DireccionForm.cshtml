@@ -4,56 +4,63 @@
 
 
     <!-- Formulario de registro -->
-    @using (Html.BeginForm("Save", "Direction"))
+    @*@using (Html.BeginForm("Save", "Direction"))
     {
-        @Html.AntiForgeryToken()
-        <div class=".container-form-direciones register">
+        @Html.AntiForgeryToken()*@
+        <div class="container-form-direciones register w-100">
 
             <div class="form-direction-information mb-5">
-                <div class="form-direction-information-childs">
-                    <form action="">
+                <div class="form-direction-information-childs"> 
+                    <form action="" class="form-direcion" id="formDireccion">
+                        @Html.AntiForgeryToken()
+                        <div class="w-100">
+                            <label>
+                                <i class='bx bx-user'></i>
+                                @Html.DropDownList("Provincia",
+                                    (List<SelectListItem>)ViewBag.ListaProvincias,
+                                    "Seleccione una provincia",
+                                    new { @class = "form-control", id = "IdProvincia", onchange = "cargarCantones()" })
 
-                        <label>
-                            <i class='bx bx-user'></i>
-                            @Html.DropDownList("Provincia",
-                                (List<SelectListItem>)ViewBag.ListaProvincias,
-                                "Seleccione una provincia",
-                                new { @class = "form-control", id = "IdProvincia", onchange = "cargarCantones()" })
-
-                        </label>
-                        <label>
-                            <i class='bx bxs-phone'></i>
-                            @Html.DropDownList("Canton", Enumerable.Empty<SelectListItem>(), "", new { @class = "form-control", id = "IdCanton", onchange = "cargarDistritos()" })
-                        </label>
-
-
-                        <label>
-                            <i class='bx bxs-phone'></i>
-                            @Html.DropDownList("Distrito", Enumerable.Empty<SelectListItem>(), "", new { @class = "form-control", id = "IdDistrito" })
-                        </label>
-
-                        <label>
-                            <i class='bx bx-user'></i>
-                            @Html.EditorFor(model => model.CodPostal, new { htmlAttributes = new { @class = "", placeholder = "Código postal" } })
-                            @Html.ValidationMessageFor(model => model.CodPostal, "", new { @class = "text-danger" })
-                        </label>
-
-                        <label>
-                            <i class='bx bx-user'></i>
-                            @Html.EditorFor(model => model.DireccionExacta, new { htmlAttributes = new { @class = "", placeholder = "Dirección exacta" } })
-                            @Html.ValidationMessageFor(model => model.DireccionExacta, "", new { @class = "text-danger" })
-
-                        </label>
-
-                        <span>
-                            <input type="submit" value="Agregar dirección" class="button-productos mt-2">
-                        </span>
+                            </label>
+                            <label>
+                                <i class='bx bxs-phone'></i>
+                                @Html.DropDownList("Canton", Enumerable.Empty<SelectListItem>(), "Seleccione un cantón", new { @class = "form-control", id = "IdCanton", onchange = "cargarDistritos()" })
+                            </label>
 
 
+
+                            <label>
+                                <i class='bx bxs-phone'></i>
+                                @Html.DropDownList("Distrito", Enumerable.Empty<SelectListItem>(), "Seleccione un distrito", new { @class = "form-control", id = "IdDistrito" })
+                            </label>
+
+                            <label>
+                                <i class='bx bx-user'></i>
+                                @Html.EditorFor(model => model.CodPostal, new { htmlAttributes = new { @class = "", placeholder = "Código postal" } })
+                                @Html.ValidationMessageFor(model => model.CodPostal, "", new { @class = "text-danger" })
+                            </label>
+
+                            <label>
+                                <i class='bx bx-user'></i>
+                                @Html.EditorFor(model => model.DireccionExacta, new { htmlAttributes = new { @class = "", placeholder = "Dirección exacta" } })
+                                @Html.ValidationMessageFor(model => model.DireccionExacta, "", new { @class = "text-danger" })
+
+                            </label>
+                        </div>
+
+                        <!-- Aquí se incluye el div para almacenar la URL -->
+                        <div id="saveDireccionUrl" data-url="@Url.Action("Save", "Direction")"></div>
+
+                        <div class="w-100">
+                            <span>
+                                <input type="button" value="Agregar dirección" class="button-productos mt-2" id="btnSaveDireccion">
+                            </span>
+
+                        </div>
 
                     </form>
                 </div>
             </div>
         </div>
-    }
+    @*}*@
 

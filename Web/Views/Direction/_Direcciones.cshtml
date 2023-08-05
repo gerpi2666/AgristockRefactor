@@ -1,0 +1,26 @@
+﻿@{
+    if (ViewBag.UsuarioDirecciones != null && ViewBag.UsuarioDirecciones.Count > 0)
+    {
+
+        <div class="d-flex flex-row justify-content-between align-items-center w-100">
+            <div class="">
+                <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.8rem !important; font-weight:500">Dirección de entrega</span>
+            </div>
+
+            @foreach (var direccion in ViewBag.UsuarioDirecciones)
+            {
+                <div class="d-flex flex-column pe-4">
+                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Provincia: </span> @direccion.Provincia</span>
+                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Cantón: </span> @direccion.Canton</span>
+                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Distrito: </span> @direccion.Distrito</span>
+                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Código postal: </span> @direccion.CodPostal</span>
+                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Dirección exacta: </span> @direccion.DireccionExacta</span>
+                </div>
+            }
+            <span>
+                <input type="button" value="Editar" class="button-productos mt-2" id="btnSaveDireccionForm">
+            </span>
+
+        </div>
+    }
+}

@@ -82,8 +82,8 @@ nav ul {
 }
 
 body > header > nav > ul > li > a {
-    font-size: 17px !important;    
-    color: var(--gray-nav) !important;    
+    font-size: 17px !important;
+    color: var(--gray-nav) !important;
 }
 
 .icon-large {
@@ -260,10 +260,10 @@ aside .logo {
     align-items: center;
 }
 
-aside .logo img {
+    aside .logo img {
         width: 5rem;
         height: 5rem;
-}
+    }
 
 aside .close {
     display: none;
@@ -398,12 +398,12 @@ aside .sidebar div {
         align-items: center;
         margin-right: 10px;
         position: relative;
-        font-size:1rem;
+        font-size: 1rem;
     }
 
-    .custom-list li span {
-        margin-right: 0.5rem !important;
-    }
+        .custom-list li span {
+            margin-right: 0.5rem !important;
+        }
 
         .custom-list li:not(:last-child)::after {
             content: "";
@@ -446,7 +446,7 @@ aside .sidebar div {
 }
 
     .chat-header h2 {
-        margin: 0 !important ;
+        margin: 0 !important;
         font-size: 18px !important;
     }
 
@@ -593,7 +593,7 @@ main {
         text-align: center;
     }
 
-.card{
+.card {
     margin-top: 1rem;
 }
 
@@ -602,9 +602,9 @@ main {
 }
 
 
-    .card img{
-        height:250px !important;
-    }
+.card img {
+    height: 250px !important;
+}
 
 .imagen-detalle {
     width: 400px;
@@ -635,9 +635,9 @@ main {
 
 
 
-    .btn-group {
-        margin: 0 auto;
-    }
+.btn-group {
+    margin: 0 auto;
+}
 
 .card-title {
     color: var(--gray-nav);
@@ -666,10 +666,10 @@ main {
         width: 5.6rem;
     }
 
-        aside .sidebar div:last-child {
-            position: relative;
-            margin-top: 1.8rem;
-        }
+    aside .sidebar div:last-child {
+        position: relative;
+        margin-top: 1.8rem;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -932,12 +932,11 @@ main {
 
 /* Estilos adicionales para los mensajes */
 
-.message div{
+.message div {
     padding: 8px;
     margin-bottom: 10px;
     border-radius: 4px;
     font-size: 14px;
-
 }
 
 /*    .message {
@@ -948,7 +947,7 @@ main {
     background-color: green !important;
     color: white;
     text-align: right;
-    justify-content:end !important;
+    justify-content: end !important;
 }
 
 .receiver {
@@ -980,22 +979,15 @@ main {
     box-shadow: 0 5px 7px rgba(0, 0, 0, 0.1);
 }
 
-.container-form-direciones {
-    min-width: 900px;
-    max-width: 900px;
-    height: 570px;
+.information {
+    width: 40%;
     display: flex;
+    align-items: center;
+    text-align: center;
+    background-color: var(--color-secondary-variant);
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
 }
-
-    .information {
-        width: 40%;
-        display: flex;
-        align-items: center;
-        text-align: center;
-        background-color: var(--color-secondary-variant);
-        border-top-left-radius: 20px;
-        border-bottom-left-radius: 20px;
-    }
 
 .info-childs {
     width: 100%;
@@ -1041,21 +1033,12 @@ main {
     border-bottom-right-radius: 20px;
 }
 
-.form-direction-information {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: 30%;
-    text-align: center;
-    background-color: #f8f8f8;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-}
 
-    .form-information-childs {
-        padding: 0 30px;
-        width: 65%;
-    }
+
+.form-information-childs {
+    padding: 0 30px;
+    width: 65%;
+}
 
 
 
@@ -1149,7 +1132,8 @@ div.form-information > div > input[type=submit] {
     margin-top: 15px !important;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
 }
-div.form-information > div > input[type=submit]:hover {
+
+    div.form-information > div > input[type=submit]:hover {
         background-color: var(--color-warning) !important;
     }
 
@@ -1166,7 +1150,7 @@ div.form-information > div > input[type=submit]:hover {
 
 
 /* ======================= Perfil usuario  =================*/
-.icon-user{
+.icon-user {
     font-size: 15rem;
 }
 
@@ -1176,6 +1160,41 @@ div.form-information > div > input[type=submit]:hover {
     box-shadow: var(--box-shadow);
     padding: 1rem !important;
 }
+
+
+/*============== Form direcciones ===============*/
+
+.container-form-direciones {
+    padding-right: 8rem
+}
+
+#direccionForm > form > div > div > div > label > select {
+    width: 200px !important;
+}
+
+.form-direction-information-childs {
+        display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    text-align: center;
+    background-color: #f8f8f8;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.form-direction-information {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    text-align: center;
+    background-color: #f8f8f8;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+
 /* ======================= media query para Login  =================*/
 @media screen and (max-width: 768px) {
     .view-container {

@@ -22,17 +22,12 @@ namespace Web.Controllers
         }
 
 
-        public List<Direccion> GetDirecciones()
+        public List<Direccion> GetDirecciones(int id)
         {
             IServiceDireccion _ServiceDireccion = new ServiceDireccion();
             List<Direccion> direcciones = null;
-
-            Usuario usuario = Session["User"] as Usuario;
-
-            if (usuario != null)
-            {
-               direcciones =  _ServiceDireccion.GetDireccionById(id); 
-            }
+     
+            direcciones =  _ServiceDireccion.GetDireccionById(id); 
             return direcciones;
 
         }
@@ -63,14 +58,14 @@ namespace Web.Controllers
 
                     Direccion direccion1 = _ServiceDirection.Save(direccion, usuario);
 
+                    List<Direccion> direcciones = _ServiceDirection.GetDireccionById(usuario.Id);
+
+                    return Json(new { success = true, direcciones });
+
                 }
 
-                if (ModelState.IsValid)
-                {
-
-                }
                 return RedirectToAction("Index", "Home");
-
+        
             }
             catch (DbEntityValidationException ex)
             {

@@ -138,6 +138,79 @@ async function cargarDistritos() {
 
 
 
+// custom.js
+
+
+function saveDireccion() {
+        // Obtener la URL del atributo personalizado
+        var saveUrl = $("#saveDireccionUrl").data("url");
+
+    // Obtener los datos del formulario
+    var formData = $("#formDireccion").serialize();
+
+    $.ajax({
+        type: "POST",
+    url: saveUrl,
+        data: formData,
+        dataType: "json",
+        success: function (data) {
+
+            if (data.success) {
+                // Actualizar el contenedor de direcciones con la lista de direcciones actualizada
+                var direccionesHtml = "";
+
+                $.each(data.direcciones, function (index, direccion) {
+                    direccionesHtml += `
+                    
+
+                    <div class="d-flex flex-row justify-content-between align-items-center w-100">
+                        <div class="">
+                                 <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.8rem !important; font-weight:500">Dirección de entrega</span>
+                        </div>
+
+                        <div class="d-flex flex-column pe-4">
+                                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Provincia: </span> ${direccion.Provincia}</span>
+                                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Cantón: </span> ${direccion.Canton}</span>
+                                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Distrito: </span> ${direccion.Distrito}</span>
+                                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Código postal: </span> ${direccion.CodPostal}</span>
+                                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Dirección exacta: </span> ${direccion.DireccionExacta}</span>
+                        </div>
+
+                        <span>
+                            <input type="button" value="Editar" class="button-productos mt-2" id="btnSaveDireccionForm">
+                        </span>
+                    </div>`;
+                });
+
+
+                    $("#direccionActualizada").html(direccionesHtml);
+
+                    // Limpiar el formulario después de agregar la dirección
+                    $("#formDireccion")[0].reset();
+
+                    // Ocultar el formulario después de agregar la dirección
+                $("#direccionForm").hide();
+                $("#direccion-label").hide();
+
+                    // Restablecer las listas desplegables de provincias, cantones y distritos a sus valores iniciales
+                    $("#IdProvincia").val(""); // Opcional: aquí deberías seleccionar la provincia que desees mostrar en la lista desplegable
+                    $("#IdCanton").empty();
+                    $("#IdDistrito").empty();
+
+
+                  } else {
+                    alert("Error al guardar la dirección.");
+                  }
+            },
+    error: function (jqXHR, textStatus, errorThrown) {
+        // Manejo de errores si es necesario
+    }
+        });
+    }
+
+
+
+
 
 
 
