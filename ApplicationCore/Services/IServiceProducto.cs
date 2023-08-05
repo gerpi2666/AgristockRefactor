@@ -14,6 +14,8 @@ namespace ApplicationCore.Services
         Producto GetProductoById(int id);
         Task Delete(int id);
         Task<Producto> Crear(Producto producto);
+        Task<Producto> Actualizar(Producto producto);
+
 
     }
 }

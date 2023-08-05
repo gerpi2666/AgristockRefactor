@@ -22,6 +22,38 @@ namespace Web.Controllers
             return View(lista);
         }
 
+        public ActionResult Edit(int? id)
+        {
+            try { 
+            IServiceProducto serviceProducto = new ServiceProducto();
+            Producto producto = null; 
+            //Si es null el parametro
+            if (id == null)
+            {
+                return RedirectToAction("IndexAdmin");
+            }
+            producto = serviceProducto.GetProductoById(Convert.ToInt32(id));
+            if (producto == null)
+            {
+                TempData["Message"] = "No existe el libro solicitado";
+                TempData["Redirect"] = "Libro";
+                TempData["Redirect-Action"] = "IndexAdmin";
+                //Redireccion a la vista del error
+                return RedirectToAction("Default", "Error");
+
+            }
+                IServiceCategoria _ServiceCategoria = new ServiceCategoria();
+                ViewBag.Categorias = ListaCategorias();
+                return View(producto);
+             }catch (Exception ex)
+                {
+               
+                TempData["Message"] = "Error al procesar los datos!" + ex.Message;
+                return RedirectToAction("Default", "Error");
+                }
+           
+        }
+
         public ActionResult ProductoTienda()
         {
             IServiceProducto _ServiceProducto = new ServiceProducto();
@@ -64,33 +96,80 @@ namespace Web.Controllers
             return new SelectList(lista,"Id","Nombre",id);
         }
         
-        public async Task<ActionResult> Create(Producto producto, HttpPostedFileBase imagen)
+        public  ActionResult Create(Producto producto)
         {
             IServiceCategoria _ServiceCategoria = new ServiceCategoria();
             ViewBag.Categorias = ListaCategorias();
             MemoryStream target = new MemoryStream();
 
-            if (imagen != null)
-            {
-                imagen.InputStream.CopyTo(target);
-                producto.Imagen = target.ToArray();
-                ModelState.Remove("Imagen");
-                producto.IdProveedor = 2;
-                producto.IdCategoria = 1;
-            }
-           
-
-            if(ModelState.IsValid)
-                {
-                IServiceProducto _ServiceProducto = new ServiceProducto();
-                await _ServiceProducto.Crear(producto);
-            }
-
-
+          
             
+
+
             return View();
 
         }
+
+        public ActionResult Save(Producto producto, HttpPostedFileBase ImageFile)
+        {
+            if (ImageFile != null && ImageFile.ContentLength > 0)
+            {
+                // Convierte el archivo a un byte array y asígnalo al modelo Producto
+                using (var binaryReader = new BinaryReader(ImageFile.InputStream))
+                {
+                    producto.Imagen = binaryReader.ReadBytes(ImageFile.ContentLength);
+                }
+            }
+
+            if (producto != null)
+            {
+                IServiceProducto _ServiceProducto = new ServiceProducto();
+                _ServiceProducto.Crear(producto);
+
+                return RedirectToAction("ProductoAdmin");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Update(Producto producto, HttpPostedFileBase ImageFile)
+        {
+            IServiceProducto _ServiceProducto = new ServiceProducto();
+            Producto p = _ServiceProducto.GetProductoById(producto.Id);
+            if (ImageFile != null && ImageFile.ContentLength > 0)
+            {
+                // Convierte el archivo a un byte array y asígnalo al modelo Producto
+                using (var binaryReader = new BinaryReader(ImageFile.InputStream))
+                {
+                    producto.Imagen = binaryReader.ReadBytes(ImageFile.ContentLength);
+                }
+            }
+            else
+            {
+                producto.Imagen = p.Imagen;
+            }
+
+            if (producto != null)
+            {
+
+               
+                producto.Borrado = p.Borrado;
+                producto.Activo = p.Activo;
+                _ServiceProducto.Actualizar(producto);
+
+                return RedirectToAction("ProductoAdmin");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
+
+
 
         public ActionResult DetalleVendedor()
         {

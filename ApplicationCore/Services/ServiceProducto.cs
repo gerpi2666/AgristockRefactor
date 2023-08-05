@@ -41,5 +41,10 @@ namespace ApplicationCore.Services
             IRepositoryProducto repository = new RepositoryProducto();
             return await repository.Crear(producto);
         }
+        public async Task<Producto> Actualizar(Producto producto)
+        {
+            IRepositoryProducto repository = new RepositoryProducto();
+            return await repository.Actualizar(producto);
+        }
     }
 }
