@@ -209,6 +209,57 @@ function saveDireccion() {
     }
 
 
+function cargarMeses() {
+    var mesesSelect = document.getElementById("meses");
+
+    // Guarda el valor seleccionado actualmente
+    var valorSeleccionado = mesesSelect.value;
+
+    // Limpia las opciones existentes
+    while (mesesSelect.options.length > 0) {
+        mesesSelect.remove(0);
+    }
+
+    // Crea y agrega las opciones de los meses del año
+    for (var i = 1; i <= 12; i++) {
+        var option = document.createElement("option");
+        option.text = i;
+        option.value = i;
+        mesesSelect.add(option);
+    }
+
+    // Establece el valor seleccionado nuevamente
+    mesesSelect.value = valorSeleccionado;
+}
+
+
+
+
+
+function cargarAnios() {
+    var anioActual = new Date().getFullYear();
+    var aniosSelect = document.getElementById("anios");
+
+    // Guarda el valor seleccionado actualmente
+    var valorSeleccionado = aniosSelect.value;
+
+    // Limpia las opciones existentes
+    while (aniosSelect.options.length > 0) {
+        aniosSelect.remove(0);
+    }
+
+    // Crea y agrega las opciones de los años desde el año actual hasta 10 años en el futuro
+    for (var i = anioActual; i <= anioActual + 10; i++) {
+        var option = document.createElement("option");
+        option.text = i;
+        option.value = i;
+        aniosSelect.add(option);
+    }
+
+    // Establece el valor seleccionado nuevamente
+    aniosSelect.value = valorSeleccionado;
+}
+
 
 
 

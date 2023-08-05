@@ -92,13 +92,16 @@
                         <span id="no-direcion" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.5rem !important;">No hay un método pago agregado</span>
 
                         <span>
-                            <input type="button" value="Agregar método de pago" class="button-productos">
+                            <input type="button" value="Agregar método de pago" class="button-productos" id="btnToggleMetodoPago">
                         </span>
 
                     </div>
+
+                    <div id="direccionForm">
+                        @Html.Partial("~/Views/MetodoPago/_MetodoPagoForm.cshtml")
+                    </div>
                 }
             </div>
-
 
         </div>
     </div>

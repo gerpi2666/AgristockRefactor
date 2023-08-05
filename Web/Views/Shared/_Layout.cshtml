@@ -15,7 +15,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 
-    <link href="~/Content/Site.css?v=1.0" rel="stylesheet" />
+    <link href="~/Content/Site.css?v=1.1" rel="stylesheet" />
  
 
     @Styles.Render("~/Content/css")
@@ -41,7 +41,7 @@
     @RenderSection("scripts", required: false)
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="~/Scripts/bootstrap.bundle.js"></script>
-    <script src="~/Scripts/script.js?v=1.0"></script>
+    <script src="~/Scripts/script.js"></script>
 
 
     <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -68,9 +68,13 @@
             $("#btnToggleForm").click(function () {
                 $("#direccionForm").toggle(); // Alternar el valor de la propiedad 'display' entre 'none' y 'block'
                 $("#btnToggleForm").hide();
-                $("#no-direcion").hide();
-                
+                $("#no-direcion").hide();               
 
+            });
+        });
+
+        $(document).ready(function () {
+            $("#btnToggleMetodoPago").click(function () {
             });
         });
 

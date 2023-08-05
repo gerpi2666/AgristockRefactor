@@ -10,6 +10,8 @@ namespace Infraestructure.Repository
     public interface IRepositoryMetodoPago
     {
         IEnumerable<MetodoPago> GetMetodosPago();
-        MetodoPago GetMetodoPagoById(int id);
+        List<MetodoPago> GetMetodoPagoById(int id);
+
+        MetodoPago SaveMetodoPago(MetodoPago metodoPago, Usuario usuario);
     }
 }

@@ -10,7 +10,7 @@ namespace ApplicationCore.Services
 {
     public class ServiceMetodoPago : IServiceMetodoPago
     {
-        public MetodoPago GetMetodoPagoById(int id)
+        public List <MetodoPago> GetMetodoPagoById(int id)
         {
             IRepositoryMetodoPago repository = new RepositoryMetodoPago();
             return repository.GetMetodoPagoById(id);
@@ -21,6 +21,12 @@ namespace ApplicationCore.Services
         {
             IRepositoryMetodoPago repository = new RepositoryMetodoPago();
             return repository.GetMetodosPago();
+        }
+
+        public MetodoPago SaveMetodoPago(MetodoPago metodoPago, Usuario usuario)
+        {
+            IRepositoryMetodoPago repository = new RepositoryMetodoPago();
+            return repository.SaveMetodoPago(metodoPago, usuario);
         }
     }
 }

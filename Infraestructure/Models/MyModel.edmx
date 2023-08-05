@@ -94,7 +94,8 @@ advertencia 6002: La tabla o vista 'AgriStock.dbo.Mensaje' no tiene definida nin
           <Property Name="TipoPago" Type="nvarchar" MaxLength="20" />
           <Property Name="Proveedor" Type="nvarchar" MaxLength="20" />
           <Property Name="NumCuenta" Type="nvarchar" MaxLength="20" />
-          <Property Name="FechaExpiracion" Type="date" />
+          <Property Name="DiaExpiracion" Type="int" />
+          <Property Name="MesExpiracion" Type="int" />
           <Property Name="Activo" Type="bit" />
           <Property Name="Borrado" Type="bit" />
         </EntityType>
@@ -285,18 +286,6 @@ advertencia 6002: La tabla o vista 'AgriStock.dbo.Mensaje' no tiene definida nin
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MetodoPago_Usuario">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
-          <End Role="MetodoPago" Type="Self.MetodoPago" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="MetodoPago">
-              <PropertyRef Name="IdUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PerfilUsuario_Perfil">
           <End Role="Perfil" Type="Self.Perfil" Multiplicity="1" />
           <End Role="PerfilUsuario" Type="Self.PerfilUsuario" Multiplicity="*" />
@@ -423,10 +412,6 @@ advertencia 6002: La tabla o vista 'AgriStock.dbo.Mensaje' no tiene definida nin
             <End Role="Tienda" EntitySet="Tienda" />
             <End Role="ChatProducto" EntitySet="ChatProducto" />
           </AssociationSet>
-          <AssociationSet Name="FK_MetodoPago_Usuario" Association="Self.FK_MetodoPago_Usuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="MetodoPago" EntitySet="MetodoPago" />
-          </AssociationSet>
           <AssociationSet Name="FK_PerfilUsuario_Perfil" Association="Self.FK_PerfilUsuario_Perfil">
             <End Role="Perfil" EntitySet="Perfil" />
             <End Role="PerfilUsuario" EntitySet="PerfilUsuario" />
@@ -543,10 +528,10 @@ advertencia 6002: La tabla o vista 'AgriStock.dbo.Mensaje' no tiene definida nin
           <Property Name="TipoPago" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Proveedor" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="NumCuenta" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="FechaExpiracion" Type="DateTime" Precision="0" />
+          <Property Name="DiaExpiracion" Type="Int32" />
+          <Property Name="MesExpiracion" Type="Int32" />
           <Property Name="Activo" Type="Boolean" />
           <Property Name="Borrado" Type="Boolean" />
-          <NavigationProperty Name="Usuario" Relationship="Self.FK_MetodoPago_Usuario" FromRole="MetodoPago" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Perfil">
           <Key>
@@ -606,7 +591,6 @@ advertencia 6002: La tabla o vista 'AgriStock.dbo.Mensaje' no tiene definida nin
           <NavigationProperty Name="Compra" Relationship="Self.FK_Compra_Usuario1" FromRole="Usuario" ToRole="Compra" />
           <NavigationProperty Name="Direccion" Relationship="Self.FK_Direccion_Usuario" FromRole="Usuario" ToRole="Direccion" />
           <NavigationProperty Name="Evaluacion" Relationship="Self.FK_Evaluacion_Usuario" FromRole="Usuario" ToRole="Evaluacion" />
-          <NavigationProperty Name="MetodoPago" Relationship="Self.FK_MetodoPago_Usuario" FromRole="Usuario" ToRole="MetodoPago" />
           <NavigationProperty Name="Tienda" Relationship="Self.FK_VendedorServicio_Usuario" FromRole="Usuario" ToRole="Tienda" />
           <NavigationProperty Name="Mensaje" Relationship="Self.FK_Mensaje_Usuario" FromRole="Usuario" ToRole="Mensaje" />
           <NavigationProperty Name="Perfil" Relationship="Self.PerfilUsuario" FromRole="Usuario" ToRole="Perfil" />
@@ -755,18 +739,6 @@ advertencia 6002: La tabla o vista 'AgriStock.dbo.Mensaje' no tiene definida nin
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MetodoPago_Usuario">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
-          <End Role="MetodoPago" Type="Self.MetodoPago" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="MetodoPago">
-              <PropertyRef Name="IdUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Producto_Proveedor">
           <End Role="Tienda" Type="Self.Tienda" Multiplicity="0..1" />
           <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
@@ -863,10 +835,6 @@ advertencia 6002: La tabla o vista 'AgriStock.dbo.Mensaje' no tiene definida nin
           <AssociationSet Name="FK_Evaluacion_VendedorServicio" Association="Self.FK_Evaluacion_VendedorServicio">
             <End Role="Tienda" EntitySet="Tienda" />
             <End Role="Evaluacion" EntitySet="Evaluacion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MetodoPago_Usuario" Association="Self.FK_MetodoPago_Usuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="MetodoPago" EntitySet="MetodoPago" />
           </AssociationSet>
           <AssociationSet Name="FK_Producto_Proveedor" Association="Self.FK_Producto_Proveedor">
             <End Role="Tienda" EntitySet="Tienda" />
@@ -972,7 +940,8 @@ advertencia 6002: La tabla o vista 'AgriStock.dbo.Mensaje' no tiene definida nin
                 <ScalarProperty Name="TipoPago" ColumnName="TipoPago" />
                 <ScalarProperty Name="Proveedor" ColumnName="Proveedor" />
                 <ScalarProperty Name="NumCuenta" ColumnName="NumCuenta" />
-                <ScalarProperty Name="FechaExpiracion" ColumnName="FechaExpiracion" />
+                <ScalarProperty Name="DiaExpiracion" ColumnName="DiaExpiracion" />
+                <ScalarProperty Name="MesExpiracion" ColumnName="MesExpiracion" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="Borrado" ColumnName="Borrado" />
               </MappingFragment>

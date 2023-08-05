@@ -1194,7 +1194,20 @@ div.form-information > div > input[type=submit] {
     border-bottom-right-radius: 20px;
 }
 
+.form-metPago-information-childs {
 
+}
+
+#meses {
+    width: 80px !important;
+    height: 30px !important;
+    border: 1px solid var(--color-primary) !important;
+}
+#anios {
+    width: 80px !important;
+    height: 30px !important;
+    border: 1px solid var(--color-primary) !important;
+}
 /* ======================= media query para Login  =================*/
 @media screen and (max-width: 768px) {
     .view-container {
