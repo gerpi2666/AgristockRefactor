@@ -12,7 +12,8 @@ namespace ApplicationCore.Services
         IEnumerable<Compra> GetCompras();
         IEnumerable<Compra> GetComprasByCliente(int idCliente);
         IEnumerable<Compra> GetComprasByTienda(int idTienda);
-
         Compra GetCompraById(int id);
+        Task<Compra> Crear(Compra compra);
+
     }
 }

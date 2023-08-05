@@ -138,5 +138,42 @@ namespace Infraestructure.Repository
                 throw;
             }
         }
+
+        public async Task<Compra> Crear(Compra compra)
+        {
+            int rows1 = 0;
+            try
+            {
+                    Compra comp = null;
+                if (compra != null)
+                {
+                    // producto.IdProveedor = 1;
+                    comp = compra;
+                    comp.Activo = true;
+                    comp.Borrado = false;
+                    using (MyContext ctx = new MyContext())
+                    {
+                        ctx.Configuration.LazyLoadingEnabled = false;
+                        ctx.Compra.Add(comp);
+                        rows1 = await ctx.SaveChangesAsync();
+                    }
+                }
+
+                return comp;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
+
     }
 }

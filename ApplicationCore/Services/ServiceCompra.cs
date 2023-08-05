@@ -33,5 +33,12 @@ namespace ApplicationCore.Services
             IRepositoryCompra repository = new RepositoryCompra();
             return repository.GetComprasByTienda(idTienda);
         }
+
+        public Task<Compra> Crear(Compra compra)
+        {
+            IRepositoryCompra repository = new RepositoryCompra();
+            return repository.Crear(compra);
+        }
+
     }
 }
