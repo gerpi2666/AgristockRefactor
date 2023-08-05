@@ -112,6 +112,11 @@ namespace Web.Controllers
 
         public ActionResult Save(Producto producto, HttpPostedFileBase ImageFile)
         {
+            IServiceTienda serviceTienda = new ServiceTienda();
+            Usuario usuario = Session["User"] as Usuario;
+            Tienda store = serviceTienda.GetByVendedor(usuario.Id);
+            producto.IdProveedor = store.Id;
+            producto.Tienda = store;
             if (ImageFile != null && ImageFile.ContentLength > 0)
             {
                 // Convierte el archivo a un byte array y asígnalo al modelo Producto
@@ -124,7 +129,7 @@ namespace Web.Controllers
             if (producto != null)
             {
                 IServiceProducto _ServiceProducto = new ServiceProducto();
-                _ServiceProducto.Crear(producto);
+                _ServiceProducto.Crear(producto,store);
 
                 return RedirectToAction("ProductoAdmin");
             }

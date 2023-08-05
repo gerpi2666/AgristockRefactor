@@ -150,6 +150,7 @@
     <Compile Include="Utils\SweetAlertHelper.cs" />
     <Compile Include="Utils\Util.cs" />
     <Compile Include="ViewModel\Canton.cs" />
+    <Compile Include="ViewModel\ViewModelDetalleCompra.cs" />
     <Compile Include="ViewModel\Distrito.cs" />
     <Compile Include="ViewModel\Provincia.cs" />
   </ItemGroup>

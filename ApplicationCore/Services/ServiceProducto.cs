@@ -36,10 +36,10 @@ namespace ApplicationCore.Services
 
         }
 
-        public async Task<Producto> Crear(Producto producto)
+        public async Task<Producto> Crear(Producto producto, Tienda store)
         {
             IRepositoryProducto repository = new RepositoryProducto();
-            return await repository.Crear(producto);
+            return await repository.Crear(producto,  store);
         }
         public async Task<Producto> Actualizar(Producto producto)
         {

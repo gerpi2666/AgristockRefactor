@@ -13,7 +13,7 @@ namespace ApplicationCore.Services
         IEnumerable<Producto> GetProductosByTienda(int id);
         Producto GetProductoById(int id);
         Task Delete(int id);
-        Task<Producto> Crear(Producto producto);
+        Task<Producto> Crear(Producto producto, Tienda store);
         Task<Producto> Actualizar(Producto producto);
 
 

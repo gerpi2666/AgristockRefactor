@@ -10,5 +10,7 @@ namespace ApplicationCore.Services
     public interface IServiceTienda
     {
         Tienda SaveProveedor(Tienda tienda);
+        Tienda GetByVendedor(int vendorID);
+
     }
 }
