@@ -34,10 +34,22 @@ namespace ApplicationCore.Services
             return repository.GetComprasByTienda(idTienda);
         }
 
-        public Task<Compra> Crear(Compra compra)
+        public Task<Compra> Crear(Compra compra, List<DetalleCompra> carrito)
         {
             IRepositoryCompra repository = new RepositoryCompra();
-            return repository.Crear(compra);
+            return repository.Crear(compra,carrito);
+        }
+
+       public Task<Compra> Actualizar(Compra compra)
+        {
+            IRepositoryCompra repository = new RepositoryCompra();
+            return repository.Actualizar(compra);
+        }
+
+        public Task Delete(int id)
+        {
+            IRepositoryCompra repository = new RepositoryCompra();
+            return repository.Delete(id);
         }
 
     }

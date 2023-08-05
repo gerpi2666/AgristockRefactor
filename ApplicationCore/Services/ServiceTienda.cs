@@ -15,5 +15,12 @@ namespace ApplicationCore.Services
             IRepositoryTienda repository = new RepositoryTienda();
             return repository.SaveProveedor(tienda);
         }
+
+        public Tienda GetByVendedor(int vendorID)
+        {
+            IRepositoryTienda repository = new RepositoryTienda();
+            return repository.GetByVendedor(vendorID);
+        }
+
     }
 }

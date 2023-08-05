@@ -139,7 +139,7 @@ namespace Infraestructure.Repository
             }
         }
 
-        public async Task<Compra> Crear(Compra compra)
+        public async Task<Compra> Crear(Compra compra, List<DetalleCompra> carrito)
         {
             int rows1 = 0;
             try
@@ -147,19 +147,95 @@ namespace Infraestructure.Repository
                     Compra comp = null;
                 if (compra != null)
                 {
-                    // producto.IdProveedor = 1;
                     comp = compra;
                     comp.Activo = true;
                     comp.Borrado = false;
                     using (MyContext ctx = new MyContext())
                     {
                         ctx.Configuration.LazyLoadingEnabled = false;
+
+                        if (carrito !=null)
+                        {
+                            comp.DetalleCompra = new List<DetalleCompra>();
+                            foreach (var detalle in carrito)
+                            {
+                                ctx.DetalleCompra.Attach(detalle); 
+                                comp.DetalleCompra.Add(detalle);
+
+
+                            }
+                        }
+
                         ctx.Compra.Add(comp);
                         rows1 = await ctx.SaveChangesAsync();
                     }
                 }
 
                 return comp;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
+
+        public async Task<Compra> Actualizar(Compra compra)
+        {
+            int rows1 = 0;
+            try
+            {
+
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+
+                    if (compra != null)
+                    {
+                        ctx.Entry(compra).State = EntityState.Modified;
+                        rows1 = await ctx.SaveChangesAsync();
+                    }
+                }
+                return compra;
+
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
+
+        public async Task Delete(int id)
+        {
+            try
+            {
+                Compra compra = null;
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    compra = await ctx.Compra.FindAsync(id);
+                    if (compra != null)
+                    {
+                        compra.Borrado = true;
+                        await ctx.SaveChangesAsync();
+                    }
+                }
+
             }
             catch (DbUpdateException dbEx)
             {

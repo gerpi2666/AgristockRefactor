@@ -137,7 +137,7 @@ namespace Infraestructure.Repository
             }
         }
 
-        public async Task<Producto> Crear(Producto product)
+        public async Task<Producto> Crear(Producto product, Tienda store)
         {
             int rows1 = 0;
             try
@@ -145,13 +145,14 @@ namespace Infraestructure.Repository
                 Producto producto = null;
                 if (product != null)
                 {
-                   // producto.IdProveedor = 1;
+                   // producto.IdProveedor = product.Tienda.Id;
                     producto = product;
                     producto.Activo = true;
                     producto.Borrado = false;
                     using (MyContext ctx = new MyContext())
                     {
                         ctx.Configuration.LazyLoadingEnabled = false;
+                        ctx.Tienda.Attach(store);
                         ctx.Producto.Add(producto);
                         rows1 = await ctx.SaveChangesAsync();
                     }

@@ -13,7 +13,7 @@ namespace Infraestructure.Repository
         IEnumerable<Producto> GetProductosByTienda(int id);
         Producto GetProductoID(int id);
         Task Delete(int id);
-        Task<Producto> Crear(Producto producto);
+        Task<Producto> Crear(Producto producto,Tienda store);
         Task<Producto> Actualizar(Producto producto);
     }
 }

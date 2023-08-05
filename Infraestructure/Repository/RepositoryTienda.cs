@@ -66,6 +66,35 @@ namespace Infraestructure.Repository
             }
         }
 
+        public Tienda GetByVendedor(int vendorID) {
+            try
+            {
+                Tienda tienda = null;
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    tienda = ctx.Tienda.FirstOrDefault(u => u.IdUsuario == vendorID);
+
+
+                }
+                return tienda;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+
+        }
+
+
         public Tienda SaveProveedor(Tienda tienda)
         {
             int retorno = 0;
