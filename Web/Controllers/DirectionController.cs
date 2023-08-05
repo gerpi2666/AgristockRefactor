@@ -31,7 +31,7 @@ namespace Web.Controllers
 
             if (usuario != null)
             {
-               direcciones =  _ServiceDireccion.GetDireccionById(id); 
+               //direcciones =  _ServiceDireccion.GetDireccionById(id); 
             }
             return direcciones;
 

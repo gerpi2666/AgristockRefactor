@@ -145,7 +145,10 @@ namespace Infraestructure.Repository
                 Producto producto = null;
                 if (product != null)
                 {
+                   // producto.IdProveedor = 1;
                     producto = product;
+                    producto.Activo = true;
+                    producto.Borrado = false;
                     using (MyContext ctx = new MyContext())
                     {
                         ctx.Configuration.LazyLoadingEnabled = false;
@@ -155,6 +158,39 @@ namespace Infraestructure.Repository
                 }
                
                 return producto;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
+
+        public async Task<Producto> Actualizar(Producto producto)
+        {
+            int rows1 = 0;
+            try
+            {
+                
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                  
+                    if (producto != null)
+                    {
+                        ctx.Entry(producto).State = EntityState.Modified;
+                        rows1 = await ctx.SaveChangesAsync();
+                    }
+                }
+                return producto;
+
             }
             catch (DbUpdateException dbEx)
             {
