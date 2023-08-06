@@ -19,9 +19,11 @@ namespace Infraestructure.Models
         public string TipoPago { get; set; }
         public string Proveedor { get; set; }
         public string NumCuenta { get; set; }
-        public Nullable<int> DiaExpiracion { get; set; }
+        public Nullable<int> AnioExpiracion { get; set; }
         public Nullable<int> MesExpiracion { get; set; }
         public Nullable<bool> Activo { get; set; }
         public Nullable<bool> Borrado { get; set; }
+    
+        public virtual Usuario Usuario { get; set; }
     }
 }

@@ -67,39 +67,47 @@
                     { }
                     else
                     {
-                        <div class="d-flex flex-row justify-content-between align-items-center w-100 flex-grow-3">
+                        <div class="d-flex flex-row justify-content-between align-items-center w-100">
 
-                            <span id="direccion-label" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.8rem !important; font-weight:500">Dirección de entrega</span>
+                            <span id="direccion-label" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.6rem !important; font-weight:500">Dirección de entrega</span>
 
-                            <span id="no-direcion" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.5rem !important;">No hay direcciones agregadas</span>
+                            <span id="no-direcion" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.4rem !important;">No hay direcciones agregadas</span>
 
                             <span>
                                 <input type="button" value="Agregar dirección" class="button-productos" id="btnToggleForm">
                             </span>
 
+                        </div>
 
-                            <div id="direccionForm" class="direccion-form" style="display: none;">
-                                @Html.Partial("~/Views/Direction/_DireccionForm.cshtml")
-                            </div>
-
+                        <div id="direccionForm" class="direccion-form" style="display: none;">
+                            @Html.Partial("~/Views/Direction/_DireccionForm.cshtml")
                         </div>
                     }
 
-                    <div class="d-flex flex-row justify-content-between align-items-center w-100 mt-5">
-
-                        <span id="direccion-label" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.8rem !important; font-weight:500">Método de pago</span>
-
-                        <span id="no-direcion" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.5rem !important;">No hay un método pago agregado</span>
-
-                        <span>
-                            <input type="button" value="Agregar método de pago" class="button-productos" id="btnToggleMetodoPago">
-                        </span>
-
+                    <div id="metodoPagoActualizado">
+                        @Html.Partial("~/Views/MetodoPago/_MetodosPago.cshtml")
                     </div>
 
-                    <div id="direccionForm">
-                        @Html.Partial("~/Views/MetodoPago/_MetodoPagoForm.cshtml")
-                    </div>
+                    if (ViewBag.MetodosPago != null && ViewBag.MetodosPago.Count > 0)
+                    { }
+                    else
+                    {
+                        <div class="d-flex flex-row justify-content-between align-items-center w-100 mt-3 mb-5">
+
+                            <span id="metPago-label" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.6rem !important; font-weight:500">Método de pago</span>
+
+                            <span id="no-metPago" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.4rem !important;">No hay un método pago agregado</span>
+
+                            <span>
+                                <input type="button" value="Agregar método de pago" class="button-productos" id="btnToggleMetodoPago">
+                            </span>
+                        </div>
+
+                        <div id="metodoPagoForm" style="display: none;">
+                            @Html.Partial("~/Views/MetodoPago/_MetodoPagoForm.cshtml")
+                        </div>
+                    }
+
                 }
             </div>
 

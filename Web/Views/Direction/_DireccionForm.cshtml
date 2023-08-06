@@ -2,66 +2,71 @@
 @model Infraestructure.Models.Direccion
 
 
+<div class=" register w-100">
 
-    <!-- Formulario de registro -->
-    @*@using (Html.BeginForm("Save", "Direction"))
-    {
-        @Html.AntiForgeryToken()*@
-        <div class="container-form-direciones register w-100">
+    <div class=" mb-1 w-100">
+        <div class="form-metPago-information-childs">
 
-            <div class="form-direction-information mb-5">
-                <div class="form-direction-information-childs"> 
-                    <form action="" class="form-direcion" id="formDireccion">
-                        @Html.AntiForgeryToken()
-                        <div class="w-100">
-                            <label>
-                                <i class='bx bx-user'></i>
-                                @Html.DropDownList("Provincia",
-                                    (List<SelectListItem>)ViewBag.ListaProvincias,
-                                    "Seleccione una provincia",
-                                    new { @class = "form-control", id = "IdProvincia", onchange = "cargarCantones()" })
+            <form action="" class="form-direcion mt-1" id="formDireccion">
+                @Html.AntiForgeryToken()
+                <div class="w-100 d-flex  flex-column">
+                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.4rem !important; font-weight:500">Dirección de entrega</span>
+                    <hr />
 
+                    <div class="d-flex flex-row  align-items-center mb-3">
+                        <span style="margin-right: 5.3rem; font-size: 1.1rem !important; ">Provincia</span>
+                        @Html.DropDownList("Provincia",
+                 (List<SelectListItem>)ViewBag.ListaProvincias,
+                 "Seleccione una provincia",
+                 new { @class = "form-control", id = "IdProvincia", onchange = "cargarCantones()" })
+                    </div>
 
-                            </label>
-                            <label>
-                                <i class='bx bxs-phone'></i>
-                                @Html.DropDownList("Canton", Enumerable.Empty<SelectListItem>(), "Seleccione un cantón", new { @class = "form-control", id = "IdCanton", onchange = "cargarDistritos()" })
-                            </label>
+                    <div class="d-flex flex-row  align-items-center mb-3">
+                        <span style="font-size: 1.1rem !important; margin-right: 6.2rem;">Cantón</span>
+                        @Html.DropDownList("Canton", Enumerable.Empty<SelectListItem>(), "Seleccione un cantón", new { @class = "form-control", id = "IdCanton", onchange = "cargarDistritos()" })
+                    </div>
 
+                    <div class="d-flex flex-row  align-items-center mb-3">
+                        <span style="font-size: 1.1rem !important; margin-right: 6.5rem; ">Distrito</span>
+                        @Html.DropDownList("Distrito", Enumerable.Empty<SelectListItem>(), "Seleccione un distrito", new { @class = "form-control", id = "IdDistrito" })
+                    </div>
 
+                    <div class="d-flex flex-row  align-items-center mb-3">
+                        <span style="font-size: 1.1rem !important; margin-right: 2.6rem; ">Código postal</span>
+                        @Html.EditorFor(model => model.CodPostal, new { htmlAttributes = new { @class = "", placeholder = "", id = "CodPostal"} })
+                        @Html.ValidationMessageFor(model => model.CodPostal, "", new { @class = "text-danger" })
+                    </div>
 
-                            <label>
-                                <i class='bx bxs-phone'></i>
-                                @Html.DropDownList("Distrito", Enumerable.Empty<SelectListItem>(), "Seleccione un distrito", new { @class = "form-control", id = "IdDistrito" })
-                            </label>
+                    <div class="d-flex flex-row  align-items-center mb-3">
+                        <span style="font-size: 1.1rem !important; margin-right: 1.1rem; ">Dirección exacta</span>
+                        @Html.EditorFor(model => model.DireccionExacta, new { htmlAttributes = new { @class = "", placeholder = "", id = "DireccionExacta" } })
+                        @Html.ValidationMessageFor(model => model.DireccionExacta, "", new { @class = "text-danger" })
+                    </div>
 
-                            <label>
-                                <i class='bx bx-user'></i>
-                                @Html.EditorFor(model => model.CodPostal, new { htmlAttributes = new { @class = "", placeholder = "Código postal" } })
-                                @Html.ValidationMessageFor(model => model.CodPostal, "", new { @class = "text-danger" })
-                            </label>
-
-                            <label>
-                                <i class='bx bx-user'></i>
-                                @Html.EditorFor(model => model.DireccionExacta, new { htmlAttributes = new { @class = "", placeholder = "Dirección exacta" } })
-                                @Html.ValidationMessageFor(model => model.DireccionExacta, "", new { @class = "text-danger" })
-
-                            </label>
-                        </div>
-
-                        <!-- Aquí se incluye el div para almacenar la URL -->
-                        <div id="saveDireccionUrl" data-url="@Url.Action("Save", "Direction")"></div>
-
-                        <div class="w-100">
-                            <span>
-                                <input type="button" value="Agregar dirección" class="button-productos mt-2" id="btnSaveDireccion">
-                            </span>
-
-                        </div>
-
-                    </form>
                 </div>
-            </div>
+
+                <div id="saveDireccionUrl" data-url="@Url.Action("Save", "Direction")"></div>
+
+                <hr />
+
+                <div class="w-100 d-flex justify-content-end">
+                    <span>
+                        <input type="button" value="Agregar dirección" class="button-productos mt-2" id="btnSaveDireccion">
+                    </span>
+
+                </div>
+
+            </form>
         </div>
-    @*}*@
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
 

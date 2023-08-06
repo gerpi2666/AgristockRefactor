@@ -1208,6 +1208,44 @@ div.form-information > div > input[type=submit] {
     height: 30px !important;
     border: 1px solid var(--color-primary) !important;
 }
+
+#tipoPago {
+    width: 180px !important;
+    height: 30px !important;
+    border: 1px solid var(--color-primary) !important;
+}
+
+#IdProvincia {
+    width: 205px !important;
+    height: 35px !important;
+    border: 1px solid var(--color-primary) !important;
+}
+
+#IdCanton {
+    width: 205px !important;
+    height: 35px !important;
+    border: 1px solid var(--color-primary) !important;
+}
+
+#IdDistrito {
+    width: 205px !important;
+    height: 35px !important;
+    border: 1px solid var(--color-primary) !important;
+}
+
+#CodPostal {
+    width: 205px !important;
+    height: 35px !important;
+    border: 1px solid var(--color-primary) !important;
+    border-radius: 5px;
+}
+
+#DireccionExacta {
+    width: 205px !important;
+    height: 35px !important;
+    border: 1px solid var(--color-primary) !important;
+    border-radius: 5px;
+}
 /* ======================= media query para Login  =================*/
 @media screen and (max-width: 768px) {
     .view-container {

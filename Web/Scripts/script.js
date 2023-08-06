@@ -160,26 +160,34 @@ function saveDireccion() {
                 var direccionesHtml = "";
 
                 $.each(data.direcciones, function (index, direccion) {
-                    direccionesHtml += `
-                    
+                    direccionesHtml += `                   
+                     <div class=" register w-100">
+                        <div class=" w-100">
+                            <div class="form-metPago-information-childs">
+                                <form action="" class="form-direcion" id="formMetodoPago">
+                                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.6rem !important; font-weight:500">Dirección de entrega</span>
+                                    <hr />
+                                    <div class="w-100 d-flex  flex-row justify-content-between align-items-center">
+                                            <div class="d-flex flex-column pe-4">
+                                                <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Provincia: </span> ${direccion.Provincia}</span>
+                                                <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Cantón: </span> ${direccion.Canton}</span>
+                                                <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Distrito: </span> ${direccion.Distrito}</span>
+                                                <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Código postal: </span> ${direccion.CodPostal}</span>
+                                                <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Direccion exacta: </span> ${direccion.DireccionExacta}</span>
 
-                    <div class="d-flex flex-row justify-content-between align-items-center w-100">
-                        <div class="">
-                                 <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.8rem !important; font-weight:500">Dirección de entrega</span>
+                                            </div>
+
+                                            <span>
+                                                <input type="button" value="Editar" class="button-productos mt-2" id="btnSaveDireccionForm">
+                                            </span>
+                                    </div>
+                                    <div id="saveMetodoPagoUrl" data-url="@Url.Action("x", "x")"></div>
+
+                                    <hr />
+                                </form>
+                            </div>
                         </div>
-
-                        <div class="d-flex flex-column pe-4">
-                                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Provincia: </span> ${direccion.Provincia}</span>
-                                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Cantón: </span> ${direccion.Canton}</span>
-                                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Distrito: </span> ${direccion.Distrito}</span>
-                                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Código postal: </span> ${direccion.CodPostal}</span>
-                                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Dirección exacta: </span> ${direccion.DireccionExacta}</span>
-                        </div>
-
-                        <span>
-                            <input type="button" value="Editar" class="button-productos mt-2" id="btnSaveDireccionForm">
-                        </span>
-                    </div>`;
+                    </div> `;
                 });
 
 
@@ -189,8 +197,8 @@ function saveDireccion() {
                     $("#formDireccion")[0].reset();
 
                     // Ocultar el formulario después de agregar la dirección
-                $("#direccionForm").hide();
-                $("#direccion-label").hide();
+                    $("#direccionForm").hide();
+                    $("#direccion-label").hide();
 
                     // Restablecer las listas desplegables de provincias, cantones y distritos a sus valores iniciales
                     $("#IdProvincia").val(""); // Opcional: aquí deberías seleccionar la provincia que desees mostrar en la lista desplegable
@@ -233,9 +241,6 @@ function cargarMeses() {
 }
 
 
-
-
-
 function cargarAnios() {
     var anioActual = new Date().getFullYear();
     var aniosSelect = document.getElementById("anios");
@@ -259,6 +264,102 @@ function cargarAnios() {
     // Establece el valor seleccionado nuevamente
     aniosSelect.value = valorSeleccionado;
 }
+
+
+
+
+
+
+
+
+function saveMetodoPago() {
+    // Obtener la URL del atributo personalizado
+    var saveUrl = $("#saveMetodoPagoUrl").data("url");
+
+    // Obtener los datos del formulario
+    var formData = $("#formMetodoPago").serialize();
+
+    $.ajax({
+        type: "POST",
+        url: saveUrl,
+        data: formData,
+        dataType: "json",
+        success: function (data) {
+            if (data.success) {
+                // Actualizar el contenedor de metodo de pago con la lista de metodosPago actualizada
+                var metodosPagoHtml = "";
+
+                $.each(data.metodosPago, function (index, met) {
+                    metodosPagoHtml += `
+                    <div class="register w-100">
+                        <div class="w-100">
+                            <div class="form-metPago-information-childs">
+                                <span class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.6rem !important; font-weight:500">Metodo de pago</span>
+                                <hr />
+                                <div class="w-100 d-flex flex-row justify-content-between align-items-center">
+                                    <div class="d-flex flex-column pe-4">
+                                        <span class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Tipo de pago: </span>${met.TipoPago}</span>
+                                        <span class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Proveedor: </span>${met.Proveedor}</span>
+                                        <span class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Numero de cuenta: </span>${met.NumCuenta}</span>
+                                    </div>
+                                    <span>
+                                        <input type="button" value="Editar" class="button-productos mt-2" id="btnSaveDireccionForm">
+                                    </span>
+                                </div>
+                                <hr />
+                            </div>
+                        </div>
+                    </div> `;
+                });
+
+                $("#metodoPagoActualizado").html(metodosPagoHtml);
+
+                // Limpiar el formulario después de agregar el metodoPago
+                $("#formMetodoPago")[0].reset();
+
+                // Ocultar el formulario después de agregar el metodoPago
+                $("#formMetodoPago").hide();
+                $("#metPago-label").hide();
+
+                $("#mes").empty();
+                $("#anios").empty();
+            } else {
+                alert("Error al guardar el método de pago.");
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            // Manejo de errores si es necesario
+        }
+    });
+}
+
+
+
+function cargarTipoPago() {
+    var tipoPagoSelect = document.getElementById("tipoPago");
+
+    // Guarda el valor seleccionado actualmente
+    var valorSeleccionado = tipoPagoSelect.value;
+
+    // Limpia las opciones existentes
+    while (tipoPagoSelect.options.length > 0) {
+        tipoPagoSelect.remove(0);
+    }
+
+    // Crea y agrega las opciones de tipo de pago
+    var tiposDePago = ["Tarjeta de credito", "Tarjeta de debito", "PayPal", "Criptomonedas", "Tarjeta de regalo"];
+
+    for (var i = 0; i < tiposDePago.length; i++) {
+        var option = document.createElement("option");
+        option.text = tiposDePago[i];
+        option.value = tiposDePago[i];
+        tipoPagoSelect.add(option);
+    }
+
+    // Establece el valor seleccionado nuevamente
+    tipoPagoSelect.value = valorSeleccionado;
+}
+
 
 
 

@@ -1,0 +1,50 @@
+﻿
+@{
+    if (ViewBag.MetodosPago != null && ViewBag.MetodosPago.Count > 0)
+    {
+
+        <div class=" register w-100">
+
+            <div class=" mb-5 w-100">
+                <div class="form-metPago-information-childs">
+                    <form action="" class="form-direcion" id="formMetodoPago">
+                        @Html.AntiForgeryToken()
+                            <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.4rem !important; font-weight:500">Métodos me pago</span>
+                            <hr />
+                        <div class="w-100 d-flex  flex-row justify-content-between align-items-center">
+
+                            @foreach (var metodo in ViewBag.MetodosPago)
+                            {
+                                <div class="d-flex flex-column pe-4">
+                                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Tipo de pago: </span> @metodo.TipoPago</span>
+                                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Proveedor: </span> @metodo.Proveedor</span>
+                                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important;"><span style="font-weight:600">Numero de cuenta: </span> @metodo.NumCuenta</span>
+                                </div>
+
+                                <span>
+                                    <input type="button" value="Editar" class="button-productos mt-2" id="btnSaveDireccionForm">
+                                </span>
+                            }
+
+
+                        </div>
+
+                        <!-- Aquí se incluye el div para almacenar la URL -->
+                        <div id="saveMetodoPagoUrl" data-url="@Url.Action("Save", "MetodoPago")"></div>
+
+                        <hr />
+
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+
+
+
+
+
+
+}

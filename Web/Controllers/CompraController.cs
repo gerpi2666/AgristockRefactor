@@ -80,25 +80,25 @@ namespace Web.Controllers
         }
 
         // GET: Compra/Edit/5
-        public ActionResult Save(Compra compra)
-        {
+        //public ActionResult Save(Compra compra)
+        //{
            
-            Usuario usuario = Session["User"] as Usuario;
+        //    Usuario usuario = Session["User"] as Usuario;
                           
-            if (compra != null)
-            {
-                compra.IdUsuario = usuario.Id;
-                compra.Usuario = usuario;
-                IServiceCompra serviceCompra = new ServiceCompra();
-                serviceCompra.Crear(compra, store);
+        //    if (compra != null)
+        //    {
+        //        compra.IdUsuario = usuario.Id;
+        //        compra.Usuario = usuario;
+        //        IServiceCompra serviceCompra = new ServiceCompra();
+        //        serviceCompra.Crear(compra, store);
 
-                return RedirectToAction("ProductoAdmin");
-            }
-            else
-            {
-                return RedirectToAction("Index");
-            }
-        }
+        //        return RedirectToAction("ProductoAdmin");
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Index");
+        //    }
+        //}
 
         // POST: Compra/Edit/5
         [HttpPost]

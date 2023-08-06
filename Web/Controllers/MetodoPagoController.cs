@@ -22,6 +22,11 @@ namespace Web.Controllers
                 {
                     Usuario usuario = Session["User"] as Usuario;
 
+                    metodoPago.Activo = true;
+                    metodoPago.Borrado = false;
+                    metodoPago.Usuario = usuario;
+                    metodoPago.IdUsuario = usuario.Id;
+
                     MetodoPago oMetodoPago =  _ServiceMetodoPago.SaveMetodoPago(metodoPago, usuario);
 
                     List<MetodoPago> metodosPago =  _ServiceMetodoPago.GetMetodoPagoById(usuario.Id);
@@ -43,6 +48,15 @@ namespace Web.Controllers
                 }
                 throw;
             }
+        }
+
+        public List<MetodoPago> GetMetodoPago(int id)
+        {
+            IServiceMetodoPago _ServiceMetodoPago = new ServiceMetodoPago();
+
+            List<MetodoPago> metodoPago = _ServiceMetodoPago.GetMetodoPagoById(id);
+
+            return metodoPago;
         }
     }
 }

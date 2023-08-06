@@ -21,11 +21,14 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<ActionResult> Perfil()
         {
-            ViewBag.ListaProvincias = await ListaProvinciasAsync();
+            ViewBag.ListaProvincias = await ListaProvinciasAsync();          
+
+
             Usuario usuario = Session["User"] as Usuario;
             if (usuario != null)
             {
-            ViewBag.UsuarioDirecciones = GetDirecciones(usuario.Id);
+             ViewBag.UsuarioDirecciones = GetDirecciones(usuario.Id);
+             ViewBag.MetodosPago = GetMetodoPago(usuario.Id);
             }
             return View();
         }
@@ -111,6 +114,15 @@ namespace Web.Controllers
             List<Direccion> direcciones = _ServiceDireccion.GetDireccionById(id);
 
             return direcciones;
+        }
+
+
+        public List<MetodoPago> GetMetodoPago(int id)
+        {
+            IServiceMetodoPago _ServiceMetodoPago = new ServiceMetodoPago();
+            List<MetodoPago> metodoPago = _ServiceMetodoPago.GetMetodoPagoById(id);
+
+            return metodoPago;
         }
     }
 }

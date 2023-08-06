@@ -66,7 +66,7 @@ namespace Infraestructure.Repository
             }
         }
 
-        public MetodoPago SaveMetodoPago(MetodoPago metodoPago, Usuario usuario)
+        public MetodoPago SaveMetodoPago(MetodoPago metodoPago,Usuario usuario)
         {
             try
             {
@@ -77,6 +77,8 @@ namespace Infraestructure.Repository
                     ctx.Configuration.LazyLoadingEnabled = false;
 
                     IRepositoryMetodoPago _RepositorioMetPago = new RepositoryMetodoPago();
+
+                    metodoPago.IdUsuario = usuario.Id;
 
                     ctx.Usuario.Attach(usuario);
                     ctx.MetodoPago.Add(metodoPago);

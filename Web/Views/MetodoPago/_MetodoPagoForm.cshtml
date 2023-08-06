@@ -1,48 +1,45 @@
 ﻿@model Infraestructure.Models.MetodoPago
 
-
-
-<!-- Formulario de registro -->
-@*@using (Html.BeginForm("Save", "Direction"))
-    {
-        @Html.AntiForgeryToken()*@
 <div class=" register w-100" >
-
     <div class=" mb-5 w-100">
         <div class="form-metPago-information-childs" >
-            <form action="" class="form-direcion" id="formDireccion">
+            <form action="" class="form-direcion mt-1" id="formMetodoPago">
                 @Html.AntiForgeryToken()
                 <div class="w-100 d-flex  flex-column">
-                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.2rem !important; font-weight:500">Agregar una tarjeta de crédito o débito</span>
+                    <span id="" class="producto-titulo" style="color: var(--color-dark-variant) !important; font-size: 1.3rem !important; font-weight:500">Agregar una tarjeta de crédito o débito</span>
                     <hr />
 
+                    <div class="d-flex flex-row  align-items-center mb-3">
+                        <span style="margin-right: 6.5rem; font-size: 1.1rem !important; ">Tipo de pago</span>
+                        @Html.DropDownList("TipoPago", Enumerable.Empty<SelectListItem>(), "", new { @class = "form-control selectExpiracion", id = "tipoPago", onclick = "cargarTipoPago()" })
+                    </div>
 
                     <div class="mb-3">
-                        <span style = "font-size: 1.1rem !important; margin-right: 3.5rem;" >Número de tarjeta</span>
+                        <span style="font-size: 1.1rem !important; margin-right: 3.5rem;">Número de tarjeta</span>
                         @Html.EditorFor(model => model.NumCuenta, new { htmlAttributes = new { @class = "", placeholder = "", style = "width: 180px !important;\r\n    height: 25px !important;\r\n border: 1px solid var(--color-primary) !important; border-radius: 5px;" } })
                     </div>
 
                     <div class="mb-3">
-                        <span style = "font-size: 1.1rem !important; margin-right: 1.1rem; " >Nombre del proveedor</span>
+                        <span style="font-size: 1.1rem !important; margin-right: 1.1rem; ">Nombre del proveedor</span>
                         @Html.EditorFor(model => model.Proveedor, new { htmlAttributes = new { @class = "", placeholder = "", style = "width: 180px !important;\r\n    height: 25px !important;\r\n border: 1px solid var(--color-primary) !important; border-radius: 5px;" } })
                     </div>
-                  
-                     <div class="d-flex flex-row  align-items-center">
+
+                    <div class="d-flex flex-row  align-items-center">
                         <span style="margin-right: 2.7rem; font-size: 1.1rem !important; ">Fecha de expiración</span>
-                            @Html.DropDownList("DiaExpiracion", Enumerable.Empty<SelectListItem>(), "", new { @class = "form-control selectExpiracion", id = "meses", onclick = "cargarMeses()", style = "margin-right:1.4rem" })
-                            @Html.DropDownList("MesExpiracion", Enumerable.Empty<SelectListItem>(), "", new { @class = "form-control selectExpiracion", id = "anios", onclick = "cargarAnios()", style = "margin-right:0rem" })
-                     </div>                  
+                        @Html.DropDownList("MesExpiracion", Enumerable.Empty<SelectListItem>(), "", new { @class = "form-control selectExpiracion", id = "meses", onclick = "cargarMeses()", style = "margin-right:1.4rem" })
+                        @Html.DropDownList("AnioExpiracion", Enumerable.Empty<SelectListItem>(), "", new { @class = "form-control selectExpiracion", id = "anios", onclick = "cargarAnios()", style = "margin-right:0rem" })
+                    </div>
 
                 </div>
 
                 <!-- Aquí se incluye el div para almacenar la URL -->
-                <div id="saveDireccionUrl" data-url="@Url.Action("Save", "Direction")"></div>
+                <div id="saveMetodoPagoUrl" data-url="@Url.Action("Save", "MetodoPago")"></div>
 
                 <hr />
 
                 <div class="w-100 d-flex justify-content-end">                    
                     <span>
-                        <input type="button" value="Agregar tarjeta" class="button-productos mt-2" id="btnSaveDireccion">
+                        <input type="button" value="Agregar tarjeta" class="button-productos mt-2" id="btnSaveMetodoPago">
                     </span>
 
                 </div>
@@ -51,5 +48,5 @@
         </div>
     </div>
 </div>
-@*}*@
+
 
