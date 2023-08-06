@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Web.Utils;
 
 namespace Web.Controllers
 {
@@ -80,25 +81,41 @@ namespace Web.Controllers
         }
 
         // GET: Compra/Edit/5
-        //public ActionResult Save(Compra compra)
-        //{
-           
-        //    Usuario usuario = Session["User"] as Usuario;
-                          
-        //    if (compra != null)
-        //    {
-        //        compra.IdUsuario = usuario.Id;
-        //        compra.Usuario = usuario;
-        //        IServiceCompra serviceCompra = new ServiceCompra();
-        //        serviceCompra.Crear(compra, store);
+        public ActionResult Save(Compra compra)
+        {
 
-        //        return RedirectToAction("ProductoAdmin");
-        //    }
-        //    else
-        //    {
-        //        return RedirectToAction("Index");
-        //    }
-        //}
+            Usuario usuario = Session["User"] as Usuario;
+
+            if (compra != null)
+            {
+                List<DetalleCompra> listaDetalle = null;
+                var car = Carrito.Instancia.Items;
+                foreach (var item in car)
+                {
+                    DetalleCompra ordenDetalle = new DetalleCompra();
+                    ordenDetalle.IdCompra = compra.Id;
+                    ordenDetalle.idProducto = item.IdProducto;
+                    ordenDetalle.Cantidad = item.Cantidad;
+                    ordenDetalle.SubTotal = item.SubTotal;
+                    ordenDetalle.Iva = item.SubTotal * 0.13;
+                    ordenDetalle.Total = item.SubTotal + (item.SubTotal * 0.13);
+
+                    compra.DetalleCompra.Add(ordenDetalle);
+                    listaDetalle.Add(ordenDetalle);
+
+                }
+                compra.IdUsuario = usuario.Id;
+                compra.Usuario = usuario;
+                IServiceCompra serviceCompra = new ServiceCompra();
+                serviceCompra.Crear(compra, listaDetalle);
+
+                return RedirectToAction("ProductoAdmin");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
 
         // POST: Compra/Edit/5
         [HttpPost]
