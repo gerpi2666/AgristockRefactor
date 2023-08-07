@@ -28,5 +28,11 @@ namespace ApplicationCore.Services
             IRepositoryMetodoPago repository = new RepositoryMetodoPago();
             return repository.SaveMetodoPago(metodoPago, usuario);
         }
+        public MetodoPago GetByID(int id)
+        {
+            IRepositoryMetodoPago repository = new RepositoryMetodoPago();
+            return repository.GetByID(id);
+        }
+
     }
 }

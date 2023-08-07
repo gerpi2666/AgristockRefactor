@@ -12,22 +12,32 @@
                     <div class="d-flex flex-row  align-items-center mb-3">
                         <span style="margin-right: 6.5rem; font-size: 1.1rem !important; ">Tipo de pago</span>
                         @Html.DropDownList("TipoPago", Enumerable.Empty<SelectListItem>(), "", new { @class = "form-control selectExpiracion", id = "tipoPago", onclick = "cargarTipoPago()" })
+                        @Html.ValidationMessageFor(model => model.TipoPago, "", new { @class = "text-danger" })
+
                     </div>
 
                     <div class="mb-3">
                         <span style="font-size: 1.1rem !important; margin-right: 3.5rem;">Número de tarjeta</span>
                         @Html.EditorFor(model => model.NumCuenta, new { htmlAttributes = new { @class = "", placeholder = "", style = "width: 180px !important;\r\n    height: 25px !important;\r\n border: 1px solid var(--color-primary) !important; border-radius: 5px;" } })
+                        @Html.ValidationMessageFor(model => model.NumCuenta, "", new { @class = "text-danger" })
+
                     </div>
 
                     <div class="mb-3">
                         <span style="font-size: 1.1rem !important; margin-right: 1.1rem; ">Nombre del proveedor</span>
                         @Html.EditorFor(model => model.Proveedor, new { htmlAttributes = new { @class = "", placeholder = "", style = "width: 180px !important;\r\n    height: 25px !important;\r\n border: 1px solid var(--color-primary) !important; border-radius: 5px;" } })
+                        @Html.ValidationMessageFor(model => model.Proveedor, "", new { @class = "text-danger" })
+
                     </div>
 
                     <div class="d-flex flex-row  align-items-center">
                         <span style="margin-right: 2.7rem; font-size: 1.1rem !important; ">Fecha de expiración</span>
                         @Html.DropDownList("MesExpiracion", Enumerable.Empty<SelectListItem>(), "", new { @class = "form-control selectExpiracion", id = "meses", onclick = "cargarMeses()", style = "margin-right:1.4rem" })
+                        @Html.ValidationMessageFor(model => model.MesExpiracion, "", new { @class = "text-danger" })
+
                         @Html.DropDownList("AnioExpiracion", Enumerable.Empty<SelectListItem>(), "", new { @class = "form-control selectExpiracion", id = "anios", onclick = "cargarAnios()", style = "margin-right:0rem" })
+                        @Html.ValidationMessageFor(model => model.AnioExpiracion, "", new { @class = "text-danger" })
+
                     </div>
 
                 </div>

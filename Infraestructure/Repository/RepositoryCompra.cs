@@ -150,24 +150,27 @@ namespace Infraestructure.Repository
                     comp = compra;
                     comp.Activo = true;
                     comp.Borrado = false;
-                    comp.DetalleCompra = carrito;
                     using (MyContext ctx = new MyContext())
                     {
                         ctx.Configuration.LazyLoadingEnabled = false;
 
                         if (carrito !=null)
                         {
+                            Compra refCom = getLastOne();
                             comp.DetalleCompra = new List<DetalleCompra>();
                             foreach (var detalle in carrito)
                             {
-                               // ctx.DetalleCompra.Attach(detalle); 
+                                // ctx.DetalleCompra.Attach(detalle); 
+                                detalle.IdCompra = refCom.Id + 1;
                                 comp.DetalleCompra.Add(detalle);
 
 
                             }
                         }
-                        ctx.DetalleCompra.Attach((DetalleCompra)comp.DetalleCompra);
+
                         ctx.Compra.Add(comp);
+                        IEnumerable<DetalleCompra> d = comp.DetalleCompra;
+                        ctx.DetalleCompra.Attach((DetalleCompra)d);
                         rows1 = await ctx.SaveChangesAsync();
                     }
                 }
@@ -237,6 +240,32 @@ namespace Infraestructure.Repository
                     }
                 }
 
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
+
+        private Compra getLastOne()
+        {
+            try
+            {
+                Compra compra = null;
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    compra = ctx.Compra.OrderByDescending(r => r.Id).FirstOrDefault();
+                }
+                return compra;
             }
             catch (DbUpdateException dbEx)
             {

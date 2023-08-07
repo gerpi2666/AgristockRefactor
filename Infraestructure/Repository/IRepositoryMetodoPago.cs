@@ -13,5 +13,7 @@ namespace Infraestructure.Repository
         List<MetodoPago> GetMetodoPagoById(int id);
 
         MetodoPago SaveMetodoPago(MetodoPago metodoPago, Usuario usuario);
+
+        MetodoPago GetByID(int id);
     }
 }

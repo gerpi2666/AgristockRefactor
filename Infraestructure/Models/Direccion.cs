@@ -11,7 +11,11 @@ namespace Infraestructure.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
+
+    [MetadataType(typeof(DireccionMetadata))]
+
     public partial class Direccion
     {
         public int Id { get; set; }

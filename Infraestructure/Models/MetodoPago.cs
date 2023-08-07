@@ -11,7 +11,10 @@ namespace Infraestructure.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
+    [MetadataType(typeof(MetodoPagoMetadata))]
+
     public partial class MetodoPago
     {
         public int Id { get; set; }
