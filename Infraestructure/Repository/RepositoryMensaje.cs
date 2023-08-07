@@ -92,5 +92,45 @@ namespace Infraestructure.Repository
                 throw;
             }
         }
+
+        public async Task<Mensaje> Crear(Mensaje message, ChatProducto chat, Usuario usuario)
+        {
+            int rows1 = 0;
+
+            try
+            {
+                Mensaje mensaje = null;
+
+                if (message != null)
+                {
+                    mensaje = message;
+                    // producto.IdProveedor = product.Tienda.Id;
+
+                    using (MyContext ctx = new MyContext())
+                    {
+                        ctx.Configuration.LazyLoadingEnabled = false;
+                        ctx.ChatProducto.Attach(chat);
+                        ctx.Usuario.Attach(usuario);
+
+                        ctx.Mensaje.Add(mensaje);
+                        rows1 = await ctx.SaveChangesAsync();
+                    }
+                }
+
+                return mensaje;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje1 = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje1);
+                throw new Exception(mensaje1);
+            }
+            catch (Exception ex)
+            {
+                string mensaje1 = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje1);
+                throw;
+            }
+        }
     }
 }

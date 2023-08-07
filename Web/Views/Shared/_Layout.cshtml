@@ -53,6 +53,12 @@
         });
     </script>
 
+    <script>
+        $(document).ready(function () {
+            $('#tb_productoTienda').DataTable();
+        });
+    </script>
+
 
     @Scripts.Render("~/bundles/sweetalert")
 
@@ -68,18 +74,18 @@
             $("#btnToggleForm").click(function () {
                 $("#direccionForm").toggle(); // Alternar el valor de la propiedad 'display' entre 'none' y 'block'
                 $("#btnToggleForm").hide();
-                $("#no-direcion").hide();  
-                $("#direccion-label").hide(); 
+                $("#no-direcion").hide();
+                $("#direccion-label").hide();
 
             });
         });
 
         $(document).ready(function () {
             $("#btnToggleMetodoPago").click(function () {
-                $("#metodoPagoForm").toggle(); 
+                $("#metodoPagoForm").toggle();
                 $("#btnToggleMetodoPago").hide();
                 $("#no-metPago").hide();
-                $("#metPago-label").hide(); 
+                $("#metPago-label").hide();
             });
         });
 

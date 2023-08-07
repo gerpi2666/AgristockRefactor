@@ -12,6 +12,43 @@ namespace Infraestructure.Repository
 {
     public class RepositoryChatProducto : IRepositoryChatProducto
     {
+        public async Task<ChatProducto> Crear(ChatProducto chatP, Mensaje mensaje)
+        {
+            int rows1 = 0;
+            try
+            {
+                ChatProducto chat = null;
+                
+                if (chatP != null)
+                {
+                    chat = chatP;
+                    // producto.IdProveedor = product.Tienda.Id;
+
+                    using (MyContext ctx = new MyContext())
+                    {
+                        ctx.Configuration.LazyLoadingEnabled = false;
+                        ctx.Mensaje.Attach(mensaje);
+                        ctx.ChatProducto.Add(chat);
+                        rows1 = await ctx.SaveChangesAsync();
+                    }
+                }
+
+                return chat;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje1 = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje1);
+                throw new Exception(mensaje1);
+            }
+            catch (Exception ex)
+            {
+                string mensaje1 = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje1);
+                throw;
+            }
+        }
+
         public ChatProducto GetChatById(int id)
         {
             try

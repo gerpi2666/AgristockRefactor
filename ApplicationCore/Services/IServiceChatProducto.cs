@@ -12,5 +12,7 @@ namespace ApplicationCore.Services
         IEnumerable<ChatProducto> GetChatsByProductos(int idProducto);
         IEnumerable<ChatProducto> GetChatsByTienda(int idTienda);
         ChatProducto GetChatById(int id);
+        Task<ChatProducto> Crear(ChatProducto chat, Mensaje mensaje);
+
     }
 }
