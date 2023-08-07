@@ -267,11 +267,6 @@ function cargarAnios() {
 
 
 
-
-
-
-
-
 function saveMetodoPago() {
     // Obtener la URL del atributo personalizado
     var saveUrl = $("#saveMetodoPagoUrl").data("url");
@@ -359,7 +354,6 @@ function cargarTipoPago() {
     // Establece el valor seleccionado nuevamente
     tipoPagoSelect.value = valorSeleccionado;
 }
-
 
 
 

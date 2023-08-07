@@ -41,7 +41,7 @@
     @RenderSection("scripts", required: false)
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="~/Scripts/bootstrap.bundle.js"></script>
-    <script src="~/Scripts/script.js?v=1.1"></script>
+    <script src="~/Scripts/script.js?v=1.0"></script>
 
 
     <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -90,14 +90,85 @@
         $("#btnSaveMetodoPago").click(function () {
             saveMetodoPago();
         });
+
+
+        //activar el agregar al carrito un producto
+        $(document).on('click', '.comprar',
+            function () {
+                var ctr = $(this);
+                var idProducto = $(this).data('id');
+                $.ajax({
+                    method: "GET",
+                    url: "/Compra/ordenarProducto",
+                    data: { "idProducto": idProducto },
+                    success: function (data) {
+                        $("#cantidadProductos").html('');
+                        $("#cantidadProductos").html(data);
+                    }, error: function (xhr, status, error) {
+                        console.log("Error: " + error + ", No Error: " + xhr.status);
+                    },
+                });
+            });
+
+
+        //Cambio en la cantidad a comprar
+        $(document).on('change', '.changeCantidad',
+            function () {
+                var txtCantidad = $(this);
+                var cantidad = txtCantidad.val();
+                var id = txtCantidad.data("productoid");
+                $.ajax({
+                    type: "GET",
+                    dataType: 'text',
+                    url: "/Compra/actualizarCantidad",
+                    data: { "idProd": id, "Cantidad": cantidad },
+                    success: function (data) {
+                        $("#resultadoDetalle").html('');
+                        $("#resultadoDetalle").html(data);
+                        updateCantLibros();
+                    }, error: function (xhr, status, error) {
+                        console.log("Error: " + error + ", No Error: " + xhr.status);
+                    },
+                });
+            });
+
+
+
+        function updateCantLibros() {
+            $.ajax({
+                type: "GET",
+                dataType: 'text',
+                url: "/Compra/actualizarOrdenCantidad",
+                success: function (data) {
+                    $("#cantidadProductos").html('');
+                    $("#cantidadProductos").html(data);
+                }, error: function (xhr, status, error) {
+                    console.log("Error: " + error + ", No Error: " + xhr.status);
+                },
+            });
+        }
+
+
+        //Eliminar producto
+        $(document).on('click', '.eliminar',
+            function () {
+                var ctr = $(this);
+                var id = $(this).data('id');
+                $.ajax({
+                    type: "GET",
+                    dataType: 'text',
+                    url: "/Compra/eliminarLibro",
+                    data: { "idProducto": id },
+                    success: function (data) {
+                        $("#resultadoDetalle").html('');
+                        $("#resultadoDetalle").html(data);
+                        updateCantLibros();
+                    }, error: function (xhr, status, error) {
+                        console.log("Error: " + error + ", No Error: " + xhr.status);
+                    },
+                });
+            });
     </script>
-
-
-
-
-
-
-
 
 
 

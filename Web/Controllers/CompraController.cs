@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Web.Utils;
 
 namespace Web.Controllers
 {
@@ -17,6 +18,7 @@ namespace Web.Controllers
             IServiceCompra _ServiceCompra = new ServiceCompra();
             ViewBag.compras = _ServiceCompra.GetCompras();
             IEnumerable<Compra> compras = _ServiceCompra.GetCompras();
+
             return View(compras);
         }
 
@@ -48,10 +50,14 @@ namespace Web.Controllers
         // GET: Compra/Create
         public ActionResult CompraCliente()
         {
-            IServiceCompra _ServiceCompra = new ServiceCompra();
-            IEnumerable<Compra> compra = _ServiceCompra.GetComprasByCliente(5);
+            ViewBag.DetalleOrden = Carrito.Instancia.Items;
+            return View();
+        }
 
-            return View(compra);
+        public ActionResult ConfirmarCompra(List<Web.ViewModel.ViewModelDetalleCompra> detalleOrden)
+        {
+            ViewBag.DetalleOrden = Carrito.Instancia.Items; ;
+            return View(Carrito.Instancia.Items);
         }
 
         public ActionResult CompraTienda(int? idTienda)
@@ -59,6 +65,8 @@ namespace Web.Controllers
             ViewBag.idTienda =1;
             IServiceCompra _ServiceCompra = new ServiceCompra();
             IEnumerable<Compra> compra = _ServiceCompra.GetComprasByTienda(1);
+
+            ViewBag.DetalleOrden = Carrito.Instancia.Items;
 
             return View(compra);
         }
@@ -82,9 +90,9 @@ namespace Web.Controllers
         // GET: Compra/Edit/5
         //public ActionResult Save(Compra compra)
         //{
-           
+
         //    Usuario usuario = Session["User"] as Usuario;
-                          
+
         //    if (compra != null)
         //    {
         //        compra.IdUsuario = usuario.Id;
@@ -100,20 +108,40 @@ namespace Web.Controllers
         //    }
         //}
 
-        // POST: Compra/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult ordenarProducto(int? idProducto)
         {
-            try
-            {
-                // TODO: Add update logic here
+            //int cantidadLibros = Carrito.Instancia.Items.Count();
+            ViewBag.NotiCarrito = Carrito.Instancia.AgregarItem((int)idProducto);
+            return PartialView("_CompraCantidad");
+        }
 
-                return RedirectToAction("Index");
-            }
-            catch
+        public ActionResult actualizarCantidad(int idProd, int Cantidad)
+        {
+            ViewBag.DetalleOrden = Carrito.Instancia.Items;
+            TempData["NotiCarrito"] = Carrito.Instancia.SetItemCantidad(idProd, Cantidad);
+            TempData.Keep();
+            return PartialView("_DetalleCompra", Carrito.Instancia.Items);
+
+        }
+
+        public ActionResult actualizarOrdenCantidad()
+        {
+            if (TempData.ContainsKey("NotiCarrito"))
             {
-                return View();
+                ViewBag.NotiCarrito = TempData["NotiCarrito"];
             }
+            int cantidadLibros = Carrito.Instancia.Items.Count();
+            return PartialView("_OrdenCantidad");
+
+        }
+
+
+        //si le cambio de nombre el ajax da un 404
+        public ActionResult eliminarLibro(int? idProducto)
+        {
+            TempData["NotiCarrito"] = Carrito.Instancia.EliminarItem((int)idProducto);
+            TempData.Keep();
+            return PartialView("_DetalleCompra", Carrito.Instancia.Items);
         }
 
         // GET: Compra/Delete/5

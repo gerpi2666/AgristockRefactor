@@ -267,6 +267,9 @@
     <Content Include="Views\Direction\_Direcciones.cshtml" />
     <Content Include="Views\MetodoPago\_MetodoPagoForm.cshtml" />
     <Content Include="Views\MetodoPago\_MetodosPago.cshtml" />
+    <Content Include="Views\Compra\_CompraCantidad.cshtml" />
+    <Content Include="Views\Compra\_DetalleCompra.cshtml" />
+    <Content Include="Views\Compra\ConfirmarCompra.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

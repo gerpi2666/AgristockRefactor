@@ -1,0 +1,81 @@
+﻿
+@model List<Web.ViewModel.ViewModelDetalleCompra>
+
+@{
+    ViewBag.Title = "ConfirmarCompra";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="invoice">
+    <h1>Orden de Compra</h1>
+    <div class="user-details mt-3">
+        @if (Session["User"] != null)
+        {
+            Infraestructure.Models.Usuario oUsuario;
+            oUsuario = (Infraestructure.Models.Usuario)Session["User"];
+
+            <p><strong>Nombre del Usuario:</strong> @oUsuario.Nombre</p>
+        }
+
+        <p><strong>Dirección de Entrega:</strong> Calle 123, Ciudad, País</p>
+        <p><strong>Método de Pago:</strong> Tarjeta de Crédito</p>
+    </div>
+
+    @if (Web.Utils.Carrito.Instancia.Items.Count() > 0)
+    {
+    
+        <table class="mt-3">
+            <tr>
+                <th>
+                    Producto
+                </th>
+                <th class="center">
+                    Cantidad
+                </th>
+                <th class="right">
+                    Precio
+                </th>
+
+                <th class="right">
+                    SubTotal
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.Producto.Id)
+                        @Html.DisplayFor(modelItem => item.Producto.Nombre)
+                    </td>
+                    <td class="center" style="width:1.5em">
+                        @Html.DisplayFor(modelItem => item.Cantidad)
+
+                    </td>
+                    <td class="right">
+
+                        @Html.DisplayFor(modelItem => item.Precio)
+                    </td>
+
+                    <td class="right">
+                        @Html.DisplayFor(modelItem => item.SubTotal)
+                    </td>
+
+
+                </tr>
+            }
+        </table>
+        <div class="total">
+            <p><strong>Total:</strong>  <span>@(((decimal)Web.Utils.Carrito.Instancia.GetTotal()).ToString("C2"))</span></p>
+        </div>
+
+
+        <div class="w-100 d-flex justify-content-end">
+            <a href="@Url.Action("ConfirmarCompra", "Compra")" class="btn btn-success float-right" id="btnOrdenar">
+                <span class="glyphicon glyphicon-floppy-save"></span>
+                ConfirmarCompra
+            </a>
+        </div>
+    }
+    </div>

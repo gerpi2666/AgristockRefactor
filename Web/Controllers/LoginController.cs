@@ -49,7 +49,18 @@ namespace Web.Controllers
                             $"con el rol {oUsuario.Perfil}");
                         TempData["mensaje"] = Util.SweetAlertHelper.Mensaje("Login",
                             "Usuario autenticado", Util.SweetAlertMessageType.success);
-                        return RedirectToAction("Index", "Home");
+
+                    foreach (var item in oUsuario.Perfil)
+                    {
+                        if (item.Id == 1)
+                        {
+                            return RedirectToAction("DashboardTienda", "Home");
+                        }
+                    }
+
+
+
+                    return RedirectToAction("Index", "Home");
                     }
                     else
                     {

@@ -107,10 +107,12 @@
 
 
 
-            <li>
-                <a href="@Url.Action("CompraCliente", "Compra")" class="icon-link">
-                    @Html.Raw("<span class='material-symbols-outlined icon-large icon-compra'>shopping_bag</span>")
-                </a>
+            <li class="nav-item" id="cantidadProductos">
+                @*<a href="@Url.Action("CompraCliente", "Compra")" class="icon-link">
+                @Html.Raw("<span class='material-symbols-outlined icon-large icon-compra'>shopping_bag</span>")
+            </a>*@
+                @Html.Partial("~/Views/Compra/_CompraCantidad.cshtml")
+
             </li>
 
 

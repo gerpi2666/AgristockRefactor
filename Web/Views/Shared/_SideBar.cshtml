@@ -14,25 +14,6 @@
             <span class="material-symbols-outlined"> grid_view </span>
             @Html.ActionLink("Dashboard", "DashboardTienda", "Home", null, new { @class = "primary" })
 
-
-
-        </div>
-        <div>
-            <span class="material-symbols-outlined"> inventory </span>
-            @Html.ActionLink("Products", "ProductoTienda", "Producto", null, new { @class = "" })
-            @*<h3>Products</h3>*@
-        </div>
-
-        <div>
-            <span class="material-symbols-outlined"> inventory </span>
-            @Html.ActionLink("Pedidos Tienda", "CompraTienda", "Compra", null, new { @class = "" })
-            @*<h3>Products</h3>*@
-        </div>
-
-        <div>
-            <span class="material-symbols-outlined"> inventory </span>
-            @Html.ActionLink("Productos Admin", "ProductoAdmin", "Producto", null, new { @class = "" })
-            @*<h3>Products</h3>*@
         </div>
 
         @*
@@ -69,5 +50,76 @@
                 <span class="material-symbols-outlined"> logout </span>
                 <h3>Logout</h3>
             </a>*@
+
+
+        @if (Session["User"] != null)
+        {
+
+            Infraestructure.Models.Usuario oUsuario;
+
+            List<Infraestructure.Models.Perfil> lista = new List<Infraestructure.Models.Perfil>();
+
+            //Validar si existe en la sesión
+            oUsuario = (Infraestructure.Models.Usuario)Session["User"];
+            if (oUsuario != null)
+            {
+                lista = oUsuario.Perfil.ToList();
+            }
+
+            if (lista != null)
+            {
+                //si no es admin entonces es vendedor
+                bool admin = false;
+
+                foreach (var item in lista)
+                {
+                    //if (item.Descripcion == "Vendedor")
+                    // si la bandera solo cuenta 1 quiere decir que el usuario es solo Cliente
+                    // si cuenta 2 es Cliente y Vendedor a la vez
+
+                    if (item.Descripcion == "Administrador")
+                    {
+                        admin = true;
+                    }
+
+                    if (item.Descripcion == "Vendedor")
+                    {
+                        admin = false;
+                    }
+
+                }
+                if (admin)
+                {
+                    <div>
+                        <span class="material-symbols-outlined"> inventory </span>
+                        @Html.ActionLink("Productos Admin", "ProductoAdmin", "Producto", null, new { @class = "" })
+                        @*<h3>Products</h3>*@
+                    </div>
+
+                    <div>
+                        <span class="material-symbols-outlined"> group </span>
+                        @Html.ActionLink("Usuarios", "ProductoAdmin", "Producto", null, new { @class = "" })
+                    </div>
+                }
+                if (!admin)
+                {
+                    <div>
+                        <span class="material-symbols-outlined"> inventory </span>
+                        @Html.ActionLink("Productos", "ProductoTienda", "Producto", null, new { @class = "" })
+                        @*<h3>Products</h3>*@
+                    </div>
+
+                    <div>
+                        <span class="material-symbols-outlined"> inventory </span>
+                        @Html.ActionLink("Pedidos Tienda", "CompraTienda", "Compra", null, new { @class = "" })
+                        @*<h3>Products</h3>*@
+                    </div>
+                }
+            }
+
+        }
+
+
+
     </div>
 </aside>

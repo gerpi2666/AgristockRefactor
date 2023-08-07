@@ -1,55 +1,77 @@
-﻿@model IEnumerable<Infraestructure.Models.Compra>
+﻿@model Infraestructure.Models.Compra
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (Session["User"] != null)
+{
+    Infraestructure.Models.Usuario oUsuario;
+    oUsuario = (Infraestructure.Models.Usuario)Session["User"];
+}
+
+<div class="content mt-4">
+
+    <div class="form-horizontal">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-form-label " for="Id">Usuario</label>
+                    <div class="col-md-12">
+                        @if (Session["User"] != null)
+                        {
+                            Infraestructure.Models.Usuario oUsuario;
+                            oUsuario = (Infraestructure.Models.Usuario)Session["User"];
+                            @Html.TextBoxFor(oUsuario => oUsuario.Id, htmlAttributes: new { @class = "form-control", @Value = oUsuario.Nombre, @readonly = "readonly" })
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="form-group">
+                    @*@Html.LabelFor(model => model.FechaHora, htmlAttributes: new { @class = "col-form-label" })*@
+                    <label class="col-form-label " for="Id">Fecha de la orden</label>
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.FechaHora, htmlAttributes: new { @class = "form-control", @Value = DateTime.Now.ToString("yyyy-MM-dd"), @readonly = "readonly" })
+                        @Html.ValidationMessageFor(model => model.FechaHora, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 
-<div class="content">
-    <h1 id="producto-titulo" class="producto-titulo text-center mb-5" style=" color: var(--gray-nav) !important; font-size: 2.3rem !important;">Pedidos</h1>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th># Pedido</th>
-                <th>Fecha del Pedido</th>
-                @*<th>Observaciones</th>
-                    <th>Direccion de entrega</th>*@
-                <th>Estado</th>
+    <hr />
 
-                <th>Detalle</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@Html.DisplayFor(model => item.Id)</td>
-                    <td>@Html.DisplayFor(model => item.FechaHora)</td>
-                    @*<td>@Html.DisplayFor(model => item.Observaciones)</td>
-                        <td>@Html.DisplayFor(model => item.Direccion)</td>*@
-                    @if (item.Estado == 3)
-                    {
-                        <td><span class="text-success">Entregado</span></td>
+    <div id="resultadoDetalle">
+        @if (Web.Utils.Carrito.Instancia.Items.Count() > 0)
+        {
+            @Html.Partial("~/Views/Compra/_DetalleCompra.cshtml",
+            (List<Web.ViewModel.ViewModelDetalleCompra>)ViewBag.DetalleOrden
+           )
+        }
+        else
+        {
+            <div class="alert alert-warning d-flex align-items-center" role="alert">
+                La orden no tiene productos asignados
 
-                    }
-                    @if (item.Estado == 2)
-                    {
-                        <td>En camino</td>
+            </div>
+        }
+    </div>
 
-                    }
-                    @if (item.Estado == 1)
-                    {
-                        <td>Preparando Pedido</td>
-                    }
-
-                    <td><a href="@Url.Action("Details", "Compra", new {id=item.Id})" class="btn btn-info text-white">Detalle</a></td>
-
-                </tr>
-            }
-        </tbody>
-    </table>
+    <hr />
+    <!-- Submit -->
+    <div class="w-100 d-flex justify-content-end">
+        <a href="@Url.Action("ConfirmarCompra", "Compra", new { detalleOrden = ViewBag.DetalleOrden })" class="btn btn-success float-right" id="btnOrdenar">
+            <span class="glyphicon glyphicon-floppy-save"></span>
+            Guardar
+        </a>
+    </div>
 
 </div>
+
+

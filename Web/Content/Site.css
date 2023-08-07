@@ -595,6 +595,7 @@ main {
 
 .card {
     margin-top: 1rem;
+    background: #f2f2f2 !important;
 }
 
 .carta-sombra:hover {
@@ -603,7 +604,8 @@ main {
 
 
 .card img {
-    height: 250px !important;
+    height: 260px !important;
+   /* width: 90%;*/
 }
 
 .imagen-detalle {
@@ -643,6 +645,41 @@ main {
     color: var(--gray-nav);
     font-size: 1rem !important;
 }
+
+
+.filter-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f2f2f2;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid #ccc !important;
+}
+
+.filter-option {
+    margin-right: 20px;
+}
+
+    .filter-option label {
+        font-weight: bold;
+    }
+
+    .filter-option select {
+        padding: 5px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+    }
+
+.contenedor-Productos {
+    background-color: #f2f2f2;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
 /* ===================== Media queries ===================== */
 @media screen and (max-width: 1200px) {
     .contenedor {
@@ -1246,6 +1283,46 @@ div.form-information > div > input[type=submit] {
     border: 1px solid var(--color-primary) !important;
     border-radius: 5px;
 }
+
+/* ======================= resumen de orden de compra  =================*/
+.invoice {
+    width: 80%;
+    margin: auto;
+    border: 2px solid #000;
+    padding: 20px;
+}
+
+
+.user-details {
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.total {
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.payment {
+    text-align: right;
+}
+
+
 /* ======================= media query para Login  =================*/
 @media screen and (max-width: 768px) {
     .view-container {
