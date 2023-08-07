@@ -19,28 +19,38 @@
                  (List<SelectListItem>)ViewBag.ListaProvincias,
                  "Seleccione una provincia",
                  new { @class = "form-control", id = "IdProvincia", onchange = "cargarCantones()" })
+                        @Html.ValidationMessageFor(model => model.Provincia, "", new { @class = "text-danger" })
+
                     </div>
 
                     <div class="d-flex flex-row  align-items-center mb-3">
                         <span style="font-size: 1.1rem !important; margin-right: 6.2rem;">Cantón</span>
                         @Html.DropDownList("Canton", Enumerable.Empty<SelectListItem>(), "Seleccione un cantón", new { @class = "form-control", id = "IdCanton", onchange = "cargarDistritos()" })
+                        @Html.ValidationMessageFor(model => model.Canton, "", new { @class = "text-danger" })
+
                     </div>
 
                     <div class="d-flex flex-row  align-items-center mb-3">
                         <span style="font-size: 1.1rem !important; margin-right: 6.5rem; ">Distrito</span>
                         @Html.DropDownList("Distrito", Enumerable.Empty<SelectListItem>(), "Seleccione un distrito", new { @class = "form-control", id = "IdDistrito" })
+                        @Html.ValidationMessageFor(model => model.Distrito, "", new { @class = "text-danger" })
+
                     </div>
 
                     <div class="d-flex flex-row  align-items-center mb-3">
                         <span style="font-size: 1.1rem !important; margin-right: 2.6rem; ">Código postal</span>
-                        @Html.EditorFor(model => model.CodPostal, new { htmlAttributes = new { @class = "", placeholder = "", id = "CodPostal"} })
+                        @Html.EditorFor(model => model.CodPostal, new { htmlAttributes = new { @class = "", placeholder = "", id = "CodPostal" } })
                         @Html.ValidationMessageFor(model => model.CodPostal, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.CodPostal, "", new { @class = "text-danger" })
+
                     </div>
 
                     <div class="d-flex flex-row  align-items-center mb-3">
                         <span style="font-size: 1.1rem !important; margin-right: 1.1rem; ">Dirección exacta</span>
                         @Html.EditorFor(model => model.DireccionExacta, new { htmlAttributes = new { @class = "", placeholder = "", id = "DireccionExacta" } })
                         @Html.ValidationMessageFor(model => model.DireccionExacta, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.DireccionExacta, "", new { @class = "text-danger" })
+
                     </div>
 
                 </div>

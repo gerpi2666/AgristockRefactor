@@ -60,7 +60,17 @@ namespace Web.Controllers
 
         public ActionResult ConfirmarCompra(List<Web.ViewModel.ViewModelDetalleCompra> detalleOrden)
         {
+            Usuario usuario = Session["User"] as Usuario;
             ViewBag.DetalleOrden = Carrito.Instancia.Items; ;
+            IServiceMetodoPago serviceMetodoPago = new ServiceMetodoPago();
+            ViewBag.MetodoPago = serviceMetodoPago.GetMetodoPagoById(usuario.Id);
+            List<string> direciones = new List<string>();
+            foreach(var direccion  in usuario.Direccion)
+            {
+                direciones.Add(direccion.Provincia + ", " + direccion.Canton + ", " + direccion.Distrito + ", " + direccion.DireccionExacta + ", " + direccion.CodPostal);
+            }
+            ViewBag.Direccion =direciones;
+
             return View(Carrito.Instancia.Items);
         }
 
@@ -95,15 +105,22 @@ namespace Web.Controllers
         }
 
         // GET: Compra/Edit/5
-        public ActionResult Save(Compra compra)
+        public ActionResult Save(int metodoPago, string observaciones, string direccion)
         {
+            Compra compra = new Compra();
+            IServiceMetodoPago serviceMetodoPago = new ServiceMetodoPago();
             IServiceProducto serviceProducto = new ServiceProducto();
             Producto producto = null;
             Usuario usuario = Session["User"] as Usuario;
+            MetodoPago me = serviceMetodoPago.GetByID(metodoPago);
 
-            if (compra != null)
-            {
-                List<DetalleCompra> listaDetalle = null;
+            compra.IdMetodoPago = me.Id;
+            compra.Estado = 1;
+            compra.Observaciones = observaciones;
+            compra.Direccion = direccion;
+
+
+                List<DetalleCompra> listaDetalle = new List<DetalleCompra>();
                 var car = Carrito.Instancia.Items;
                 foreach (var item in car)
                 {
@@ -119,7 +136,6 @@ namespace Web.Controllers
                     producto.Stock = producto.Stock - item.Cantidad;
                     serviceProducto.Actualizar(producto);
 
-                    compra.DetalleCompra.Add(ordenDetalle);
                     listaDetalle.Add(ordenDetalle);
 
                 }
@@ -128,13 +144,11 @@ namespace Web.Controllers
                 IServiceCompra serviceCompra = new ServiceCompra();
                 serviceCompra.Crear(compra, listaDetalle);
 
-                return RedirectToAction("ProductoAdmin");
-            }
-            else
-            {
                 return RedirectToAction("Index");
-            }
+           
         }
+
+       
 
         public ActionResult ordenarProducto(int? idProducto)
         {

@@ -26,6 +26,7 @@ namespace Infraestructure.Repository
                     usuario = ctx.Usuario
                         .Where(p => p.Id == id)
                         .Include(c => c.Perfil)
+                        .Include(a=> a.Direccion)
                         .FirstOrDefault<Usuario>();
 
                 }

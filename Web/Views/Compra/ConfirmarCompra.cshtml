@@ -17,13 +17,32 @@
             <p><strong>Nombre del Usuario:</strong> @oUsuario.Nombre</p>
         }
 
-        <p><strong>Dirección de Entrega:</strong> Calle 123, Ciudad, País</p>
-        <p><strong>Método de Pago:</strong> Tarjeta de Crédito</p>
+        <p>
+            <strong>Dirección de Entrega:</strong><select name="metodoPago" id="Direccion">
+                @foreach (var direccion in ViewBag.Direccion)
+                {
+                    <option value="@direccion">@direccion</option>
+                }
+            </select>
+        </p>
+        <p>
+            <strong>Método de Pago:</strong> <select name="metodoPago" id="metodoPago">
+                @foreach (var metodoPago in ViewBag.MetodoPago)
+                {
+                    <option value="@metodoPago.Id">@metodoPago.NumCuenta</option>
+                }
+            </select>
+        </p>
+    </div>
+    <div class="observations mt-3">
+        <strong><label for="observaciones">Observaciones:</label></strong>
+        <textarea id="observaciones" name="observaciones" style="width: 100%; height: 50%; font-size:12px;"></textarea>
+
     </div>
 
     @if (Web.Utils.Carrito.Instancia.Items.Count() > 0)
     {
-    
+
         <table class="mt-3">
             <tr>
                 <th>
@@ -78,4 +97,31 @@
             </a>
         </div>
     }
-    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Manejador de evento click para el botón de eliminar
+        $("#btnOrdenar").click(function () {
+            var metodoPago = $("#metodoPago").val();
+            var direccion = $("#Direccion").val();
+            var observaciones = $("#observaciones").val();
+
+            // Realiza la petición Ajax para eliminar el producto
+            $.ajax({
+                url: "/Compra/Save",
+                type: "POST",
+                data: { metodoPago: metodoPago, observaciones: observaciones, direccion: direccion },
+                success: function (data) {
+                    // Muestra el resultado de la eliminación en el elemento div
+                    $("#resultado").text(data);
+                    console.log("Inventario actualiado")
+                },
+                error: function () {
+                    $("#resultado").text("Error al eliminar el producto.");
+                }
+            });
+        });
+    });
+</script>

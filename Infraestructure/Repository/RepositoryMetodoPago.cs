@@ -11,6 +11,33 @@ namespace Infraestructure.Repository
 {
     public class RepositoryMetodoPago : IRepositoryMetodoPago
     {
+        public MetodoPago GetByID(int id)
+        {
+            try
+            {
+                MetodoPago metodoPago = null;
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    metodoPago = ctx.MetodoPago.Find(id);
+
+                }
+                return metodoPago;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
+
         public List<MetodoPago> GetMetodoPagoById(int id)
         {
             try
