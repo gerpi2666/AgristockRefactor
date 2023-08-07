@@ -39,26 +39,82 @@
                                     menu
                                 </span>
                             </button>
-                            <div class="theme-toggler">
-                                <span class="material-symbols-outlined active">
-                                    light_mode
-                                </span>
-                                <span class="material-symbols-outlined">
-                                    dark_mode
-                                </span>
-                            </div>
+                           
                             <div class="profile">
+
                                 <div class="info">
-                                    <p>
-                                        Hey, <b>Maikel</b>
-                                        <small class="text-muted">Admin</small>
-                                    </p>
+
+                                    @if (Session["User"] != null)
+                                    {
+
+
+                                        Infraestructure.Models.Usuario oUsuario;
+
+                                        List<Infraestructure.Models.Perfil> lista = new List<Infraestructure.Models.Perfil>();
+
+                                        //Validar si existe en la sesión
+                                        oUsuario = (Infraestructure.Models.Usuario)Session["User"];
+
+
+
+
+                                        if (oUsuario != null)
+                                        {
+                                            lista = oUsuario.Perfil.ToList();
+                                        }
+
+
+
+                                        if (lista != null)
+                                        {
+
+                                            foreach (var item in lista)
+                                            {
+
+                                                if (item.Descripcion == "Administrador")
+                                                {
+                                                    <p>
+                                                        Hey, <b>@oUsuario.Nombre</b>
+
+                                                        <small class="text-muted">Admin</small>
+                                                    </p>
+                                                }
+
+                                                if (item.Descripcion == "Vendedor")
+                                                {
+                                                    <p>
+                                                        Hey, <b>@oUsuario.Nombre</b>
+                                                    </p>
+                                                }
+
+                                            }
+
+                                        }
+                                    }
+
                                 </div>
-                                <div class="profile-photo">
+                                <div class="theme-toggler">
+                                    <span class="material-symbols-outlined active">
+                                        light_mode
+                                    </span>
                                     <span class="material-symbols-outlined">
-                                        account_circle
+                                        dark_mode
                                     </span>
                                 </div>
+                                @*<div class="profile-photo">
+            <span class="material-symbols-outlined">
+                account_circle
+            </span>
+        </div>*@
+
+                                @if (Session["User"] != null)
+                                {
+                                    <div>
+                                        <a href="@Url.Action("Logout", "Login")" class="">
+                                            @Html.Raw("<span class='material-symbols-outlined icon-large'>logout</span>")
+                                        </a>
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
@@ -87,22 +143,11 @@
         $(document).ready(function () {
             $('#tb_producto').DataTable();
         });
-    </script>
-
-
-    @RenderSection("scripts", required: false)
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="~/Scripts/bootstrap.bundle.js"></script>
-    <script src="~/Scripts/script.js?v=1.0"></script>
-
-
-    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
-    <script>
         $(document).ready(function () {
-            $('#tb_producto').DataTable();
+            $('#tb_usuario').DataTable();
         });
     </script>
+
+
 </body>
 </html>

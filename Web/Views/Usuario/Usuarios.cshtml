@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Infraestructure.Models.Usuario>
+
+@{
+    ViewBag.Title = "Usuarios";
+    Layout = "~/Views/Shared/_LayoutTienda.cshtml";
+}
+
+
+<div class="" style="width: 80%; margin: 0 auto;">
+
+    <h1 id="producto-titulo" class="producto-titulo text-center mb-5" style=" color: var(--gray-nav) !important; font-size: 2.3rem !important;"></h1>
+    <a href="@Url.Action("Create","Producto")" class="btn  text-white btn flex-grow-1 pt-2 mt-3" style="background: var(--color-secondary-variant) ">Crear</a>
+
+    <div class="card">
+
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-sm-12">
+
+                    @*<table class="table table-bordered" id="tb_empleados">*@
+
+                    <table class="display" id="tb_usuario" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Teléfono</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                    <tr>
+                                        <td>@Html.DisplayFor(model => item.Nombre)</td>
+                                        <td>@Html.DisplayFor(model => item.Correo)</td>
+                                        <td>@Html.DisplayFor(model => item.Telefono)</td>
+
+                                        @if (item.Activo == true)
+                                        {
+                                            <td>Activo</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Inactivo</td>
+                                        }
+
+
+                                        <td>
+                                            <a href="@Url.Action("z", "z", new { id = item.Id })" class="btn  text-white btn flex-grow-1 pt-2" style="background: green ">
+                                                <span class="material-symbols-outlined">
+                                                    info
+                                                </span>
+                                            </a>
+                                            <a href="@Url.Action("Edit", "Usuario", new { id = item.Id })" class="btn  text-white btn flex-grow-1 pt-2" style="background: var(--color-secondary-variant) ">
+                                                <span class="material-symbols-outlined">
+                                                    edit
+                                                </span>
+                                            </a>
+                                            <a class="btn  text-white btn flex-grow-1 pt-2" style="background: red ">
+                                                <span class="btnEliminar material-symbols-outlined text-white" data-id="@Html.DisplayFor(m=> item.Id)">delete</span>
+                                            </a>
+                                        </td>
+                                    </tr>                                
+                            }
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>

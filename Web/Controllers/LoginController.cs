@@ -50,6 +50,11 @@ namespace Web.Controllers
                         TempData["mensaje"] = Util.SweetAlertHelper.Mensaje("Login",
                             "Usuario autenticado", Util.SweetAlertMessageType.success);
 
+                    if (oUsuario.Activo == false)
+                    {
+                        return RedirectToAction("UnAuthorized", "Login");
+                    }
+
                     foreach (var item in oUsuario.Perfil)
                     {
                         if (item.Id == 1)

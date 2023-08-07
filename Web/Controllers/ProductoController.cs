@@ -8,6 +8,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Web.Security;
 
 namespace Web.Controllers
 {
@@ -54,6 +55,7 @@ namespace Web.Controllers
            
         }
 
+        [CustomAuthorize((int)Perfil.Vendedor)]
         public ActionResult ProductoTienda()
         {
             IServiceProducto _ServiceProducto = new ServiceProducto();
@@ -68,6 +70,7 @@ namespace Web.Controllers
             return View(lista);
         }
 
+        [CustomAuthorize((int)Perfil.Vendedor)]
         public ActionResult ProductoAdminTienda()
         {
             Usuario usuario = Session["User"] as Usuario;

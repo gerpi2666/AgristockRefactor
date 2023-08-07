@@ -1,7 +1,10 @@
 ﻿using ApplicationCore.Services;
 using Infraestructure.Models;
+using Infraestructure.Repository;
+using Infraestructure.Utils;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
@@ -18,8 +21,9 @@ namespace Web.Controllers
     public class UsuarioController : Controller
     {
         // GET: Usuario
+        [CustomAuthorize((int)Perfil.Cliente, (int)Perfil.Vendedor)]
         [HttpGet]
-        public async Task<ActionResult> Perfil()
+        public async Task<ActionResult> PerfilUsuario()
         {
             ViewBag.ListaProvincias = await ListaProvinciasAsync();          
 
@@ -33,6 +37,13 @@ namespace Web.Controllers
             return View();
         }
 
+        [CustomAuthorize((int)Perfil.Administrador)]
+        public ActionResult Usuarios()
+        {
+            IServiceUsuario _ServiceUsuario = new ServiceUsuario(); 
+            IEnumerable<Usuario> lista = _ServiceUsuario.GetUsuarios();
+            return View(lista);
+        }
 
 
 
@@ -84,6 +95,42 @@ namespace Web.Controllers
             }
         }
 
+
+
+        [HttpPost]
+        public ActionResult Update(Usuario usuario)
+        {
+            IServiceUsuario _ServiceUsuario = new ServiceUsuario();
+
+            try
+            {
+
+                if (ModelState.IsValid)
+                {
+
+                    Usuario oUsuario = _ServiceUsuario.Save(usuario);
+                   
+                }
+
+                return RedirectToAction("Usuarios", "Usuario");
+
+            }
+            catch (DbEntityValidationException ex)
+            {
+                // Capturar errores de validación y mostrar detalles
+                foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                {
+                    foreach (var validationError in entityValidationErrors.ValidationErrors)
+                    {
+                        Console.WriteLine($"Entity: {entityValidationErrors.Entry.Entity.GetType().Name}, Property: {validationError.PropertyName}, Error: {validationError.ErrorMessage}");
+                    }
+                }
+                throw;
+            }
+        }
+
+
+
         private async Task<List<SelectListItem>> ListaProvinciasAsync()
         {
             string provinciasJsonUrl = "https://ubicaciones.paginasweb.cr/provincias.json";
@@ -123,6 +170,40 @@ namespace Web.Controllers
             List<MetodoPago> metodoPago = _ServiceMetodoPago.GetMetodoPagoById(id);
 
             return metodoPago;
+        }
+
+
+        public ActionResult Edit(int? id)
+        {
+            IServiceUsuario _ServiceLibro = new ServiceUsuario ();
+            Usuario usuario = null;
+            try
+            {
+                //Si es null el parametro
+                if (id == null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                usuario = _ServiceLibro.GetUsuarioById(Convert.ToInt32(id));
+                if (usuario == null)
+                {
+                    TempData["Message"] = "No existe el usuario solicitado";
+                    TempData["Redirect"] = "Usuario";
+                    TempData["Redirect-Action"] = "Index";
+                    //Redireccion a la vista del error
+                    return RedirectToAction("Default", "Error");
+
+                }
+                //ViewBag.IdAutor = ListaAutores(libro.IdAutor);
+                //ViewBag.IdCategoria = ListaCategorias(libro.Categoria);
+                return View(usuario);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos!" + ex.Message;
+                return RedirectToAction("Default", "Error");
+            }
         }
     }
 }
