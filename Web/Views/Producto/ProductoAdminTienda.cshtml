@@ -19,7 +19,7 @@
 
                     @*<table class="table table-bordered" id="tb_empleados">*@
 
-                    <table class="display" id="tb_producto" style="width:100%">
+                    <table class="display" id="tb_productoTienda" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Nombre</th>
@@ -35,33 +35,37 @@
                             {
                                 if (item.Borrado == false)
                                 {
-                            <tr>
-                                <td>@Html.DisplayFor(model => item.Nombre)</td>
-                                <td>@Html.DisplayFor(model => item.Id)</td>
-                                <td>@Html.DisplayFor(model => item.Precio)</td>
-                                <td>
-                                    <p>
-                                        <i class="fa-solid fa-box"><b>Stock</b></i> <i class=""> @Html.TextBoxFor(model => item.Stock, new { @class = "form-control", type = "number", min = "0", id = "stock" + item.Id })</i>
-                                    </p>
-                                </td>
-                                <td class="">
-                                    <a href="" class="btn  text-white btn flex-grow-1 pt-2" style="background: green ">
-                                        <span class="btnGuardar material-symbols-outlined" data-id="@Html.DisplayFor(m=> item.Id)">
-                                            save
-                                        </span>
-                                    </a>
+                                    <tr>
+                                        <td>@Html.DisplayFor(model => item.Nombre)</td>
+                                        <td>@Html.DisplayFor(model => item.Id)</td>
+                                        <td>@Html.DisplayFor(model => item.Precio)</td>
+                                        <td>
+                                            <p>
+                                                <i class="fa-solid fa-box"><b>Stock</b></i> <i class=""> @Html.TextBoxFor(model => item.Stock, new { @class = "form-control", type = "number", min = "0", id = "stock" + item.Id })</i>
+                                            </p>
+                                        </td>
+                                        <td class="">
+                                            <a href="" class="btn  text-white btn flex-grow-1 pt-2" style="background: green ">
+                                                <span class="btnGuardar material-symbols-outlined" data-id="@Html.DisplayFor(m=> item.Id)">
+                                                    save
+                                                </span>
+                                            </a>
+                                            <a href="@Url.Action("Details", "Producto", new { id = item.Id })" class="btn  text-white btn flex-grow-1 pt-2" style="background: var(--color-secondary-variant) ">
+                                                <span class="material-symbols-outlined">
+                                                    info
+                                                </span>
+                                            </a>
+                                            <a href="@Url.Action("Edit", "Producto", new { id = item.Id })" class="btn  text-white btn flex-grow-1 pt-2" style="background: var(--color-danger) ">
+                                                <span class="material-symbols-outlined">
+                                                    edit
+                                                </span>
+                                            </a>
 
-                                    <a href="@Url.Action("Edit", "Producto", new { id = item.Id })" class="btn  text-white btn flex-grow-1 pt-2" style="background: var(--color-secondary-variant) ">
-                                        <span class="material-symbols-outlined">
-                                            edit
-                                        </span>
-                                    </a>
-
-                                    <a class="btn  text-white btn flex-grow-1 pt-2" style="background: red ">
-                                        <span class="btnEliminar material-symbols-outlined text-white" data-id="@Html.DisplayFor(m=> item.Id)">delete</span>
-                                    </a>
-                                </td>
-                            </tr>
+                                            <a class="btn  text-white btn flex-grow-1 pt-2" style="background: red ">
+                                                <span class="btnEliminar material-symbols-outlined text-white" data-id="@Html.DisplayFor(m=> item.Id)">delete</span>
+                                            </a>
+                                        </td>
+                                    </tr>
                                 }
                             }
                         </tbody>
@@ -77,7 +81,16 @@
 
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
 <script>
+
+    $(document).ready(function () {
+        $('#tb_productoTienda').DataTable();
+    });
+
     $(document).ready(function () {
         // Manejador de evento click para el botón de eliminar
         $(".btnEliminar").click(function () {
