@@ -12,5 +12,7 @@ namespace ApplicationCore.Services
         IEnumerable<Mensaje> GetMensajesByChat(int idChat);
         IEnumerable<Mensaje> GetMensajesByRemitente(int idUser);
         Mensaje GetMensajeById(int id);
+        Task<Mensaje> Crear(Mensaje mensaje, ChatProducto chat, Usuario usuario);
+
     }
 }

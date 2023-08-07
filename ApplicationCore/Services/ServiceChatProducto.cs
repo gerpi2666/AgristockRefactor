@@ -10,6 +10,12 @@ namespace ApplicationCore.Services
 {
     public class ServiceChatProducto : IServiceChatProducto
     {
+        public Task<ChatProducto> Crear(ChatProducto chat, Mensaje mensaje)
+        {
+            IRepositoryChatProducto repository = new RepositoryChatProducto();
+            return repository.Crear(chat, mensaje);
+        }
+
         public ChatProducto GetChatById(int id)
         {
             IRepositoryChatProducto repository = new RepositoryChatProducto();

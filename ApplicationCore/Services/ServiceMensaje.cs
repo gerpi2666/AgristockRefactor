@@ -10,7 +10,7 @@ namespace ApplicationCore.Services
 {
     public class ServiceMensaje : IServiceMensaje
     {
-        public Mensaje GetMensajeById(int id)
+             public Mensaje GetMensajeById(int id)
         {
             IRepositoryMensaje repository = new RepositoryMensaje();
             return repository.GetMensajeById(id);
@@ -26,6 +26,12 @@ namespace ApplicationCore.Services
         {
             IRepositoryMensaje repository = new RepositoryMensaje();
             return repository.GetMensajesByRemitente(idUser);
+        }
+
+        Task<Mensaje> IServiceMensaje.Crear(Mensaje mensaje, ChatProducto chat, Usuario usuario)
+        {
+            IRepositoryMensaje repository = new RepositoryMensaje();
+            return repository.Crear(mensaje, chat, usuario);
         }
     }
 }
