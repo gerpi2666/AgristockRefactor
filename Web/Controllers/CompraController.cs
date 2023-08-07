@@ -55,11 +55,14 @@ namespace Web.Controllers
             return View(compra);
         }
 
-        public ActionResult CompraTienda(int? idTienda)
+        public ActionResult CompraTienda()
         {
-            ViewBag.idTienda =1;
+            Usuario usuario = Session["User"] as Usuario;
+            IServiceTienda serviceTienda = new ServiceTienda();
+            Tienda tienda = serviceTienda.GetByVendedor(usuario.Id);
+            ViewBag.idTienda =tienda.Id;
             IServiceCompra _ServiceCompra = new ServiceCompra();
-            IEnumerable<Compra> compra = _ServiceCompra.GetComprasByTienda(1);
+            IEnumerable<Compra> compra = _ServiceCompra.GetComprasByTienda(tienda.Id);
 
             return View(compra);
         }
@@ -83,7 +86,8 @@ namespace Web.Controllers
         // GET: Compra/Edit/5
         public ActionResult Save(Compra compra)
         {
-
+            IServiceProducto serviceProducto = new ServiceProducto();
+            Producto producto = null;
             Usuario usuario = Session["User"] as Usuario;
 
             if (compra != null)
@@ -99,6 +103,10 @@ namespace Web.Controllers
                     ordenDetalle.SubTotal = item.SubTotal;
                     ordenDetalle.Iva = item.SubTotal * 0.13;
                     ordenDetalle.Total = item.SubTotal + (item.SubTotal * 0.13);
+
+                    producto=serviceProducto.GetProductoById(item.IdProducto);
+                    producto.Stock = producto.Stock - item.Cantidad;
+                    serviceProducto.Actualizar(producto);
 
                     compra.DetalleCompra.Add(ordenDetalle);
                     listaDetalle.Add(ordenDetalle);

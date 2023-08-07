@@ -1,99 +1,86 @@
-﻿
-@model Infraestructure.Models.Producto
+﻿@model IEnumerable<Infraestructure.Models.Producto>
 
 @{
-    ViewBag.Title = "Details";
-}
-
-@{
+    ViewBag.Title = "Inventario";
     Layout = "~/Views/Shared/_LayoutTienda.cshtml";
 }
 
-<div>
-    <div class="content">
-        <div class="row g-3">
-            <div class="col">
-                <div class=" mb-3" style="max-width: auto;">
+<h2>Inventario</h2>
 
-                    <div class="row g-0 d-flex align-items-start">
+<div class="content">
+    <div class="row g-3">
+        <div class="col">
+            <div class=" mb-3" style="max-width: auto;">
+                <div class="row g-0 d-flex align-items-start">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Detalles</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                if (item.Borrado == false)
+                                {
+                                    <tr>
+                                        <td class="p-0 m-0">
+                                            <img  src="data:image/jpeg;charset=utf-8;base64,@Convert.ToBase64String(item.Imagen)"
+                                                 alt="Libro @Html.DisplayFor(model => item.Nombre)"
+                                                 class="img-fluid rounded-start h-25 w-25 " />
+                                        </td>
+                                        <td>
+                                            <p class="card-text">
+                                                <span class="card-title text-black">@Html.DisplayFor(model => item.Nombre)</span>
+                                            </p>
+                                                                                   
+                                            <p class="card-text">
+                                                <i class="fa-solid fa-box"><b>SKU: </b></i> <i class="">@Html.DisplayFor(model => item.Id)</i>
+                                            </p>
+                                            <p>
+                                                <i class="fa-solid fa-box"><b>Stock</b></i> <i class=""> @Html.TextBoxFor(model => item.Stock, new { @class = "form-control", type = "number", min = "0",id="stock"+item.Id })</i>
+                                            </p>
+                                          
+                                            <p class="card-text fw-bold precio" style="color: #2596be; font-weight: 500;">
+                                                $@Html.DisplayFor(model => item.Precio)
+                                            </p>
+                                        </td>
+                                        <td class="">
+                                            <a href="" class="btn  text-white btn flex-grow-1 pt-2" style="background: green ">
+                                                <span class="btnGuardar material-symbols-outlined" data-id="@Html.DisplayFor(m=> item.Id)">
+                                                    save
+                                                </span>
+                                            </a>
 
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <td>Producto</td>
-                                    <td>Detalles</td>
-                                    <td>Acciones</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="p-0 m-0">
-                                        <img class="w-50 h-50" src="data:image/jpeg;charset=utf-8;base64,@Convert.ToBase64String(Model.Imagen)"
-                                             alt="Libro @Html.DisplayFor(model => model.Nombre)"
-                                             class="img-fluid rounded-start imagen-detalle " />
+                                            <a href="@Url.Action("Edit", "Producto", new { id = item.Id })" class="btn  text-white btn flex-grow-1 pt-2" style="background: var(--color-secondary-variant) ">
+                                                <span class="material-symbols-outlined">
+                                                    edit
+                                                </span>
+                                            </a>
 
-                                    </td>
-
-                                    <td>
-                                        <p class="card-text">
-                                            <span class="card-title text-black">@Html.DisplayFor(model => model.Nombre)</span>
-                                        </p>
-                                        <p class="card-text">
-                                            <i class="fa-solid fa-box detail-descrip">  @Html.DisplayFor(model => model.Descripcion)</i>
-                                        </p>
-
-                                        <p class="card-text">
-                                            <i class="fa-solid fa-box"> </i> <b>@Html.DisplayNameFor(model => model.Estado):</b>  @Html.DisplayFor(model => model.Estado)
-                                        </p>
-                                        <p class="card-text">
-                                            <i class="fa-solid fa-box"><b>SKU: </b> </i> <i class="">@Html.DisplayFor(model => model.Id)</i>
-                                        </p>
-
-                                        <p>
-                                            <i class="fa-solid fa-box"><b>Estado</b> </i> <i class="">@Html.DisplayFor(model => model.Stock)</i>
-
-                                        </p>
-
-                                        <p class="card-text">
-                                            <i class="fa-solid fa-bookmark"></i> <b>@Html.DisplayNameFor(model => model.Categoria):</b> @Html.DisplayFor(model => model.Categoria.nombre)
-                                        </p>
-                                        <p class="card-text fw-bold precio" style="color: #2596be; font-weight: 500;">
-                                            $@Html.DisplayFor(model => model.Precio)
-                                        </p>
-                                    </td>
-                                    <td class="">
-                                        <button type="button" class="btn flex-grow-0 w-50 h-50 m-5" style="background: var(--color-danger) ">
-                                            <span class="material-symbols-outlined text-white">edit</span>
-                                        </button>
-                                        <button type="button" class="btn flex-grow-0 w-50 h-50 btn-danger m-5">
-                                            <span id="btnEliminar" class="material-symbols-outlined text-white" data-id="@Html.DisplayFor(m=> Model.Id)">delete</span>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-
-
-
-
-
-
-
-                    </div>
+                                            <a class="btn  text-white btn flex-grow-1 pt-2" style="background: red ">
+                                                <span class="btnEliminar material-symbols-outlined text-white" data-id="@Html.DisplayFor(m=> item.Id)">delete</span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-@*Script que ejecuta el delete*@
+<!-- Script que ejecuta el delete -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 <script>
     $(document).ready(function () {
         // Manejador de evento click para el botón de eliminar
-        $("#btnEliminar").click(function () {
+        $(".btnEliminar").click(function () {
             var productoId = $(this).data("id");
 
             // Realiza la petición Ajax para eliminar el producto
@@ -112,5 +99,26 @@
             });
         });
     });
-</script>
 
+    $(document).ready(function () {
+        // Manejador de evento click para el botón de eliminar
+        $(".btnGuardar").click(function () {
+            var productoId = $(this).data("id");
+            var stock = $("#stock" + productoId).val();
+            // Realiza la petición Ajax para eliminar el producto
+            $.ajax({
+                url: "/Producto/Inventario",
+                type: "POST",
+                data: { id: productoId, cantidad: stock },
+                success: function (data) {
+                    // Muestra el resultado de la eliminación en el elemento div
+                    $("#resultado").text(data);
+                    console.log("Inventario actualiado")
+                },
+                error: function () {
+                    $("#resultado").text("Error al eliminar el producto.");
+                }
+            });
+        });
+    });
+</script>

@@ -67,7 +67,19 @@ namespace Web.Controllers
             IEnumerable<Producto> lista = _ServiceProducto.GetProductos();
             return View(lista);
         }
-         private Usuario getUser(int id)
+
+        public ActionResult ProductoAdminTienda()
+        {
+            Usuario usuario = Session["User"] as Usuario;
+            IServiceTienda serviceTienda = new ServiceTienda();
+            Tienda tienda = serviceTienda.GetByVendedor(usuario.Id);
+
+            IServiceProducto _ServiceProducto = new ServiceProducto();
+            IEnumerable<Producto> lista = _ServiceProducto.GetProductosByTienda(tienda.Id);
+
+            return View(lista);
+        }
+        private Usuario getUser(int id)
         {
             IServiceUsuario serviceUsuario = new ServiceUsuario();
             return serviceUsuario.GetUsuarioById(id);
@@ -143,6 +155,10 @@ namespace Web.Controllers
         public ActionResult Update(Producto producto, HttpPostedFileBase ImageFile)
         {
             IServiceProducto _ServiceProducto = new ServiceProducto();
+            IServiceTienda serviceTienda = new ServiceTienda();
+            Usuario usuario = Session["User"] as Usuario;
+            Tienda store = serviceTienda.GetByVendedor(usuario.Id);
+            producto.IdProveedor = store.Id;
             Producto p = _ServiceProducto.GetProductoById(producto.Id);
             if (ImageFile != null && ImageFile.ContentLength > 0)
             {
@@ -178,15 +194,17 @@ namespace Web.Controllers
 
         public ActionResult DetalleVendedor()
         {
-            IServiceProducto _ServiceProducto = new ServiceProducto();
-            Producto producto = null;
-            //if (id == null)
-            //{
-            //    return RedirectToAction("Index");
+            Usuario usuario = Session["User"] as Usuario;
 
-            //}
-            producto = _ServiceProducto.GetProductoById(1);
-            return View(producto);
+            IEnumerable<Producto> productos = null;
+
+            IServiceTienda serviceTienda = new ServiceTienda();
+          Tienda tienda=  serviceTienda.GetByVendedor(usuario.Id);
+
+            IServiceProducto _ServiceProducto = new ServiceProducto();
+         
+            productos = _ServiceProducto.GetProductosByTienda(tienda.Id);
+            return View(productos);
         }
 
         public async Task<ActionResult> Delete(int? id)
@@ -202,5 +220,27 @@ namespace Web.Controllers
             return RedirectToAction("Index");
         }
 
+        public  ActionResult Inventario(int? id,int cantidad)
+        {
+
+            IServiceProducto _ServiceProducto = new ServiceProducto();
+            Producto producto = _ServiceProducto.GetProductoById(Convert.ToInt32(id));
+          
+           
+
+            if (producto != null)
+            {
+
+
+                producto.Stock = cantidad;
+                _ServiceProducto.Actualizar(producto);
+
+                return RedirectToAction("ProductoAdmin");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
     }
 }

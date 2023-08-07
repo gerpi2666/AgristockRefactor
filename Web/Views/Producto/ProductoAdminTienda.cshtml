@@ -1,0 +1,124 @@
+﻿@model IEnumerable<Infraestructure.Models.Producto>
+
+@{
+    ViewBag.Title = "ProductoAdminTienda";
+    Layout = "~/Views/Shared/_LayoutTienda.cshtml";
+}
+
+<div class="content">
+
+    <h1 id="producto-titulo" class="producto-titulo text-center mb-5" style=" color: var(--gray-nav) !important; font-size: 2.3rem !important;">Productos</h1>
+    <a href="@Url.Action("Create","Producto")" class="btn  text-white btn flex-grow-1 pt-2" style="background: var(--color-secondary-variant) ">Crear</a>
+
+    <div class="card">
+
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-sm-12">
+
+                    @*<table class="table table-bordered" id="tb_empleados">*@
+
+                    <table class="display" id="tb_producto" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Codigo</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
+                                <th>Acciones</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                if (item.Borrado == false)
+                                {
+                            <tr>
+                                <td>@Html.DisplayFor(model => item.Nombre)</td>
+                                <td>@Html.DisplayFor(model => item.Id)</td>
+                                <td>@Html.DisplayFor(model => item.Precio)</td>
+                                <td>
+                                    <p>
+                                        <i class="fa-solid fa-box"><b>Stock</b></i> <i class=""> @Html.TextBoxFor(model => item.Stock, new { @class = "form-control", type = "number", min = "0", id = "stock" + item.Id })</i>
+                                    </p>
+                                </td>
+                                <td class="">
+                                    <a href="" class="btn  text-white btn flex-grow-1 pt-2" style="background: green ">
+                                        <span class="btnGuardar material-symbols-outlined" data-id="@Html.DisplayFor(m=> item.Id)">
+                                            save
+                                        </span>
+                                    </a>
+
+                                    <a href="@Url.Action("Edit", "Producto", new { id = item.Id })" class="btn  text-white btn flex-grow-1 pt-2" style="background: var(--color-secondary-variant) ">
+                                        <span class="material-symbols-outlined">
+                                            edit
+                                        </span>
+                                    </a>
+
+                                    <a class="btn  text-white btn flex-grow-1 pt-2" style="background: red ">
+                                        <span class="btnEliminar material-symbols-outlined text-white" data-id="@Html.DisplayFor(m=> item.Id)">delete</span>
+                                    </a>
+                                </td>
+                            </tr>
+                                }
+                            }
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Manejador de evento click para el botón de eliminar
+        $(".btnEliminar").click(function () {
+            var productoId = $(this).data("id");
+
+            // Realiza la petición Ajax para eliminar el producto
+            $.ajax({
+                url: "/Producto/Delete",
+                type: "POST",
+                data: { id: productoId },
+                success: function (data) {
+                    // Muestra el resultado de la eliminación en el elemento div
+                    $("#resultado").text(data);
+                    console.log("Producto borrado")
+                },
+                error: function () {
+                    $("#resultado").text("Error al eliminar el producto.");
+                }
+            });
+        });
+    });
+
+    $(document).ready(function () {
+        // Manejador de evento click para el botón de eliminar
+        $(".btnGuardar").click(function () {
+            var productoId = $(this).data("id");
+            var stock = $("#stock" + productoId).val();
+            // Realiza la petición Ajax para eliminar el producto
+            $.ajax({
+                url: "/Producto/Inventario",
+                type: "POST",
+                data: { id: productoId, cantidad: stock },
+                success: function (data) {
+                    // Muestra el resultado de la eliminación en el elemento div
+                    $("#resultado").text(data);
+                    console.log("Inventario actualiado")
+                },
+                error: function () {
+                    $("#resultado").text("Error al eliminar el producto.");
+                }
+            });
+        });
+    });
+</script>
