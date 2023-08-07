@@ -270,6 +270,7 @@
     <Content Include="Views\Compra\_CompraCantidad.cshtml" />
     <Content Include="Views\Compra\_DetalleCompra.cshtml" />
     <Content Include="Views\Compra\ConfirmarCompra.cshtml" />
+    <Content Include="Views\Compra\ComprasXCliente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Infraestructure.Models.Compra>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="content">
+    <h1 id="producto-titulo" class="producto-titulo text-center mb-5" style=" color: var(--gray-nav) !important; font-size: 2.3rem !important;">Pedidos</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Fecha Pedido</th>
+                <th># Pedido</th>
+                <th>Producto</th>
+
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@Html.DisplayFor(f => item.FechaHora)</td>
+
+                    <td>@Html.DisplayFor(m => item.Id)</td>
+
+                    @if (item.Estado == 3)
+                    {
+                        <td><span class="text-success fw-bold">Entregado</span></td>
+                    }
+                    @if (item.Estado == 2)
+                    {
+                        <td><span class="text-warning fw-bold">En progreso</span></td>
+
+                    }
+                    @if (item.Estado == 1)
+                    {
+                        <td><span class="text-danger fw-bold">Pendiente</span></td>
+
+                    }
+
+                    <td>
+                        <a href="@Url.Action("Details", "Compra", new { id = item.Id })" class="btn  text-white btn flex-grow-1 pt-2" style="background: var(--color-secondary-variant) ">
+                            <span class="material-symbols-outlined">
+                                info
+                            </span>
+                        </a>
+
+                    </td>
+
+                </tr>
+
+            }
+
+        </tbody>
+    </table>
+
+</div>

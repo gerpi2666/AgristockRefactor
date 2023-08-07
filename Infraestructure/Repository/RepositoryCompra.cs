@@ -168,12 +168,9 @@ namespace Infraestructure.Repository
                             }
                         }
 
+                        ctx.Usuario.Attach(comp.Usuario);
                         ctx.Compra.Add(comp);
-                        IEnumerable<DetalleCompra> d = comp.DetalleCompra;
-                        foreach(var detail in d)
-                        {
-                            ctx.DetalleCompra.Attach(detail);
-                        }
+                        
                         rows1 = await ctx.SaveChangesAsync();
                     }
                 }
