@@ -123,13 +123,13 @@ namespace Web.Controllers
                 IServiceCompra serviceCompra = new ServiceCompra();
                 serviceCompra.Crear(compra, listaDetalle);
 
-        //        return RedirectToAction("ProductoAdmin");
-        //    }
-        //    else
-        //    {
-        //        return RedirectToAction("Index");
-        //    }
-        //}
+                return RedirectToAction("ProductoAdmin");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
 
         public ActionResult ordenarProducto(int? idProducto)
         {
