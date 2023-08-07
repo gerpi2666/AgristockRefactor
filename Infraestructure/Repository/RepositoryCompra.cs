@@ -170,7 +170,10 @@ namespace Infraestructure.Repository
 
                         ctx.Compra.Add(comp);
                         IEnumerable<DetalleCompra> d = comp.DetalleCompra;
-                        ctx.DetalleCompra.Attach((DetalleCompra)d);
+                        foreach(var detail in d)
+                        {
+                            ctx.DetalleCompra.Attach(detail);
+                        }
                         rows1 = await ctx.SaveChangesAsync();
                     }
                 }
