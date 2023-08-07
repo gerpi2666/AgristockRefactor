@@ -1,23 +1,33 @@
 ﻿@model IEnumerable<Infraestructure.Models.Producto>
 
 @{
-    ViewBag.Title = "Inventario";
+    ViewBag.Title = "ProductoAdminTienda";
     Layout = "~/Views/Shared/_LayoutTienda.cshtml";
 }
 
-<h2>Inventario</h2>
-
 <div class="content">
-    <div class="row g-3">
-        <div class="col">
-            <div class=" mb-3" style="max-width: auto;">
-                <div class="row g-0 d-flex align-items-start">
-                    <table class="table table-striped">
+
+    <h1 id="producto-titulo" class="producto-titulo text-center mb-5" style=" color: var(--gray-nav) !important; font-size: 2.3rem !important;">Productos</h1>
+    <a href="@Url.Action("Create","Producto")" class="btn  text-white btn flex-grow-1 pt-2" style="background: var(--color-secondary-variant) ">Crear</a>
+
+    <div class="card">
+
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-sm-12">
+
+                    @*<table class="table table-bordered" id="tb_empleados">*@
+
+                    <table class="display" id="tb_productoTienda" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Producto</th>
-                                <th>Detalles</th>
+                                <th>Nombre</th>
+                                <th>Codigo</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
                                 <th>Acciones</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -26,25 +36,12 @@
                                 if (item.Borrado == false)
                                 {
                                     <tr>
-                                        <td class="p-0 m-0">
-                                            <img  src="data:image/jpeg;charset=utf-8;base64,@Convert.ToBase64String(item.Imagen)"
-                                                 alt="Libro @Html.DisplayFor(model => item.Nombre)"
-                                                 class="img-fluid rounded-start h-25 w-25 " />
-                                        </td>
+                                        <td>@Html.DisplayFor(model => item.Nombre)</td>
+                                        <td>@Html.DisplayFor(model => item.Id)</td>
+                                        <td>@Html.DisplayFor(model => item.Precio)</td>
                                         <td>
-                                            <p class="card-text">
-                                                <span class="card-title text-black">@Html.DisplayFor(model => item.Nombre)</span>
-                                            </p>
-                                                                                   
-                                            <p class="card-text">
-                                                <i class="fa-solid fa-box"><b>SKU: </b></i> <i class="">@Html.DisplayFor(model => item.Id)</i>
-                                            </p>
                                             <p>
-                                                <i class="fa-solid fa-box"><b>Stock</b></i> <i class=""> @Html.TextBoxFor(model => item.Stock, new { @class = "form-control", type = "number", min = "0",id="stock"+item.Id })</i>
-                                            </p>
-                                          
-                                            <p class="card-text fw-bold precio" style="color: #2596be; font-weight: 500;">
-                                                $@Html.DisplayFor(model => item.Precio)
+                                                <i class="fa-solid fa-box"><b>Stock</b></i> <i class=""> @Html.TextBoxFor(model => item.Stock, new { @class = "form-control", type = "number", min = "0", id = "stock" + item.Id })</i>
                                             </p>
                                         </td>
                                         <td class="">
@@ -53,8 +50,12 @@
                                                     save
                                                 </span>
                                             </a>
-
-                                            <a href="@Url.Action("Edit", "Producto", new { id = item.Id })" class="btn  text-white btn flex-grow-1 pt-2" style="background: var(--color-secondary-variant) ">
+                                            <a href="@Url.Action("Details", "Producto", new { id = item.Id })" class="btn  text-white btn flex-grow-1 pt-2" style="background: var(--color-secondary-variant) ">
+                                                <span class="material-symbols-outlined">
+                                                    info
+                                                </span>
+                                            </a>
+                                            <a href="@Url.Action("Edit", "Producto", new { id = item.Id })" class="btn  text-white btn flex-grow-1 pt-2" style="background: var(--color-danger) ">
                                                 <span class="material-symbols-outlined">
                                                     edit
                                                 </span>
@@ -68,16 +69,28 @@
                                 }
                             }
                         </tbody>
+
                     </table>
+
                 </div>
             </div>
+
+
         </div>
     </div>
-</div>
 
-<!-- Script que ejecuta el delete -->
+</div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
 <script>
+
+    $(document).ready(function () {
+        $('#tb_productoTienda').DataTable();
+    });
+
     $(document).ready(function () {
         // Manejador de evento click para el botón de eliminar
         $(".btnEliminar").click(function () {

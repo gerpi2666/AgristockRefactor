@@ -150,6 +150,7 @@ namespace Infraestructure.Repository
                     comp = compra;
                     comp.Activo = true;
                     comp.Borrado = false;
+                    comp.DetalleCompra = carrito;
                     using (MyContext ctx = new MyContext())
                     {
                         ctx.Configuration.LazyLoadingEnabled = false;
@@ -159,13 +160,13 @@ namespace Infraestructure.Repository
                             comp.DetalleCompra = new List<DetalleCompra>();
                             foreach (var detalle in carrito)
                             {
-                                ctx.DetalleCompra.Attach(detalle); 
+                               // ctx.DetalleCompra.Attach(detalle); 
                                 comp.DetalleCompra.Add(detalle);
 
 
                             }
                         }
-
+                        ctx.DetalleCompra.Attach((DetalleCompra)comp.DetalleCompra);
                         ctx.Compra.Add(comp);
                         rows1 = await ctx.SaveChangesAsync();
                     }
