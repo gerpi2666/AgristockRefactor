@@ -112,7 +112,7 @@ namespace Infraestructure.Repository
             using (MyContext ctx = new MyContext())
             {
                 ctx.Configuration.LazyLoadingEnabled = false;
-                //oUsuario = GetUsuarioById(usuario.Id);
+                oUsuario = GetUsuarioById(usuario.Id);
 
                 IRepositoryPerfil _RepositorioPerfil = new RepositoryPerfil();
 
@@ -146,7 +146,7 @@ namespace Infraestructure.Repository
                 {
                     ctx.Usuario.Add(usuario);
                     ctx.Entry(usuario).State = EntityState.Modified;
-                    retorno += ctx.SaveChanges();
+           
                 }
 
                 retorno = ctx.SaveChanges();

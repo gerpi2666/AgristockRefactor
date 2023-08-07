@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Web.Utils;
 using Web.Utils;
+using Web.Security;
 
 namespace Web.Controllers
 {
@@ -48,7 +49,9 @@ namespace Web.Controllers
             return View(compra);
         }
 
+
         // GET: Compra/Create
+        [CustomAuthorize((int)Perfil.Cliente, (int)Perfil.Vendedor)]
         public ActionResult CompraCliente()
         {
             ViewBag.DetalleOrden = Carrito.Instancia.Items;
@@ -81,6 +84,8 @@ namespace Web.Controllers
             return View(Carrito.Instancia.Items);
         }
 
+
+        [CustomAuthorize((int)Perfil.Vendedor)]
         public ActionResult CompraTienda()
         {
             Usuario usuario = Session["User"] as Usuario;
