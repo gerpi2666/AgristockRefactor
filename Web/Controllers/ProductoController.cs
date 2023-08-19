@@ -12,14 +12,20 @@ using Web.Security;
 
 namespace Web.Controllers
 {
+    [RoutePrefix("api/producto")]
     public class ProductoController : Controller
     {
         // GET: Producto
+
+
+        [Route("index")]
+        [HttpGet]
         public ActionResult Index()
         {
             IEnumerable<Producto> lista = null;
             IServiceProducto _ServiceProducto = new ServiceProducto();
             lista = _ServiceProducto.GetProductos();
+            ViewBag.Categorias = ListaCategorias();
             return View(lista);
         }
 

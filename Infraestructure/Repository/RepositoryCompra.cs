@@ -168,12 +168,9 @@ namespace Infraestructure.Repository
                             }
                         }
 
+                        ctx.Usuario.Attach(comp.Usuario);
                         ctx.Compra.Add(comp);
-                        IEnumerable<DetalleCompra> d = comp.DetalleCompra;
-                        foreach(var detail in d)
-                        {
-                            ctx.DetalleCompra.Attach(detail);
-                        }
+                        
                         rows1 = await ctx.SaveChangesAsync();
                     }
                 }
@@ -192,6 +189,65 @@ namespace Infraestructure.Repository
                 Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
                 throw;
             }
+        }
+
+        private int ChangeStateCompra(List<DetalleCompra> detalle)
+        {
+            int counter = 0;
+            bool a = false;
+            foreach (var item in detalle)
+            {
+                if (a)
+                {
+                    counter++;
+                }
+            }
+
+            if(counter== detalle.Count)
+            {
+                return 3;
+            }
+            else
+            {
+                return 2;
+            }                
+                     
+        }
+
+        public void ChangeStateDetail(int idCompra,int idProducto)
+        {
+            try
+            {
+
+                Compra comp = GetCompraById(idCompra);
+                DetalleCompra detalle = new DetalleCompra();
+                    using (MyContext ctx = new MyContext())
+                    {
+                        ctx.Configuration.LazyLoadingEnabled = false;
+                        detalle= ctx.DetalleCompra.Where(p => p.idProducto == idProducto && p.IdCompra == idCompra).FirstOrDefault();
+
+
+                    ctx.Entry(detalle).State = EntityState.Modified;
+                    ctx.SaveChanges();
+
+                    }
+               
+
+               
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+
         }
 
         public async Task<Compra> Actualizar(Compra compra)

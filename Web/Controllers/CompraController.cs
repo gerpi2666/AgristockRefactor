@@ -58,6 +58,26 @@ namespace Web.Controllers
             return View();
         }
 
+        public ActionResult ComprasXCliente()
+        {
+            Usuario usuario = Session["User"] as Usuario;
+
+            IServiceCompra serviceCompra = new ServiceCompra();
+            IEnumerable<Compra> lista = serviceCompra.GetComprasByCliente(usuario.Id);
+
+            return View(lista);
+        }
+
+        public ActionResult ComprasXCliente()
+        {
+            Usuario usuario = Session["User"] as Usuario;
+
+            IServiceCompra serviceCompra = new ServiceCompra();
+            IEnumerable<Compra> lista = serviceCompra.GetComprasByCliente(usuario.Id);
+
+            return View(lista);
+        }
+
         [CustomAuthorize((int)Perfil.Cliente, (int)Perfil.Vendedor)]
         public ActionResult ConfirmarCompra(List<Web.ViewModel.ViewModelDetalleCompra> detalleOrden)
         {
@@ -112,9 +132,11 @@ namespace Web.Controllers
             IServiceMetodoPago serviceMetodoPago = new ServiceMetodoPago();
             IServiceProducto serviceProducto = new ServiceProducto();
             Producto producto = null;
+
             Usuario usuario = Session["User"] as Usuario;
             MetodoPago me = serviceMetodoPago.GetByID(metodoPago);
 
+            compra.FechaHora = Convert.ToDateTime(DateTime.Now);
             compra.IdMetodoPago = me.Id;
             compra.Estado = 1;
             compra.Observaciones = observaciones;

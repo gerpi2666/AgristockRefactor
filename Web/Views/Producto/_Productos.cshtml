@@ -11,12 +11,12 @@
         <div class="filter-menu">
             <div class="filter-option">
                 <label for="filter-category">Categoría:</label>
-                <select id="filter-category">
-                    <option value="all">Todas</option>
-                    <option value="electronics">Electrónicos</option>
-                    <option value="clothing">Ropa</option>
-
-                </select>
+                @*<select name="Categoria" id="Categoria">
+                    @foreach (var cate in ViewBag.Categorias)
+                    {
+                    <option value="@cate.Id">@cate.nombre</option>
+                    }
+                </select>*@
             </div>
 
             <div class="filter-option">
