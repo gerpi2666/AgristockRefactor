@@ -129,6 +129,7 @@
     <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\CompraController.cs" />
     <Compile Include="Controllers\DirectionController.cs" />
+    <Compile Include="Controllers\EvaluacionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MensajeController.cs" />
@@ -279,6 +280,7 @@
     <Folder Include="Models\" />
     <Folder Include="Views\Chat\" />
     <Folder Include="Views\Detalle\" />
+    <Folder Include="Views\Evaluacion\" />
     <Folder Include="Views\Mensaje\" />
     <Folder Include="Views\Tienda\" />
   </ItemGroup>

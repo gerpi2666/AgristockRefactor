@@ -10,27 +10,119 @@ using System.Threading.Tasks;
 
 namespace Infraestructure.Repository
 {
-    public class RepositoryCompra : IRepositoryCompra
+    public class RepositoryEvaluacion : IRepositoryEvaluacion
     {
-        public Compra GetCompraById(int id)
+        public async Task<Evaluacion> Add(Evaluacion eva)
         {
-
+            int rows1 = 0;
             try
             {
-                Compra compra = null;
+                Evaluacion evaluacion = null;
+                if (eva != null)
+                {
+                   evaluacion = eva;
+                   using (MyContext ctx = new MyContext())
+                    {
+                        ctx.Configuration.LazyLoadingEnabled = false;
+                        ctx.Compra.Attach(eva.Compra);
+                        ctx.Tienda.Attach(eva.Tienda);
+                        ctx.Usuario.Attach(eva.Usuario);
+                        ctx.Evaluacion.Add(evaluacion);
+                        rows1 = await ctx.SaveChangesAsync();
+                    }
+                }
+
+                return evaluacion;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
+
+        public async Task<Evaluacion> Edit(Evaluacion evaluacion)
+        {
+            int rows1 = 0;
+            try
+            {
+
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    compra = ctx.Compra.Find(id);
-                    compra = ctx.Compra.Where(l => l.Id == id)
-                        .Include(u => u.DetalleCompra)
-                        .Include(X => X.DetalleCompra.Select(d => d.Producto))
-                        .Include(p => p.DetalleCompra.Select(s => s.Producto.Tienda))
-                        .Include(k => k.Usuario)
-                        .Include(h=>h.Usuario.MetodoPago).FirstOrDefault();
+
+                    if (evaluacion != null)
+                    {
+                        ctx.Entry(evaluacion).State = EntityState.Modified;
+                        rows1 = await ctx.SaveChangesAsync();
+                    }
+                }
+                return evaluacion;
+
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<Evaluacion>> GetAll()
+        {
+            try
+            {
+
+                IEnumerable<Evaluacion> evaluaciones = null;
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    evaluaciones = await ctx.Evaluacion.ToListAsync();
+
+                }
+                return evaluaciones;
+
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<Evaluacion>> GetByClient(int idClient)
+        {
+            try
+            {
+                IEnumerable<Evaluacion> evaluaciones = null;
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    evaluaciones = await ctx.Evaluacion.Where(e=> e.idCliente==idClient).ToListAsync();
+
                    
                 }
-                return compra;
+                return evaluaciones;
             }
             catch (DbUpdateException dbEx)
             {
@@ -46,18 +138,21 @@ namespace Infraestructure.Repository
             }
         }
 
-        public IEnumerable<Compra> GetCompras()
+        public  async Task<Evaluacion> GetById(int id)
         {
             try
             {
-                IEnumerable<Compra> Compras = null;
+                Evaluacion evaluacion = null;
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    Compras = ctx.Compra.Include("DetalleCompra").ToList<Compra>();
+                    evaluacion = ctx.Evaluacion.Find(id);
 
+                    evaluacion = await ctx.Evaluacion.Where(p => p.Id == id).Include("Compra")
+                        .Include("Usuario")
+                        .Include("Tienda").FirstOrDefaultAsync();
                 }
-                return Compras;
+                return evaluacion;
             }
             catch (DbUpdateException dbEx)
             {
@@ -73,24 +168,19 @@ namespace Infraestructure.Repository
             }
         }
 
-        public IEnumerable<Compra> GetComprasByCliente(int idCliente)
+        public async Task<IEnumerable<Evaluacion>> GetBySeller(int idSeller)
         {
-
             try
             {
-                IEnumerable<Compra> compra = null;
+                IEnumerable<Evaluacion> evaluaciones = null;
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                         compra = ctx.Compra.Where(l => l.IdUsuario == idCliente)
-                        .Include(u => u.DetalleCompra)
-                        .Include(X => X.DetalleCompra.Select(d => d.Producto))
-                        .Include(p => p.DetalleCompra.Select(s => s.Producto.Tienda))
-                        .Include(k => k.Usuario)
-                        .Include(h => h.Usuario.MetodoPago).ToList();
+                    evaluaciones = await ctx.Evaluacion.Where(e => e.idVendedor == idSeller).ToListAsync();
+
 
                 }
-                return compra;
+                return evaluaciones;
             }
             catch (DbUpdateException dbEx)
             {
@@ -106,24 +196,31 @@ namespace Infraestructure.Repository
             }
         }
 
-        public IEnumerable<Compra> GetComprasByTienda(int idTienda)
+        public async Task<IEnumerable<Producto>> GetTop5Products()
         {
-
             try
             {
-                IEnumerable<Compra> compra = null;
+                IEnumerable<Producto> topProductos = null;
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    compra = ctx.Compra.Where(l => l.DetalleCompra.Any(d=>d.Producto.Tienda.Id== idTienda))
-                   .Include(u => u.DetalleCompra)
-                   .Include(X => X.DetalleCompra.Select(d => d.Producto))
-                   .Include(p => p.DetalleCompra.Select(s => s.Producto.Tienda))
-                   .Include(k => k.Usuario)
-                   .Include(h => h.Usuario.MetodoPago).ToList();
+                    topProductos = await ctx.Producto
+                .Select(producto => new
+                {
+                    Producto = producto,
+                    PromedioCalificaciones = producto.DetalleCompra
+                        .SelectMany(dc => dc.Compra.Evaluacion)
+                        .Average(e => (double)(e.calificacionACliente + e.calificacionAVendedor) / 2)
+                })
+                .OrderByDescending(p => p.PromedioCalificaciones)
+                .Take(5)
+                .Select(p => p.Producto) // Recuperar la entidad Producto
+                .ToListAsync();
+
+
 
                 }
-                return compra;
+                return topProductos;
             }
             catch (DbUpdateException dbEx)
             {
@@ -139,43 +236,67 @@ namespace Infraestructure.Repository
             }
         }
 
-        public async Task<Compra> Crear(Compra compra, List<DetalleCompra> carrito)
+        public async Task<IEnumerable<Tienda>> GetTop5Sellers()
         {
-            int rows1 = 0;
             try
             {
-                    Compra comp = null;
-                if (compra != null)
+                IEnumerable<Tienda> topTiendas = null;
+                using (MyContext ctx = new MyContext())
                 {
-                    comp = compra;
-                    comp.Activo = true;
-                    comp.Borrado = false;
-                    using (MyContext ctx = new MyContext())
-                    {
-                        ctx.Configuration.LazyLoadingEnabled = false;
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    topTiendas = await ctx.Tienda
+                .Select(tienda => new
+                {
+                    Tienda = tienda,
+                    PromedioCalificaciones = tienda.Evaluacion
+                        .Average(e => (double)(e.calificacionACliente + e.calificacionAVendedor) / 2)
+                })
+                .OrderByDescending(t => t.PromedioCalificaciones)
+                .Take(5)
+                .Select(t => t.Tienda) // Recuperar la entidad Tienda
+                .ToListAsync();
 
-                        if (carrito !=null)
+
+
+                }
+                return topTiendas;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<Tienda>> GetTop3TiendasPeorEvaluadas()
+        {
+            try
+            {
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+
+                    var topTiendas = await ctx.Tienda
+                        .Select(tienda => new
                         {
-                            Compra refCom = getLastOne();
-                            comp.DetalleCompra = new List<DetalleCompra>();
-                            foreach (var detalle in carrito)
-                            {
-                                // ctx.DetalleCompra.Attach(detalle); 
-                                detalle.IdCompra = refCom.Id + 1;
-                                comp.DetalleCompra.Add(detalle);
+                            Tienda = tienda,
+                            PromedioCalificaciones = tienda.Evaluacion
+                                .Average(e => (double)(e.calificacionACliente + e.calificacionAVendedor) / 2)
+                        })
+                        .OrderBy(p => p.PromedioCalificaciones)
+                        .Take(3)
+                        .Select(p => p.Tienda) // Recuperar la entidad Tienda
+                        .ToListAsync();
 
-
-                            }
-                        }
-
-                        ctx.Usuario.Attach(comp.Usuario);
-                        ctx.Compra.Add(comp);
-                        
-                        rows1 = await ctx.SaveChangesAsync();
-                    }
+                    return topTiendas;
                 }
-
-                return comp;
             }
             catch (DbUpdateException dbEx)
             {
@@ -191,154 +312,6 @@ namespace Infraestructure.Repository
             }
         }
 
-        private int ChangeStateCompra(List<DetalleCompra> detalle)
-        {
-            int counter = 0;
-            bool a = false;
-            foreach (var item in detalle)
-            {
-                if (a)
-                {
-                    counter++;
-                }
-            }
-
-            if(counter== detalle.Count)
-            {
-                return 3;
-            }
-            else
-            {
-                return 2;
-            }                
-                     
-        }
-
-        public void ChangeStateDetail(int idCompra,int idProducto)
-        {
-            try
-            {
-
-                Compra comp = GetCompraById(idCompra);
-                DetalleCompra detalle = new DetalleCompra();
-                    using (MyContext ctx = new MyContext())
-                    {
-                        ctx.Configuration.LazyLoadingEnabled = false;
-                        detalle= ctx.DetalleCompra.Where(p => p.idProducto == idProducto && p.IdCompra == idCompra).FirstOrDefault();
-
-
-                    ctx.Entry(detalle).State = EntityState.Modified;
-                    ctx.SaveChanges();
-
-                    }
-               
-
-               
-            }
-            catch (DbUpdateException dbEx)
-            {
-                string mensaje = "";
-                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
-                throw new Exception(mensaje);
-            }
-            catch (Exception ex)
-            {
-                string mensaje = "";
-                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
-                throw;
-            }
-
-        }
-
-        public async Task<Compra> Actualizar(Compra compra)
-        {
-            int rows1 = 0;
-            try
-            {
-
-                using (MyContext ctx = new MyContext())
-                {
-                    ctx.Configuration.LazyLoadingEnabled = false;
-
-                    if (compra != null)
-                    {
-                        ctx.Entry(compra).State = EntityState.Modified;
-                        rows1 = await ctx.SaveChangesAsync();
-                    }
-                }
-                return compra;
-
-            }
-            catch (DbUpdateException dbEx)
-            {
-                string mensaje = "";
-                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
-                throw new Exception(mensaje);
-            }
-            catch (Exception ex)
-            {
-                string mensaje = "";
-                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
-                throw;
-            }
-        }
-
-        public async Task Delete(int id)
-        {
-            try
-            {
-                Compra compra = null;
-                using (MyContext ctx = new MyContext())
-                {
-                    ctx.Configuration.LazyLoadingEnabled = false;
-                    compra = await ctx.Compra.FindAsync(id);
-                    if (compra != null)
-                    {
-                        compra.Borrado = true;
-                        await ctx.SaveChangesAsync();
-                    }
-                }
-
-            }
-            catch (DbUpdateException dbEx)
-            {
-                string mensaje = "";
-                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
-                throw new Exception(mensaje);
-            }
-            catch (Exception ex)
-            {
-                string mensaje = "";
-                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
-                throw;
-            }
-        }
-
-        private Compra getLastOne()
-        {
-            try
-            {
-                Compra compra = null;
-                using (MyContext ctx = new MyContext())
-                {
-                    ctx.Configuration.LazyLoadingEnabled = false;
-                    compra = ctx.Compra.OrderByDescending(r => r.Id).FirstOrDefault();
-                }
-                return compra;
-            }
-            catch (DbUpdateException dbEx)
-            {
-                string mensaje = "";
-                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
-                throw new Exception(mensaje);
-            }
-            catch (Exception ex)
-            {
-                string mensaje = "";
-                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
-                throw;
-            }
-        }
 
     }
 }
