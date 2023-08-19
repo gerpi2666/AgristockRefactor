@@ -134,6 +134,7 @@
     <Compile Include="Controllers\MensajeController.cs" />
     <Compile Include="Controllers\MetodoPagoController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
+    <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Controllers\TiendaController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Enum\Enum.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="ViewModel\ViewModelDetalleCompra.cs" />
     <Compile Include="ViewModel\Distrito.cs" />
     <Compile Include="ViewModel\Provincia.cs" />
+    <Compile Include="ViewModel\ViewModelGrafico.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -272,6 +274,8 @@
     <Content Include="Views\Compra\ConfirmarCompra.cshtml" />
     <Content Include="Views\Usuario\Usuarios.cshtml" />
     <Content Include="Views\Usuario\Edit.cshtml" />
+    <Content Include="Views\Reporte\graficoCompraCount.cshtml" />
+    <Content Include="Views\Reporte\_GraficoCompraCount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

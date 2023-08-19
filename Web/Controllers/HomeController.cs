@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Web.Security;
+using Web.ViewModel;
 
 namespace Web.Controllers
 {
@@ -27,6 +28,21 @@ namespace Web.Controllers
         [CustomAuthorize((int)Perfil.Administrador, (int)Perfil.Vendedor)]
         public ActionResult DashboardTienda()
         {
+            //grafico para las compras registradas
+            IServiceCompra _ServiceOrden = new ServiceCompra();
+            ViewModelGrafico grafico = new ViewModelGrafico();
+            _ServiceOrden.GetCompraCountToday(out string etiquetas, out string valores);
+            grafico.Etiquetas = etiquetas;
+            grafico.Valores = valores;
+            int cantidadValores = valores.Split(',').Length;
+            grafico.Colores = string.Join(",", grafico.GenerateColors(cantidadValores));
+            grafico.titulo = "Ordenes por fecha";
+            grafico.tituloEtiquetas = "Cantidad de Ordenes";
+            //Tipos: bar , bubble , doughnut , pie , line , polarArea 
+            grafico.tipo = "doughnut";
+            ViewBag.graficoComprasRegistradas = grafico;
+
+
             return View();
         }
 

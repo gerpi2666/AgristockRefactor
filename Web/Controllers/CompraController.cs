@@ -51,13 +51,14 @@ namespace Web.Controllers
 
 
         // GET: Compra/Create
-        [CustomAuthorize((int)Perfil.Cliente, (int)Perfil.Vendedor)]
+
         public ActionResult CompraCliente()
         {
             ViewBag.DetalleOrden = Carrito.Instancia.Items;
             return View();
         }
 
+        [CustomAuthorize((int)Perfil.Cliente, (int)Perfil.Vendedor)]
         public ActionResult ConfirmarCompra(List<Web.ViewModel.ViewModelDetalleCompra> detalleOrden)
         {
             Usuario usuario = Session["User"] as Usuario;
@@ -207,5 +208,10 @@ namespace Web.Controllers
                 return View();
             }
         }
+    
+    
+
+
+    
     }
 }

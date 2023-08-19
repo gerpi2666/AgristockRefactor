@@ -24,9 +24,9 @@ if (closeBtn) {
   });
 }
 
-    themeToggler.addEventListener("click", () => {
-        document.body.classList.toggle("dark-theme-variables");
-    });
+    //themeToggler.addEventListener("click", () => {
+    //    document.body.classList.toggle("dark-theme-variables");
+    //});
 });
 
 
@@ -354,11 +354,4 @@ function cargarTipoPago() {
     // Establece el valor seleccionado nuevamente
     tipoPagoSelect.value = valorSeleccionado;
 }
-
-
-
-
-
-
-
 

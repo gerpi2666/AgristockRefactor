@@ -284,5 +284,62 @@ namespace Infraestructure.Repository
             }
         }
 
+
+        public void GetCompraCountToday(out string etiquetas, out string valores)
+        {
+            String varEtiquetas = "";
+            String varValores = "";
+            try
+            {
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    DateTime today = DateTime.Today; // Extraer la fecha de hoy
+
+                    //var resultado = ctx.Compra.Where(c => c.FechaHora.Date == today)
+                    //                .GroupBy(c => c.FechaHora)
+                    //                .Select(grp => new {
+                    //                    Count = grp.Count(),
+                    //                    FechaCompra = grp.Key
+                    //                });
+
+                    var resultado = ctx.Compra.GroupBy(x => x.FechaHora).
+                                                       Select(o => new {
+                                                           Count = o.Count(),
+                                                           FechaHora = o.Key
+                                                       });
+
+                    foreach (var item in resultado)
+                    {
+                        varEtiquetas += String.Format("{0:dd/MM/yyyy}", item.FechaHora) + ",";
+                        varValores += item.Count + ",";
+                    }
+                }
+
+                // Eliminar la última coma de las cadenas
+                if (!string.IsNullOrEmpty(varEtiquetas))
+                    varEtiquetas = varEtiquetas.Substring(0, varEtiquetas.Length - 1);
+
+                if (!string.IsNullOrEmpty(varValores))
+                    varValores = varValores.Substring(0, varValores.Length - 1);
+
+                // Asignar valores de salida
+                etiquetas = varEtiquetas;
+                valores = varValores;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+        }
+
     }
 }

@@ -17,5 +17,6 @@ namespace ApplicationCore.Services
         Task<Compra> Actualizar(Compra compra);
         Task Delete(int id);
 
+        void GetCompraCountToday(out string etiquetas, out string valores);
     }
 }

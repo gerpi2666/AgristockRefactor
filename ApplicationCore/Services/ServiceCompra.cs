@@ -52,5 +52,14 @@ namespace ApplicationCore.Services
             return repository.Delete(id);
         }
 
+        public void GetCompraCountToday(out string etiquetas1, out string valores1)
+        {
+            IRepositoryCompra repository = new RepositoryCompra();
+            repository.GetCompraCountToday(out string etiquetas, out string valores);
+            etiquetas1 = etiquetas;
+            valores1 = valores;
+        }
+
+
     }
 }
