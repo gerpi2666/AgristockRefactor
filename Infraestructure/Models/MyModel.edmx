@@ -45,6 +45,7 @@
           <Property Name="SubTotal" Type="float" />
           <Property Name="Iva" Type="float" />
           <Property Name="Total" Type="float" />
+          <Property Name="Estado" Type="bit" />
         </EntityType>
         <EntityType Name="Direccion">
           <Key>
@@ -501,6 +502,7 @@ advertencia 6002: La tabla o vista 'AgriStock.dbo.Mensaje' no tiene definida nin
           <Property Name="SubTotal" Type="Double" />
           <Property Name="Iva" Type="Double" />
           <Property Name="Total" Type="Double" />
+          <Property Name="Estado" Type="Boolean" />
           <NavigationProperty Name="Compra" Relationship="Self.FK_DetalleCompra_Compra" FromRole="DetalleCompra" ToRole="Compra" />
           <NavigationProperty Name="Producto" Relationship="Self.FK_DetalleCompra_Producto" FromRole="DetalleCompra" ToRole="Producto" />
         </EntityType>
@@ -934,6 +936,7 @@ advertencia 6002: La tabla o vista 'AgriStock.dbo.Mensaje' no tiene definida nin
                 <ScalarProperty Name="SubTotal" ColumnName="SubTotal" />
                 <ScalarProperty Name="Iva" ColumnName="Iva" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

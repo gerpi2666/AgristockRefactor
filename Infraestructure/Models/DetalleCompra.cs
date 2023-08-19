@@ -20,6 +20,7 @@ namespace Infraestructure.Models
         public Nullable<double> SubTotal { get; set; }
         public Nullable<double> Iva { get; set; }
         public Nullable<double> Total { get; set; }
+        public Nullable<bool> Estado { get; set; }
     
         public virtual Compra Compra { get; set; }
         public virtual Producto Producto { get; set; }
