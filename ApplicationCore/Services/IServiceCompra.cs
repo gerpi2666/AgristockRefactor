@@ -18,5 +18,7 @@ namespace ApplicationCore.Services
         Task Delete(int id);
 
         void GetCompraCountToday(out string etiquetas, out string valores);
+
+        void GetTopProductosCompradosMes(out string etiquetas, out string valores);
     }
 }

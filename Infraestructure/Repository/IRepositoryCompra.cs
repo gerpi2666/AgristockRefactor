@@ -19,5 +19,7 @@ namespace Infraestructure.Repository
 
         void GetCompraCountToday(out string etiquetas, out string valores);
 
+        void GetTopProductosCompradosMes(out string etiquetas, out string valores);
+
     }
 }

@@ -397,5 +397,67 @@ namespace Infraestructure.Repository
             }
         }
 
+
+        public void GetTopProductosCompradosMes(out string etiquetas, out string valores)
+        {
+            String varEtiquetas = "";
+            String varValores = "";
+            try
+            {
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+
+                    DateTime inicioMes = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+                    DateTime finMes = inicioMes.AddMonths(1).AddDays(-1);
+
+                    var resultado = ctx.Compra
+                                       .Where(c => c.FechaHora >= inicioMes && c.FechaHora <= finMes)
+                                       .Include(c => c.DetalleCompra)
+                                       .SelectMany(c => c.DetalleCompra)
+                                       .GroupBy(dc => dc.idProducto)
+                                       .Select(grp => new {
+                                           ProductoId = grp.Key,
+                                           CantidadComprada = grp.Sum(dc => dc.Cantidad)
+                                       })
+                                       .OrderByDescending(grp => grp.CantidadComprada)
+                                       .Take(5);
+
+                    foreach (var item in resultado)
+                    {
+                        var producto = ctx.Producto.FirstOrDefault(p => p.Id == item.ProductoId);
+                        if (producto != null)
+                        {
+                            varEtiquetas += producto.Nombre + ",";
+                            varValores += item.CantidadComprada + ",";
+                        }
+                    }
+                }
+
+                // Eliminar la última coma de las cadenas
+                if (!string.IsNullOrEmpty(varEtiquetas))
+                    varEtiquetas = varEtiquetas.Substring(0, varEtiquetas.Length - 1);
+
+                if (!string.IsNullOrEmpty(varValores))
+                    varValores = varValores.Substring(0, varValores.Length - 1);
+
+                // Asignar valores de salida
+                etiquetas = varEtiquetas;
+                valores = varValores;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+        }
+
     }
 }

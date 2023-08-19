@@ -60,6 +60,13 @@ namespace ApplicationCore.Services
             valores1 = valores;
         }
 
+        public void GetTopProductosCompradosMes(out string etiquetas1, out string valores1)
+        {
+            IRepositoryCompra repository = new RepositoryCompra();
+            repository.GetTopProductosCompradosMes(out string etiquetas, out string valores);
+            etiquetas1 = etiquetas;
+            valores1 = valores;
+        }
 
     }
 }

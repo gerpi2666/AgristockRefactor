@@ -29,9 +29,9 @@ namespace Web.Controllers
         public ActionResult DashboardTienda()
         {
             //grafico para las compras registradas
-            IServiceCompra _ServiceOrden = new ServiceCompra();
+            IServiceCompra _ServiceCompra = new ServiceCompra();
             ViewModelGrafico grafico = new ViewModelGrafico();
-            _ServiceOrden.GetCompraCountToday(out string etiquetas, out string valores);
+            _ServiceCompra.GetCompraCountToday(out string etiquetas, out string valores);
             grafico.Etiquetas = etiquetas;
             grafico.Valores = valores;
             int cantidadValores = valores.Split(',').Length;
@@ -40,7 +40,22 @@ namespace Web.Controllers
             grafico.tituloEtiquetas = "Cantidad de Ordenes";
             //Tipos: bar , bubble , doughnut , pie , line , polarArea 
             grafico.tipo = "doughnut";
-            ViewBag.graficoComprasRegistradas = grafico;
+            ViewBag.graficoCountSells = grafico;
+
+
+            //grafico para las top 5 productos comprados
+            IServiceCompra _ServiceCompra2 = new ServiceCompra();
+            ViewModelGrafico grafico2 = new ViewModelGrafico();
+            _ServiceCompra2.GetTopProductosCompradosMes(out string etiquetas2, out string valores2);
+            grafico2.Etiquetas = etiquetas2;
+            grafico2.Valores = valores2;
+            int cantidadValores2 = valores.Split(',').Length;
+            grafico2.Colores = string.Join(",", grafico2.GenerateColors(cantidadValores2));
+            grafico2.titulo = "Top 5 productos más vendidos";
+            grafico2.tituloEtiquetas = "Top 5 productos más vendidos";
+            //Tipos: bar , bubble , doughnut , pie , line , polarArea 
+            grafico2.tipo = "doughnut";
+            ViewBag.graficoTopSells = grafico2;
 
 
             return View();

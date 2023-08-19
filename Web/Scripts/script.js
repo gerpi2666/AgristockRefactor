@@ -355,3 +355,5 @@ function cargarTipoPago() {
     tipoPagoSelect.value = valorSeleccionado;
 }
 
+
+
