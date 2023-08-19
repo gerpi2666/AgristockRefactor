@@ -191,25 +191,33 @@ namespace Infraestructure.Repository
             }
         }
 
-        private int ChangeStateCompra(List<DetalleCompra> detalle)
+        private int ChangeStateCompra(ICollection<DetalleCompra> detalleCompra)
         {
             int counter = 0;
             bool a = false;
-            foreach (var item in detalle)
+            foreach (var item in detalleCompra)
             {
-                if (a)
+                if (item.Estado == true) 
                 {
                     counter++;
                 }
             }
 
-            if(counter== detalle.Count)
+            if(counter== detalleCompra.Count)
             {
                 return 3;
             }
             else
             {
-                return 2;
+                if (counter==0)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 2;
+                }
+              
             }                
                      
         }
@@ -224,9 +232,10 @@ namespace Infraestructure.Repository
                     using (MyContext ctx = new MyContext())
                     {
                         ctx.Configuration.LazyLoadingEnabled = false;
-                        detalle= ctx.DetalleCompra.Where(p => p.idProducto == idProducto && p.IdCompra == idCompra).FirstOrDefault();
+                        detalle= ctx.DetalleCompra.Where(p => p.idProducto == idProducto).FirstOrDefault();
 
 
+                    detalle.Estado = true;
                     ctx.Entry(detalle).State = EntityState.Modified;
                     ctx.SaveChanges();
 
@@ -262,6 +271,7 @@ namespace Infraestructure.Repository
 
                     if (compra != null)
                     {
+                        compra.Estado = ChangeStateCompra(compra.DetalleCompra);
                         ctx.Entry(compra).State = EntityState.Modified;
                         rows1 = await ctx.SaveChangesAsync();
                     }

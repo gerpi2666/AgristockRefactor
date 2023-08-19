@@ -60,6 +60,10 @@ namespace ApplicationCore.Services
             valores1 = valores;
         }
 
-
+        public void ChangeStateDetail(int idCompra, int idProducto)
+        {
+            IRepositoryCompra repository = new RepositoryCompra();
+            repository.ChangeStateDetail(idCompra,idProducto);
+        }
     }
 }

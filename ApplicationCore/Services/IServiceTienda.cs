@@ -11,6 +11,6 @@ namespace ApplicationCore.Services
     {
         Tienda SaveProveedor(Tienda tienda);
         Tienda GetByVendedor(int vendorID);
-
+        Tienda GetTiendaById(int id);
     }
 }

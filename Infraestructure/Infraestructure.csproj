@@ -116,6 +116,7 @@
     <Compile Include="Repository\IRepositoryChatProducto.cs" />
     <Compile Include="Repository\IRepositoryCompra.cs" />
     <Compile Include="Repository\IRepositoryDireccion.cs" />
+    <Compile Include="Repository\IRepositoryEvaluacion.cs" />
     <Compile Include="Repository\IRepositoryMensaje.cs" />
     <Compile Include="Repository\IRepositoryMetodoPago.cs" />
     <Compile Include="Repository\IRepositoryPerfil.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Repository\RepositoryChatProducto.cs" />
     <Compile Include="Repository\RepositoryCompra.cs" />
     <Compile Include="Repository\RepositoryDireccion.cs" />
+    <Compile Include="Repository\RepositoryEvaluacion.cs" />
     <Compile Include="Repository\RepositoryMensaje.cs" />
     <Compile Include="Repository\RepositoryMetodoPago.cs" />
     <Compile Include="Repository\RepositoryPerfil.cs" />

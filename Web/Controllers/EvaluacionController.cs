@@ -26,7 +26,7 @@ namespace Web.Controllers
             Usuario usuario = Session["User"] as Usuario;
 
 
-            Tienda tienda = serviceTienda.GetByVendedor(idVendedor);
+            Tienda tienda = serviceTienda.GetTiendaById(idVendedor);
             Compra compra = serviceCompra.GetCompraById(compraId);
 
             Evaluacion eva = new Evaluacion();
@@ -39,8 +39,28 @@ namespace Web.Controllers
             eva.Compra = compra;
             eva.Tienda = tienda;
             eva.Usuario = usuario;//cliente
-
+            eva.idCliente = usuario.Id;
             await serviceEvaluacion.Add(eva);
+
+            return View();
+        }
+
+        public async Task<ActionResult> Edit(int compraId, int evaluacion, string comentario)
+        {
+            IServiceCompra serviceCompra = new ServiceCompra();
+            IServiceTienda serviceTienda = new ServiceTienda();
+            IServiceEvaluacion serviceEvaluacion = new ServiceEvaluacion();
+
+            Usuario usuario = Session["User"] as Usuario;
+
+
+            Tienda tienda = serviceTienda.GetByVendedor(usuario.Id);
+            Compra compra = serviceCompra.GetCompraById(compraId);
+
+            Evaluacion eva = serviceEvaluacion.GetByCompraYvendor(compraId);
+            eva.calificacionAVendedor = evaluacion;
+            eva.comentarioAVendedor = comentario;
+            await serviceEvaluacion.Edit(eva);
 
             return View();
         }

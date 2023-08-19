@@ -7,60 +7,256 @@
 
 
 
-<div class="content">
-    <h1 id="producto-titulo" class="producto-titulo text-center mb-5" style=" color: var(--gray-nav) !important; font-size: 2.3rem !important;">Pedidos</h1>
+div class="" style="width: 80%; margin: 0 auto;">
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th># Pedido</th>
-                <th>Producto</th>
-                @*<th>Observaciones</th>
-                    <th>Direccion de entrega</th>*@
-                <th>Estado</th>
+<h1 id="producto-titulo" class="producto-titulo text-center mb-5" style=" color: var(--gray-nav) !important; font-size: 2.3rem !important;">Productos</h1>
 
-                <th>Cantidad</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+<div class="card">
 
-                foreach (var detalle in item.DetalleCompra)
-                {
-                    if (detalle.Producto.IdProveedor == ViewBag.idTienda)
-                    {
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-sm-12">
+
+                @*<table class="table table-bordered" id="tb_empleados">*@
+
+                <table class="display" id="tb_producto" style="width:100%">
+                    <thead>
                         <tr>
+                            <th>Codigo</th>
+                            <th>Nombre</th>
+                            <th>Cliente</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
 
-                            <td>@Html.DisplayFor(m => item.Id)</td>
-
-                            <td>
-                                <img style="width:100px; height:100px;" src="data:image/png;base64,@Convert.ToBase64String(detalle.Producto.Imagen)" alt="Imagen @Html.DisplayFor(modelItem => detalle.Producto.Nombre)" class="zoom-img" />
-                            </td>
-                            @if (item.Estado == 3)
-                            {
-                                <td><span class="text-success fw-bold">Entregado</span></td>
-                            }
-                            @if (item.Estado == 2)
-                            {
-                                <td><span class="text-warning fw-bold">En progreso</span></td>
-
-                            }
-                            @if (item.Estado == 1)
-                            {
-                                <td><span class="text-danger fw-bold">Pendiente</span></td>
-
-                            }
-
-                            <td>@Html.DisplayFor(o => detalle.Cantidad)</td>
                         </tr>
-                    }
-                }
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+
+                            foreach (var detalle in item.DetalleCompra)
+                            {
+                                if (detalle.Producto.IdProveedor == ViewBag.idTienda)
+                                {
+                                    <tr>
+                                        <td>@item.Id</td>
+                                        <td>@detalle.Producto.Nombre</td>
+                                        <td>@item.Usuario.Nombre</td>
+                                        @if (detalle.Estado == true)
+                                        {
+                                            <td><span class="text-success fw-bold">Entregado</span></td>
+
+                                        }
+
+                                        @if (detalle.Estado == false)
+                                        {
+                                            <td><span class="text-danger fw-bold">Pendiente</span></td>
+
+                                        }
+                                    <td>
+                                        <button data-id="@item.Id" data-vendorId="@detalle.idProducto" href="" class="btnEstado btn  text-white btn flex-grow-1 pt-2" style="background: green ">
+                                            <span class="material-symbols-outlined">
+                                                update
+                                            </span>
+                                        </button>
+                                        @if (item.Estado == 3)
+                                        {
+                                            <a  href="@Url.Action("EvaluationCompraVendedor", "Compra", new { id = item.Id })" class="btnEstado btn  text-white btn flex-grow-1 pt-2" style="background: green ">
+                                                <span class="material-symbols-outlined">
+                                                    star
+                                                </span>
+                                            </a>
+
+                                        }
+                                    </td>
+                                        >
+                                    </tr>
+                                }
+                            }
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
 
 
-            }
-
-        </tbody>
-    </table>
-
+    </div>
 </div>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg  modal-dialog-centered modal " role="document">
+        <div class="modal-content custom-modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLongTitle">Califica tu satisfacción</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background-color:white">
+                    <span aria-hidden="true" style="font-size:30px">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body">
+
+                    <div class="container">
+                        <div class="w-50 text-left">
+
+                            <span style="font-size: 17px !important; color: rgba(0,0,0,.85) !important; font-weight: 600 ">Proveedor: X</span>
+                            <ul class="product-list">
+                                <li class="product-item">
+                                    <span>Producto 1</span>
+                                </li>
+                                <li class="product-item">
+                                    <span>Producto 2</span>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                        <div class="star-widget w-75">
+
+                            <input type="radio" name="rate" id="rate-5">
+                            <label for="rate-5" class="fas fa-star text-center"></label>
+                            <input type="radio" name="rate" id="rate-4">
+                            <label for="rate-4" class="fas fa-star"></label>
+                            <input type="radio" name="rate" id="rate-3">
+                            <label for="rate-3" class="fas fa-star"></label>
+                            <input type="radio" name="rate" id="rate-2">
+                            <label for="rate-2" class="fas fa-star"></label>
+                            <input type="radio" name="rate" id="rate-1">
+                            <label for="rate-1" class="fas fa-star mb-2"></label>
+                            <form action="#">
+                                @*<header></header>*@
+                                <span style="" class="w-100 d-flex justify-content-end"></span>
+                                <div class="textarea mt-1 ">
+                                    <textarea cols="30" placeholder="Describe tu experiencia.."></textarea>
+                                </div>
+                                <div class="btn p-0 m-0">
+                                    <button type="submit">Enviar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+                    <div class="container">
+                        <div class="w-50 text-left">
+
+                            <span style="font-size: 17px !important; color: rgba(0,0,0,.85) !important; font-weight: 600 ">Proveedor: X</span>
+                            <ul class="product-list">
+                                <li class="product-item">
+                                    <span>Producto 1</span>
+                                </li>
+                                <li class="product-item">
+                                    <span>Producto 2</span>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                        <div class="star-widget w-75">
+
+                            <input type="radio" name="rate" id="rate-5">
+                            <label for="rate-5" class="fas fa-star text-center"></label>
+                            <input type="radio" name="rate" id="rate-4">
+                            <label for="rate-4" class="fas fa-star"></label>
+                            <input type="radio" name="rate" id="rate-3">
+                            <label for="rate-3" class="fas fa-star"></label>
+                            <input type="radio" name="rate" id="rate-2">
+                            <label for="rate-2" class="fas fa-star"></label>
+                            <input type="radio" name="rate" id="rate-1">
+                            <label for="rate-1" class="fas fa-star mb-2"></label>
+                            <form action="#">
+                                @*<header></header>*@
+                                <span style="" class="w-100 d-flex justify-content-end"></span>
+                                <div class="textarea mt-1 ">
+                                    <textarea cols="30" placeholder="Describe tu experiencia.."></textarea>
+                                </div>
+                                <div class="btn p-0 m-0">
+                                    <button type="submit">Enviar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <div class="w-50 text-left">
+
+                            <span style="font-size: 17px !important; color: rgba(0,0,0,.85) !important; font-weight: 600 ">Proveedor: X</span>
+                            <ul class="product-list">
+                                <li class="product-item">
+                                    <span>Producto 1</span>
+                                </li>
+                                <li class="product-item">
+                                    <span>Producto 2</span>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                        <div class="star-widget w-75">
+
+                            <input type="radio" name="rate" id="rate-5">
+                            <label for="rate-5" class="fas fa-star text-center"></label>
+                            <input type="radio" name="rate" id="rate-4">
+                            <label for="rate-4" class="fas fa-star"></label>
+                            <input type="radio" name="rate" id="rate-3">
+                            <label for="rate-3" class="fas fa-star"></label>
+                            <input type="radio" name="rate" id="rate-2">
+                            <label for="rate-2" class="fas fa-star"></label>
+                            <input type="radio" name="rate" id="rate-1">
+                            <label for="rate-1" class="fas fa-star mb-2"></label>
+                            <form action="#">
+                                @*<header></header>*@
+                                <span style="" class="w-100 d-flex justify-content-end"></span>
+                                <div class="textarea mt-1 ">
+                                    <textarea cols="30" placeholder="Describe tu experiencia.."></textarea>
+                                </div>
+                                <div class="btn p-0 m-0">
+                                    <button type="submit">Enviar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                @*<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>*@
+                <button type="button" class="btn btn-primary" id="save-changes">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Manejador de evento click para el botón de eliminar
+        $(".btnEstado").click(function () {
+            var compraId = $(this).data("id");
+            var productoId = $(this).data("vendorid");
+            
+
+            console.log('compra id=', compraId);
+            console.log('Producto id=', productoId);
+             //Realiza la petición Ajax para eliminar el producto
+            $.ajax({
+                url: "/Compra/UpdateStateDetail",
+                type: "POST",
+                data: { compraId: compraId, productoId: productoId },
+                success: function (data) {
+                    // Muestra el resultado de la eliminación en el elemento div
+                    $("#resultado").text(data);
+                    console.log("entrando")
+                },
+                error: function () {
+                    $("#resultado").text("Error al eliminar el producto.");
+                }
+            });
+        });
+    });
+</script>

@@ -34,6 +34,12 @@ namespace ApplicationCore.Services
             return repositoryEvaluacion.GetByClient(idClient);
         }
 
+        public Evaluacion GetByCompraYvendor(int compraId)
+        {
+            IRepositoryEvaluacion repositoryEvaluacion = new RepositoryEvaluacion();
+            return repositoryEvaluacion.GetByCompraYvendor(compraId);
+        }
+
         public Task<Evaluacion> GetById(int id)
         {
             IRepositoryEvaluacion repositoryEvaluacion = new RepositoryEvaluacion();

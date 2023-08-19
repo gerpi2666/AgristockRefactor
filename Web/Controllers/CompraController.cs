@@ -68,15 +68,7 @@ namespace Web.Controllers
             return View(lista);
         }
 
-        public ActionResult ComprasXCliente()
-        {
-            Usuario usuario = Session["User"] as Usuario;
-
-            IServiceCompra serviceCompra = new ServiceCompra();
-            IEnumerable<Compra> lista = serviceCompra.GetComprasByCliente(usuario.Id);
-
-            return View(lista);
-        }
+       
 
         [CustomAuthorize((int)Perfil.Cliente, (int)Perfil.Vendedor)]
         public ActionResult ConfirmarCompra(List<Web.ViewModel.ViewModelDetalleCompra> detalleOrden)
@@ -154,8 +146,9 @@ namespace Web.Controllers
                     ordenDetalle.SubTotal = item.SubTotal;
                     ordenDetalle.Iva = item.SubTotal * 0.13;
                     ordenDetalle.Total = item.SubTotal + (item.SubTotal * 0.13);
+                    ordenDetalle.Estado = false;
 
-                    producto=serviceProducto.GetProductoById(item.IdProducto);
+                producto =serviceProducto.GetProductoById(item.IdProducto);
                     producto.Stock = producto.Stock - item.Cantidad;
                     serviceProducto.Actualizar(producto);
 
@@ -231,9 +224,46 @@ namespace Web.Controllers
             }
         }
     
-    
+        public ActionResult EvaluationCompraVendedor(int id)
+        {
+            IServiceTienda serviceTienda = new ServiceTienda();
+            Usuario usuario = Session["User"] as Usuario;
+            Tienda tienda = serviceTienda.GetByVendedor(usuario.Id);
+            ViewBag.idTienda = tienda.Id;
+            IServiceCompra serviceCompra = new ServiceCompra();
+            Compra compra = serviceCompra.GetCompraById(id);
+            return View(compra);
+        }
 
+        public ActionResult EvaluationCompraCliente(int id)
+        {
+            IServiceCompra serviceCompra = new ServiceCompra();
+            IServiceTienda serviceTienda = new ServiceTienda();
+            Usuario usuario = Session["User"] as Usuario;
+            Tienda tienda = serviceTienda.GetByVendedor(usuario.Id);
+            ViewBag.idTienda = tienda.Id;
+            Compra compra = serviceCompra.GetCompraById(id);
+            return View(compra);
+        }
 
-    
+        public ActionResult UpdateStateDetail(int compraId, int productoId)
+        {
+            IServiceCompra serviceCompra = new ServiceCompra();
+            
+
+            Compra compra = serviceCompra.GetCompraById(compraId);
+            DetalleCompra detalle = new DetalleCompra();
+            foreach (var item in compra.DetalleCompra)
+            {
+                if (item.idProducto == productoId)
+                {
+                    detalle = item;
+                }
+            }
+            serviceCompra.ChangeStateDetail(compraId,productoId);
+            serviceCompra.Actualizar(compra);
+            return View();
+        }
+
     }
 }
