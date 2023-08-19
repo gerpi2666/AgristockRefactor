@@ -25,7 +25,7 @@ namespace Infraestructure.Repository
                     {
                         ctx.Configuration.LazyLoadingEnabled = false;
                         ctx.Compra.Attach(eva.Compra);
-                        ctx.Tienda.Attach(eva.Tienda);
+                       // ctx.Tienda.Attach(eva.Tienda);
                         ctx.Usuario.Attach(eva.Usuario);
                         ctx.Evaluacion.Add(evaluacion);
                         rows1 = await ctx.SaveChangesAsync();
@@ -312,6 +312,36 @@ namespace Infraestructure.Repository
             }
         }
 
+        public Evaluacion GetByCompraYvendor(int compraId)
+        {
+            try
+            {
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
 
+                    Evaluacion evaluacion =  ctx.Evaluacion
+                        .Where(p => p.idCompra == compraId)
+                        .Include(e => e.Compra)
+                        .Include(e => e.Usuario)
+                        .Include(e => e.Tienda)
+                        .FirstOrDefault();
+
+                    return evaluacion;
+                }
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
     }
 }

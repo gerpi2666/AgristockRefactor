@@ -18,6 +18,7 @@ namespace Infraestructure.Repository
         Task<Evaluacion> Add(Evaluacion evaluacion);
         Task<Evaluacion> Edit(Evaluacion evaluacion);
         Task<IEnumerable<Tienda>> GetTop3TiendasPeorEvaluadas();
+        Evaluacion GetByCompraYvendor(int compraId);
 
 
 

@@ -1,0 +1,120 @@
+﻿@model Infraestructure.Models.Compra
+
+@{
+    ViewBag.Title = "EvaluationCompraVendedor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@if (Session["User"] != null)
+{
+    Infraestructure.Models.Usuario oUsuario;
+    oUsuario = (Infraestructure.Models.Usuario)Session["User"];
+}
+
+
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg  modal-dialog-centered modal " role="document">
+        <div class="modal-content custom-modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLongTitle">Califica tu satisfacción</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background-color:white">
+                    <span aria-hidden="true" style="font-size:30px">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body">
+
+                    @foreach (var item in Model.DetalleCompra)
+                    {
+                        <div class="container">
+                            <div class="w-50 text-left">
+                                <span style="font-size: 17px !important; color: rgba(0,0,0,.85) !important; font-weight: 600 ">Proveedor: @Html.DisplayFor(p => item.Producto.Tienda.NombreProveedor)</span>
+                                <ul class="product-list">
+                                    <li class="product-item">
+                                        <span>@Html.DisplayFor(p => item.Producto.Nombre)</span>
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <div class="star-widget w-75">
+
+                                <input value="5" type="radio" name="rate" id="rate-5">
+                                <label for="rate-5" class="fas fa-star text-center"></label>
+                                <input value="4" type="radio" name="rate" id="rate-4">
+                                <label for="rate-4" class="fas fa-star"></label>
+                                <input value="3" type="radio" name="rate" id="rate-3">
+                                <label for="rate-3" class="fas fa-star"></label>
+                                <input value="2" type="radio" name="rate" id="rate-2">
+                                <label for="rate-2" class="fas fa-star"></label>
+                                <input value="1" type="radio" name="rate" id="rate-1">
+                                <label for="rate-1" class="fas fa-star mb-2"></label>
+                                <form action="#">
+                                    @*<header></header>*@
+                                    <span style="" class="w-100 d-flex justify-content-end"></span>
+                                    <div class="textarea mt-1 ">
+                                        <textarea class="comment" cols="30" placeholder="Describe tu experiencia.."></textarea>
+                                    </div>
+                                    <div class="btn p-0 m-0">
+                                        <button type="submit" data-id="@Html.DisplayFor(p=> Model.Id)" data-vendorId="@item.Producto.Tienda.Id" class="send">Enviar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                <div class="modal-footer">
+                    @*<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>*@
+                    <button type="button" class="btn btn-primary" id="save-changes">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Asegúrate de tener jQuery cargado -->
+
+<script>
+    $(document).ready(function () {
+
+        $(".send").click(function () {
+            var compraId = $(this).data("id");
+            var tiendaId = $(this).data("vendorid");
+            var valorRadioSeleccionado = $("input[name='rate']:checked").val();
+            var contenidoTextarea = $(this).closest(".star-widget").find(".comment").val();
+
+            console.log('Valor del radio seleccionado:', valorRadioSeleccionado);
+            console.log('Contenido del textarea:', contenidoTextarea);
+            console.log('Contenido del id:', compraId);
+            console.log('Contenido del vendorid:', tiendaId);
+            event.preventDefault();
+            // Realiza la petición Ajax para eliminar el producto
+            $.ajax({
+                url: "/Evaluacion/Add",
+                type: "POST",
+                data: { compraId: compraId, idVendedor: tiendaId, evaluacion: valorRadioSeleccionado, comentario: contenidoTextarea },
+                success: function (data) {
+                    // Muestra el resultado de la eliminación en el elemento div
+                    $("#resultado").text(data);
+                    console.log("Producto borrado")
+                },
+                error: function () {
+                    $("#resultado").text("Error al eliminar el producto.");
+                }
+            });
+        });
+    });
+</script>
+
+
+
+
