@@ -4,19 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="56c62b49098841ad899bbe5c687cdb5e" Name="Diagram1">
-        <EntityTypeShape EntityType="AgriStockModel.Categoria" Width="1.5" PointX="8.25" PointY="20.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="AgriStockModel.ChatProducto" Width="1.5" PointX="7.5" PointY="17.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="AgriStockModel.Compra" Width="1.5" PointX="5.25" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AgriStockModel.DetalleCompra" Width="1.5" PointX="7.5" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="AgriStockModel.Direccion" Width="1.5" PointX="5.25" PointY="9.875" IsExpanded="true" />
+      <Diagram DiagramId="3682df4e664144048a34ecef9197c6ce" Name="Diagram1">
+        <EntityTypeShape EntityType="AgriStockModel.Categoria" Width="1.5" PointX="8.25" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgriStockModel.ChatProducto" Width="1.5" PointX="7.5" PointY="17.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgriStockModel.Compra" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgriStockModel.DetalleCompra" Width="1.5" PointX="7.5" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgriStockModel.Direccion" Width="1.5" PointX="5.25" PointY="10" IsExpanded="true" />
         <EntityTypeShape EntityType="AgriStockModel.Evaluacion" Width="1.5" PointX="7.5" PointY="11.375" IsExpanded="true" />
         <EntityTypeShape EntityType="AgriStockModel.MetodoPago" Width="1.5" PointX="5.25" PointY="13.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="AgriStockModel.Perfil" Width="1.5" PointX="0.75" PointY="12.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="AgriStockModel.Producto" Width="1.5" PointX="10.5" PointY="16.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="AgriStockModel.Tienda" Width="1.5" PointX="5.25" PointY="17.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="AgriStockModel.Usuario" Width="1.5" PointX="3" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="AgriStockModel.Mensaje" Width="1.5" PointX="9.75" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgriStockModel.Perfil" Width="1.5" PointX="0.75" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgriStockModel.Producto" Width="1.5" PointX="10.5" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgriStockModel.Tienda" Width="1.5" PointX="5.25" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgriStockModel.Usuario" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgriStockModel.Mensaje" Width="1.5" PointX="9.75" PointY="13.25" IsExpanded="true" />
         <AssociationConnector Association="AgriStockModel.FK_Producto_Categoria" ManuallyRouted="false" />
         <AssociationConnector Association="AgriStockModel.FK_ChatProducto_Producto" ManuallyRouted="false" />
         <AssociationConnector Association="AgriStockModel.FK_Mensaje_ChatProducto" ManuallyRouted="false" />

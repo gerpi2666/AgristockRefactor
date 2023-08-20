@@ -22,6 +22,7 @@ namespace Infraestructure.Models
         public string comentarioACliente { get; set; }
         public Nullable<int> calificacionAVendedor { get; set; }
         public string comentarioAVendedor { get; set; }
+        public Nullable<int> calificacionFinal { get; set; }
     
         public virtual Compra Compra { get; set; }
         public virtual Usuario Usuario { get; set; }

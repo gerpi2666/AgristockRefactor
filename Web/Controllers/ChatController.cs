@@ -3,6 +3,7 @@ using Infraestructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -10,85 +11,32 @@ namespace Web.Controllers
 {
     public class ChatController : Controller
     {
-        // GET: Chat
-        public ActionResult Index()
+        public async Task<ActionResult> Add(int ProductoId, string Pregunta, int userId)
         {
-            IEnumerable<ChatProducto> lista = null;
-            IServiceChatProducto _ServiceChat = new ServiceChatProducto();
-            lista = _ServiceChat.GetChatsByProductos(1);
-            return View(lista);
-        }
+            Usuario usuario = Session["User"] as Usuario;
 
-        // GET: Chat/Details/5
-        public ActionResult Details(int id)
-        {
+
+            IServiceChatProducto serviceChatProducto = new ServiceChatProducto();
+            IServiceProducto serviceProducto = new ServiceProducto();
+
+            Producto producto = serviceProducto.GetProductoById(ProductoId);
+            ChatProducto chat = new ChatProducto();
+            chat.IdProducto = ProductoId;
+            chat.IdTienda = producto.Tienda.Id;
+            chat.Tienda = producto.Tienda;
+            chat.Producto = producto;
+
+            Mensaje mensaje = new Mensaje();
+            mensaje.Mensaje1 = Pregunta;
+            mensaje.IdRemitente = usuario.Id;
+            mensaje.Usuario = usuario;
+
+          await  serviceChatProducto.Crear(chat, mensaje);
+            
+            
+
+
             return View();
-        }
-
-        // GET: Chat/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Chat/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Chat/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Chat/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Chat/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Chat/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }

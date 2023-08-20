@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Web.Utils;
 using Web.Utils;
 using Web.Security;
+using System.Threading.Tasks;
 
 namespace Web.Controllers
 {
@@ -58,12 +59,14 @@ namespace Web.Controllers
             return View();
         }
 
-        public ActionResult ComprasXCliente()
+        public async Task<ActionResult> ComprasXCliente()
         {
             Usuario usuario = Session["User"] as Usuario;
 
             IServiceCompra serviceCompra = new ServiceCompra();
-            IEnumerable<Compra> lista = serviceCompra.GetComprasByCliente(usuario.Id);
+            IEnumerable<Compra> lista =await serviceCompra.GetComprasByCliente(usuario.Id);
+            double sum = 0;
+            
 
             return View(lista);
         }
@@ -87,14 +90,14 @@ namespace Web.Controllers
 
 
         [CustomAuthorize((int)Perfil.Vendedor)]
-        public ActionResult CompraTienda()
+        public async Task< ActionResult> CompraTienda()
         {
             Usuario usuario = Session["User"] as Usuario;
             IServiceTienda serviceTienda = new ServiceTienda();
             Tienda tienda = serviceTienda.GetByVendedor(usuario.Id);
             ViewBag.idTienda =tienda.Id;
             IServiceCompra _ServiceCompra = new ServiceCompra();
-            IEnumerable<Compra> compra = _ServiceCompra.GetComprasByTienda(tienda.Id);
+            IEnumerable<Compra> compra = await _ServiceCompra.GetComprasByTienda(tienda.Id);
 
             return View(compra);
         }
@@ -236,15 +239,13 @@ namespace Web.Controllers
         public ActionResult EvaluationCompraCliente(int id)
         {
             IServiceCompra serviceCompra = new ServiceCompra();
-            IServiceTienda serviceTienda = new ServiceTienda();
-            Usuario usuario = Session["User"] as Usuario;
-            Tienda tienda = serviceTienda.GetByVendedor(usuario.Id);
-            ViewBag.idTienda = tienda.Id;
+           
+           
             Compra compra = serviceCompra.GetCompraById(id);
             return View(compra);
         }
 
-        public ActionResult UpdateStateDetail(int compraId, int productoId)
+        public async Task<ActionResult> UpdateStateDetail(int compraId, int productoId)
         {
             IServiceCompra serviceCompra = new ServiceCompra();
             
@@ -258,8 +259,8 @@ namespace Web.Controllers
                     detalle = item;
                 }
             }
-            serviceCompra.ChangeStateDetail(compraId,productoId);
-            serviceCompra.Actualizar(compra);
+           await serviceCompra.ChangeStateDetail(compraId,productoId);
+           await serviceCompra.Actualizar(compra);
             return View();
         }
 

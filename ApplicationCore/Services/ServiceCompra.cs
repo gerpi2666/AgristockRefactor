@@ -22,16 +22,16 @@ namespace ApplicationCore.Services
             return repository.GetCompras();
         }
 
-        public IEnumerable<Compra> GetComprasByCliente(int idCliente)
+        public async Task<IEnumerable<Compra>> GetComprasByCliente(int idCliente)
         {
             IRepositoryCompra repository = new RepositoryCompra();
-            return repository.GetComprasByCliente(idCliente);
+            return await repository.GetComprasByCliente(idCliente);
         }
 
-        public IEnumerable<Compra> GetComprasByTienda(int idTienda)
+        public async Task<IEnumerable<Compra>> GetComprasByTienda(int idTienda)
         {
             IRepositoryCompra repository = new RepositoryCompra();
-            return repository.GetComprasByTienda(idTienda);
+            return await repository.GetComprasByTienda(idTienda);
         }
 
         public Task<Compra> Crear(Compra compra, List<DetalleCompra> carrito)
@@ -58,10 +58,10 @@ namespace ApplicationCore.Services
             return repository.GetCompraCountToday();
         }
 
-        public void ChangeStateDetail(int idCompra, int idProducto)
+        public async Task ChangeStateDetail(int idCompra, int idProducto)
         {
             IRepositoryCompra repository = new RepositoryCompra();
-            repository.ChangeStateDetail(idCompra,idProducto);
+            await repository.ChangeStateDetail(idCompra,idProducto);
         }       
         public void GetTopProductosCompradosMes(out string etiquetas1, out string valores1)
         {

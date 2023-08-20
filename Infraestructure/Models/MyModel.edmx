@@ -73,6 +73,7 @@
           <Property Name="comentarioACliente" Type="nvarchar" MaxLength="150" />
           <Property Name="calificacionAVendedor" Type="int" />
           <Property Name="comentarioAVendedor" Type="nvarchar" MaxLength="150" />
+          <Property Name="calificacionFinal" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'AgriStock.dbo.Mensaje' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -533,6 +534,7 @@ advertencia 6002: La tabla o vista 'AgriStock.dbo.Mensaje' no tiene definida nin
           <Property Name="comentarioACliente" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="calificacionAVendedor" Type="Int32" />
           <Property Name="comentarioAVendedor" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="calificacionFinal" Type="Int32" />
           <NavigationProperty Name="Compra" Relationship="Self.FK_Evaluacion_Compra" FromRole="Evaluacion" ToRole="Compra" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_Evaluacion_Usuario" FromRole="Evaluacion" ToRole="Usuario" />
           <NavigationProperty Name="Tienda" Relationship="Self.FK_Evaluacion_VendedorServicio" FromRole="Evaluacion" ToRole="Tienda" />
@@ -966,6 +968,7 @@ advertencia 6002: La tabla o vista 'AgriStock.dbo.Mensaje' no tiene definida nin
                 <ScalarProperty Name="comentarioACliente" ColumnName="comentarioACliente" />
                 <ScalarProperty Name="calificacionAVendedor" ColumnName="calificacionAVendedor" />
                 <ScalarProperty Name="comentarioAVendedor" ColumnName="comentarioAVendedor" />
+                <ScalarProperty Name="calificacionFinal" ColumnName="calificacionFinal" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

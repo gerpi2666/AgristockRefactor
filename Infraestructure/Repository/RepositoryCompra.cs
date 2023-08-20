@@ -73,7 +73,7 @@ namespace Infraestructure.Repository
             }
         }
 
-        public IEnumerable<Compra> GetComprasByCliente(int idCliente)
+        public async Task<IEnumerable<Compra>> GetComprasByCliente(int idCliente)
         {
 
             try
@@ -82,12 +82,12 @@ namespace Infraestructure.Repository
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                         compra = ctx.Compra.Where(l => l.IdUsuario == idCliente)
+                         compra = await ctx.Compra.Where(l => l.IdUsuario == idCliente)
                         .Include(u => u.DetalleCompra)
                         .Include(X => X.DetalleCompra.Select(d => d.Producto))
                         .Include(p => p.DetalleCompra.Select(s => s.Producto.Tienda))
                         .Include(k => k.Usuario)
-                        .Include(h => h.Usuario.MetodoPago).ToList();
+                        .Include(h => h.Usuario.MetodoPago).ToListAsync();
 
                 }
                 return compra;
@@ -106,7 +106,7 @@ namespace Infraestructure.Repository
             }
         }
 
-        public IEnumerable<Compra> GetComprasByTienda(int idTienda)
+        public async Task<IEnumerable<Compra>> GetComprasByTienda(int idTienda)
         {
 
             try
@@ -115,12 +115,12 @@ namespace Infraestructure.Repository
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    compra = ctx.Compra.Where(l => l.DetalleCompra.Any(d=>d.Producto.Tienda.Id== idTienda))
+                    compra =await ctx.Compra.Where(l => l.DetalleCompra.Any(d=>d.Producto.Tienda.Id== idTienda))
                    .Include(u => u.DetalleCompra)
                    .Include(X => X.DetalleCompra.Select(d => d.Producto))
                    .Include(p => p.DetalleCompra.Select(s => s.Producto.Tienda))
                    .Include(k => k.Usuario)
-                   .Include(h => h.Usuario.MetodoPago).ToList();
+                   .Include(h => h.Usuario.MetodoPago).ToListAsync();
 
                 }
                 return compra;
@@ -222,7 +222,7 @@ namespace Infraestructure.Repository
                      
         }
 
-        public void ChangeStateDetail(int idCompra,int idProducto)
+        public async Task ChangeStateDetail(int idCompra,int idProducto)
         {
             try
             {
@@ -232,7 +232,7 @@ namespace Infraestructure.Repository
                     using (MyContext ctx = new MyContext())
                     {
                         ctx.Configuration.LazyLoadingEnabled = false;
-                        detalle= ctx.DetalleCompra.Where(p => p.idProducto == idProducto).FirstOrDefault();
+                        detalle= await ctx.DetalleCompra.Where(p => p.idProducto == idProducto).FirstOrDefaultAsync();
 
 
                     detalle.Estado = true;

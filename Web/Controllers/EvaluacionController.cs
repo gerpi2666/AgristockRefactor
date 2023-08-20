@@ -60,6 +60,7 @@ namespace Web.Controllers
             Evaluacion eva = serviceEvaluacion.GetByCompraYvendor(compraId);
             eva.calificacionAVendedor = evaluacion;
             eva.comentarioAVendedor = comentario;
+            eva.calificacionFinal = (eva.calificacionACliente + evaluacion) / 2;
             await serviceEvaluacion.Edit(eva);
 
             return View();

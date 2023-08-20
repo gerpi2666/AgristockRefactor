@@ -10,13 +10,13 @@ namespace ApplicationCore.Services
     public interface IServiceCompra
     {
         IEnumerable<Compra> GetCompras();
-        IEnumerable<Compra> GetComprasByCliente(int idCliente);
-        IEnumerable<Compra> GetComprasByTienda(int idTienda);
+        Task<IEnumerable<Compra>> GetComprasByCliente(int idCliente);
+        Task<IEnumerable<Compra>> GetComprasByTienda(int idTienda);
         Compra GetCompraById(int id);
         Task<Compra> Crear(Compra compra, List<DetalleCompra> detalle);
         Task<Compra> Actualizar(Compra compra);
         Task Delete(int id);
-        void ChangeStateDetail(int idCompra, int idProducto);
+        Task ChangeStateDetail(int idCompra, int idProducto);
         int GetCompraCountToday();
 
         void GetTopProductosCompradosMes(out string etiquetas, out string valores);
