@@ -1475,9 +1475,82 @@ form .btn {
 }
 
 
-/* ======================= media query para Login  =================*/
-@media screen and (max-width: 768px) {
-    .view-container {
+.contenedor-evaluacion {
+    width: 900px;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-white);
+    margin: 3rem auto 0rem auto;
+    padding: 1.4rem var(--card-padding);
+    border-radius: var(--border-radius-3);
+    transition: all 300ms ease;
+}
+
+/* ======================= graficos  =================*/
+
+/*#grafico1 {
+    width: 900px !important;
+    height: auto !important;
+}
+
+#grafico2 {
+    width: 600px !important;
+    height: auto !important;
+}
+*/
+.top-ventas {
+    width: 500px;
+    display: flex;
+    flex-direction: row;
+    background: var(--color-white);
+    margin: 2rem 0;
+    padding: 1.4rem var(--card-padding);
+    border-radius: var(--border-radius-3);
+    transition: all 300ms ease;
+}
+
+.item {
+    width: 275px;
+    background: var(--color-white);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+    padding: 1.4rem var(--card-padding);
+    border-radius: var(--border-radius-3);
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+}
+
+    .item:hover {
+        box-shadow: none;
+    }
+
+    .item .right{
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        margin: 0;
+        width: 100%;
+    }
+
+
+    .item .icon {
+        padding: 0.6rem 0.2rem 0.6rem 0.6rem;
+        color: var(--color-white);
+        border-radius: 50%;
+        background: var(--color-primary);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .item.offline .icon {
+        background: var(--color-primary);
+    }
+    /* ======================= media query para Login  =================*/
+    @media screen and (max-width: 768px) {
+        .view-container {
         font-size: 12px !important;
     }
 

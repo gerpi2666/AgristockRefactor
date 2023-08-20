@@ -29,7 +29,8 @@ function pintarGrafico(canvasId, titulo, tituloEtiquetas, tipo, colores, etiquet
                 text: tituloEtiquetas
             },
             responsive: true,
-            maintainAspectRatio: true
+            maintainAspectRatio: false, // Cambiado a "false" para ajustar el tamaño
         }
     });
 }
+

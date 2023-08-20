@@ -18,9 +18,9 @@ namespace Infraestructure.Repository
         Task Delete(int id);
 
         void ChangeStateDetail(int idCompra, int idProducto);
-        void GetCompraCountToday(out string etiquetas, out string valores);
-
         void GetTopProductosCompradosMes(out string etiquetas, out string valores);
+
+        int GetCompraCountToday();
 
     }
 }

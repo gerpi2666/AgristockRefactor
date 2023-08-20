@@ -6,13 +6,35 @@
 @model IEnumerable<Infraestructure.Models.Producto>
 
 
-<div>
+@*<div class="d-flex flex-column">
     <canvas id="grafico1"></canvas>
+    <canvas id="grafico2"></canvas>
+</div>*@
+
+
+
+<div class="item online">
+    <div class="icon">            
+        <span class="material-symbols-outlined">shopping_cart</span>
+    </div>
+    <div class="right">
+        <div class="info">
+            <h3>Ventas</h3>
+            <small class="text-muted">Últimas 24 horas</small>
+        </div>
+        @*<h5 class="success">+40%</h5>*@
+    </div>
+        <span class="tertiary" style="font-weight:600; font-size:1.5rem;">@ViewBag.graficoCountSells</span>
+        
 </div>
 
-<div>
-    <canvas id="grafico2"></canvas>
+
+<div class="top-ventas">
+    @*<div style="width: 500px;"><canvas id="grafico1"></canvas></div>*@
+    <div style="width: 500px; height:350px"><canvas id="grafico2"></canvas></div>
 </div>
+
+
 
 
 @section Scripts {
@@ -23,21 +45,6 @@
     <script src="~/Scripts/graficoChartJS.js"></script>
 
     <script type="text/javascript">
-
-        var colores = @Html.Raw(Json.Encode(ViewBag.graficoCountSells.Colores));
-        colores = colores.split(",");
-        var etiquetas = @Html.Raw(Json.Encode(ViewBag.graficoCountSells.Etiquetas));
-        etiquetas = etiquetas.split(",");
-        var valores = @Html.Raw(Json.Encode(ViewBag.graficoCountSells.Valores));
-        valores = valores.split(",");
-        var titulo = @Html.Raw(Json.Encode(ViewBag.graficoCountSells.titulo));
-        var tituloEtiquetas = @Html.Raw(Json.Encode(ViewBag.graficoCountSells.tituloEtiquetas));
-        var tipo = @Html.Raw(Json.Encode(ViewBag.graficoCountSells.tipo));
-
-        // Pintar el primer gráfico en el canvas "grafico1"
-        pintarGrafico("grafico1", titulo, tituloEtiquetas, tipo, colores, etiquetas, valores);
-
-
 
 
         var colores2 = @Html.Raw(Json.Encode(ViewBag.graficoTopSells.Colores));
@@ -50,6 +57,6 @@
         var tituloEtiquetas2 = @Html.Raw(Json.Encode(ViewBag.graficoTopSells.tituloEtiquetas));
         var tipo2 = @Html.Raw(Json.Encode(ViewBag.graficoTopSells.tipo));
 
-        pintarGrafico("grafico2", titulo2, tituloEtiquetas2, tipo2, colores2, etiquetas2, valores2);
+        pintarGrafico("grafico2", titulo2, tituloEtiquetas2, tipo2, colores2, etiquetas2, valores2);    
     </script>
 }

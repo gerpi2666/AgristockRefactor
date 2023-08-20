@@ -68,16 +68,6 @@ namespace Web.Controllers
             return View(lista);
         }
 
-        public ActionResult ComprasXCliente()
-        {
-            Usuario usuario = Session["User"] as Usuario;
-
-            IServiceCompra serviceCompra = new ServiceCompra();
-            IEnumerable<Compra> lista = serviceCompra.GetComprasByCliente(usuario.Id);
-
-            return View(lista);
-        }
-
         [CustomAuthorize((int)Perfil.Cliente, (int)Perfil.Vendedor)]
         public ActionResult ConfirmarCompra(List<Web.ViewModel.ViewModelDetalleCompra> detalleOrden)
         {

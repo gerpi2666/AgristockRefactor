@@ -351,47 +351,22 @@ namespace Infraestructure.Repository
         }
 
 
-        public void GetCompraCountToday(out string etiquetas, out string valores)
+        public int GetCompraCountToday()
         {
-            String varEtiquetas = "";
-            String varValores = "";
             try
             {
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    DateTime today = DateTime.Today; // Extraer la fecha de hoy
+                    DateTime currentDate = DateTime.Today;
 
-                    //var resultado = ctx.Compra.Where(c => c.FechaHora.Date == today)
-                    //                .GroupBy(c => c.FechaHora)
-                    //                .Select(grp => new {
-                    //                    Count = grp.Count(),
-                    //                    FechaCompra = grp.Key
-                    //                });
+                    int cantidadCompras = ctx.Compra
+                        .Count(dcp => dcp.FechaHora.HasValue &&
+                                     dcp.FechaHora.Value.Month == currentDate.Month &&
+                                     dcp.FechaHora.Value.Year == currentDate.Year);
 
-                    var resultado = ctx.Compra.GroupBy(x => x.FechaHora).
-                                                       Select(o => new {
-                                                           Count = o.Count(),
-                                                           FechaHora = o.Key
-                                                       });
-
-                    foreach (var item in resultado)
-                    {
-                        varEtiquetas += String.Format("{0:dd/MM/yyyy}", item.FechaHora) + ",";
-                        varValores += item.Count + ",";
-                    }
+                    return cantidadCompras;
                 }
-
-                // Eliminar la última coma de las cadenas
-                if (!string.IsNullOrEmpty(varEtiquetas))
-                    varEtiquetas = varEtiquetas.Substring(0, varEtiquetas.Length - 1);
-
-                if (!string.IsNullOrEmpty(varValores))
-                    varValores = varValores.Substring(0, varValores.Length - 1);
-
-                // Asignar valores de salida
-                etiquetas = varEtiquetas;
-                valores = varValores;
             }
             catch (DbUpdateException dbEx)
             {
@@ -421,17 +396,24 @@ namespace Infraestructure.Repository
                     DateTime inicioMes = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
                     DateTime finMes = inicioMes.AddMonths(1).AddDays(-1);
 
-                    var resultado = ctx.Compra
-                                       .Where(c => c.FechaHora >= inicioMes && c.FechaHora <= finMes)
-                                       .Include(c => c.DetalleCompra)
-                                       .SelectMany(c => c.DetalleCompra)
-                                       .GroupBy(dc => dc.idProducto)
+                    var currentDate = DateTime.Today;
+                    var firstDayOfMonth = new DateTime(currentDate.Year, currentDate.Month, 1);
+
+                    var resultado = ctx.DetalleCompra
+                                       .Join(ctx.Producto, dc => dc.idProducto, p => p.Id, (dc, p) => new { DetalleCompra = dc, Producto = p })
+                                       .Join(ctx.Compra, dcp => dcp.DetalleCompra.IdCompra, c => c.Id, (dcp, c) => new { DetalleCompraProducto = dcp, Compra = c })
+                                       .Where(dcp => dcp.Compra.FechaHora.HasValue &&
+                                                     dcp.Compra.FechaHora.Value.Month == currentDate.Month &&
+                                                     dcp.Compra.FechaHora.Value.Year == currentDate.Year)
+                                       .GroupBy(dcp => new { dcp.DetalleCompraProducto.Producto.Id, dcp.DetalleCompraProducto.Producto.Nombre })
                                        .Select(grp => new {
-                                           ProductoId = grp.Key,
-                                           CantidadComprada = grp.Sum(dc => dc.Cantidad)
+                                           ProductoId = grp.Key.Id,
+                                           ProductoNombre = grp.Key.Nombre,
+                                           CantidadTotalComprada = grp.Sum(dcp => dcp.DetalleCompraProducto.DetalleCompra.Cantidad)
                                        })
-                                       .OrderByDescending(grp => grp.CantidadComprada)
-                                       .Take(5);
+                                       .OrderByDescending(item => item.CantidadTotalComprada)
+                                       .Take(5)
+                                       .ToList();
 
                     foreach (var item in resultado)
                     {
@@ -439,7 +421,7 @@ namespace Infraestructure.Repository
                         if (producto != null)
                         {
                             varEtiquetas += producto.Nombre + ",";
-                            varValores += item.CantidadComprada + ",";
+                            varValores += item.CantidadTotalComprada + ",";
                         }
                     }
                 }

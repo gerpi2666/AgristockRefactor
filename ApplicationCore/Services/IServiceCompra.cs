@@ -17,7 +17,7 @@ namespace ApplicationCore.Services
         Task<Compra> Actualizar(Compra compra);
         Task Delete(int id);
         void ChangeStateDetail(int idCompra, int idProducto);
-        void GetCompraCountToday(out string etiquetas, out string valores);
+        int GetCompraCountToday();
 
         void GetTopProductosCompradosMes(out string etiquetas, out string valores);
     }

@@ -52,19 +52,18 @@ namespace ApplicationCore.Services
             return repository.Delete(id);
         }
 
-        public void GetCompraCountToday(out string etiquetas1, out string valores1)
+        public int GetCompraCountToday()
         {
             IRepositoryCompra repository = new RepositoryCompra();
-            repository.GetCompraCountToday(out string etiquetas, out string valores);
-            etiquetas1 = etiquetas;
-            valores1 = valores;
+            return repository.GetCompraCountToday();
         }
 
         public void ChangeStateDetail(int idCompra, int idProducto)
         {
             IRepositoryCompra repository = new RepositoryCompra();
             repository.ChangeStateDetail(idCompra,idProducto);
-        }        public void GetTopProductosCompradosMes(out string etiquetas1, out string valores1)
+        }       
+        public void GetTopProductosCompradosMes(out string etiquetas1, out string valores1)
         {
             IRepositoryCompra repository = new RepositoryCompra();
             repository.GetTopProductosCompradosMes(out string etiquetas, out string valores);
