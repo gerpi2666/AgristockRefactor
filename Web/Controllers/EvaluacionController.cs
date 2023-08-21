@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.Services;
+using Infraestructure;
 using Infraestructure.Models;
 using System;
 using System.Collections.Generic;
@@ -19,29 +20,39 @@ namespace Web.Controllers
 
         public async Task<ActionResult> Add(int compraId, int idVendedor,int evaluacion, string comentario)
         {
+            //IServiceCompra serviceCompra = new ServiceCompra();
+            //IServiceTienda serviceTienda = new ServiceTienda();
+            //IServiceEvaluacion serviceEvaluacion = new ServiceEvaluacion();
+
+            //Usuario usuario = Session["User"] as Usuario;
+
+
+            //Tienda tienda = serviceTienda.GetTiendaById(idVendedor);
+            //Compra compra = serviceCompra.GetCompraById(compraId);
+
+            //Evaluacion eva = new Evaluacion();
+            //eva.idCompra = compraId;
+            //eva.idVendedor = idVendedor;
+            //eva.calificacionAVendedor = evaluacion;
+            //eva.comentarioAVendedor = comentario;
+            //eva.comentarioACliente = "";
+            //eva.calificacionACliente = 0;
+            //eva.Compra = compra;
+            //eva.Tienda = tienda;
+            //eva.Usuario = usuario;//cliente
+            //eva.idCliente = usuario.Id;
+            //eva.calificacionFinal = 0;
+            //await serviceEvaluacion.Add(eva);
+
             IServiceCompra serviceCompra = new ServiceCompra();
             IServiceTienda serviceTienda = new ServiceTienda();
             IServiceEvaluacion serviceEvaluacion = new ServiceEvaluacion();
 
             Usuario usuario = Session["User"] as Usuario;
 
+            await serviceEvaluacion.Add(compraId, idVendedor, evaluacion, comentario, usuario.Id);
 
-            Tienda tienda = serviceTienda.GetTiendaById(idVendedor);
-            Compra compra = serviceCompra.GetCompraById(compraId);
-
-            Evaluacion eva = new Evaluacion();
-            eva.idCompra = compraId;
-            eva.idVendedor = idVendedor;
-            eva.calificacionACliente = evaluacion;
-            eva.comentarioACliente = comentario;
-            eva.comentarioAVendedor = "";
-            eva.calificacionAVendedor = 0;
-            eva.Compra = compra;
-            eva.Tienda = tienda;
-            eva.Usuario = usuario;//cliente
-            eva.idCliente = usuario.Id;
-            eva.calificacionFinal = 0;
-            await serviceEvaluacion.Add(eva);
+          
 
             return View();
         }
@@ -59,8 +70,8 @@ namespace Web.Controllers
             Compra compra = serviceCompra.GetCompraById(compraId);
 
             Evaluacion eva = serviceEvaluacion.GetByCompraYvendor(compraId);
-            eva.calificacionAVendedor = evaluacion;
-            eva.comentarioAVendedor = comentario;
+            eva.calificacionACliente = evaluacion;
+            eva.comentarioACliente = comentario;
             eva.calificacionFinal = (eva.calificacionACliente + evaluacion) / 2;
             await serviceEvaluacion.Edit(eva);
 

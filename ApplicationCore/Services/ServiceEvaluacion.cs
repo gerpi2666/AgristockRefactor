@@ -10,10 +10,10 @@ namespace ApplicationCore.Services
 {
     public class ServiceEvaluacion : IServiceEvaluacion
     {
-        public Task<Evaluacion> Add(Evaluacion evaluacion)
+        public Task<Evaluacion> Add(int compraId, int idVendedor, int evaluacion, string comentario, int idCliente)
         {
             IRepositoryEvaluacion repositoryEvaluacion = new RepositoryEvaluacion();
-            return repositoryEvaluacion.Add(evaluacion);
+            return repositoryEvaluacion.Add(compraId, idVendedor,  evaluacion, comentario,  idCliente);
         }
 
         public Task<Evaluacion> Edit(Evaluacion evaluacion)
