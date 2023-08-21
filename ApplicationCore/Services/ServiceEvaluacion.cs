@@ -28,7 +28,7 @@ namespace ApplicationCore.Services
             return repositoryEvaluacion.GetAll();
         }
 
-        public Task<IEnumerable<Evaluacion>> GetByClient(int idClient)
+        public IEnumerable<Evaluacion> GetByClient(int idClient)
         {
             IRepositoryEvaluacion repositoryEvaluacion = new RepositoryEvaluacion();
             return repositoryEvaluacion.GetByClient(idClient);

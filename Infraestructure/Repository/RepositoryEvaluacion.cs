@@ -21,27 +21,7 @@ namespace Infraestructure.Repository
                 //evaluacion = eva;
                 using (MyContext ctx = new MyContext())
                 {
-                    //// Verificar si la compra y la tienda existen en la base de datos
-                    //Compra compra = await ctx.Compra.FindAsync(eva.idCompra);
-                    //Tienda tienda = await ctx.Tienda.FindAsync(eva.idVendedor);
-                    //Usuario usuario = await ctx.Usuario.FindAsync(eva.idCliente);
-
-                    //if (compra != null && tienda != null)
-                    //{
-                    //    if (ctx.Entry(compra).State == EntityState.Detached)
-                    //        ctx.Compra.Attach(compra);
-
-                    //    if (ctx.Entry(tienda).State == EntityState.Detached)
-                    //        ctx.Tienda.Attach(tienda);
-                    //    if (ctx.Entry(usuario).State == EntityState.Detached)
-                    //        ctx.Usuario.Attach(usuario);
-                    //    ctx.Evaluacion.Add(eva);
-                    //    rows1= await ctx.SaveChangesAsync();
-
-                    //    //Retorna la evaluación con el ID actualizado
-
-
-                    //}
+                    
                     Usuario usuario = await ctx.Usuario.FindAsync(compraId);
                     Compra compra = await ctx.Compra.FindAsync(compraId);
                     Tienda tienda = await ctx.Tienda.FindAsync(idVendedor);
@@ -156,7 +136,7 @@ namespace Infraestructure.Repository
             }
         }
 
-        public async Task<IEnumerable<Evaluacion>> GetByClient(int idClient)
+        public  IEnumerable<Evaluacion> GetByClient(int idClient)
         {
             try
             {
@@ -164,7 +144,7 @@ namespace Infraestructure.Repository
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    evaluaciones = await ctx.Evaluacion.Where(e=> e.idCliente==idClient).ToListAsync();
+                    evaluaciones =  ctx.Evaluacion.Where(e=> e.idCliente==idClient).ToList();
 
                    
                 }

@@ -63,10 +63,12 @@ namespace Web.Controllers
         {
             Usuario usuario = Session["User"] as Usuario;
 
+
             IServiceCompra serviceCompra = new ServiceCompra();
+            IServiceEvaluacion serviceEvaluacion = new ServiceEvaluacion();                      
+            ViewBag.evaluacion = serviceEvaluacion.GetByClient(usuario.Id);
             IEnumerable<Compra> lista =await serviceCompra.GetComprasByCliente(usuario.Id);
-            double sum = 0;
-            
+                      
 
             return View(lista);
         }
@@ -96,6 +98,8 @@ namespace Web.Controllers
             IServiceTienda serviceTienda = new ServiceTienda();
             Tienda tienda = serviceTienda.GetByVendedor(usuario.Id);
             ViewBag.idTienda =tienda.Id;
+            IServiceEvaluacion serviceEvaluacion = new ServiceEvaluacion();
+            ViewBag.evaluacion = serviceEvaluacion.GetByClient(usuario.Id);
             IServiceCompra _ServiceCompra = new ServiceCompra();
             IEnumerable<Compra> compra = await _ServiceCompra.GetComprasByTienda(tienda.Id);
 

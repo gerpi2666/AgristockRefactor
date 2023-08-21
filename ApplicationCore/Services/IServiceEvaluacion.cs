@@ -11,7 +11,7 @@ namespace ApplicationCore.Services
     {
         Task<Evaluacion> GetById(int id);
         Task<IEnumerable<Evaluacion>> GetAll();
-        Task<IEnumerable<Evaluacion>> GetByClient(int idClient);
+        IEnumerable<Evaluacion> GetByClient(int idClient);
         Task<IEnumerable<Evaluacion>> GetBySeller(int idSeller);
         Task<IEnumerable<Tienda>> GetTop5Sellers();
         Task<IEnumerable<Producto>> GetTop5Products();

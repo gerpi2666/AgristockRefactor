@@ -26,6 +26,7 @@
                             <th>Fecha y hora del pedido</th>
                             <th>Direccion</th>
                             <th>Estado</th>
+                            <th>Calificacion</th>
                             <th>Acciones</th>
 
                         </tr>
@@ -33,49 +34,73 @@
                     <tbody>
 
                         @{
+                            int a1 = 0;
                             foreach (var item in Model)
                             {
-                                
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@Html.DisplayFor(f => item.FechaHora)</td>
+                                    <td>@item.Direccion</td>
+                                    @if (item.Estado == 3)
+                                    {
+                                        <td><span class="text-success fw-bold">Entregado</span></td>
+                                    }
+                                    @if (item.Estado == 2)
+                                    {
+                                        <td><span class="text-warning fw-bold">En progreso</span></td>
 
-                                                <tr>
-                                                    <td>@item.Id</td>
-                                                    <td>@Html.DisplayFor(f => item.FechaHora)</td>
-                                                    <td>@item.Direccion</td>
-                                                    @if (item.Estado == 3)
-                                                    {
-                                                        <td><span class="text-success fw-bold">Entregado</span></td>
-                                                    }
-                                                    @if (item.Estado == 2)
-                                                    {
-                                                        <td><span class="text-warning fw-bold">En progreso</span></td>
+                                    }
+                                    @if (item.Estado == 1)
+                                    {
+                                        <td><span class="text-danger fw-bold">Pendiente</span></td>
 
-                                                    }
-                                                    @if (item.Estado == 1)
-                                                    {
-                                                        <td><span class="text-danger fw-bold">Pendiente</span></td>
+                                    }
+                                    @if (ViewBag.evaluacion != null)
+                                    {
 
-                                                    }
+                                        int count = 0;
+                                        int suma = 0;
+                                        int avg = 0;
+                                        foreach (var a in ViewBag.evaluacion)
+                                        {
+                                            suma += a.calificacionFinal;
+                                            count++;
+                                        }
+                                        avg = suma / count;
+                                        if (avg > 0)
+                                        {
+                                            <td>@avg</td>
+                                            a1 = avg;
+                                        }
 
-                                                    <td>
-                                                        <a href="@Url.Action("Details", "Compra", new { id = item.Id })" class="btn  text-white btn flex-grow-1 pt-2" style="background: var(--color-secondary-variant) ">
-                                                            <span class="material-symbols-outlined">
-                                                                info
-                                                            </span>
-                                                        </a>
-                                                        @if (item.Estado == 3)
-                                                        {
-                                                            <a href="@Url.Action("EvaluationCompraCliente", "Compra", new { id = item.Id })" class="btnEstado btn  text-white btn flex-grow-1 pt-2" style="background: green ">
-                                                                <span class="material-symbols-outlined">
-                                                                    star
-                                                                </span>
-                                                            </a>
 
-                                                        }
-                                                    </td>
-                                                    >
-                                                </tr>
-                                    
-                                
+
+                                    }
+                                    else
+                                    {
+                                        <td>0</td>
+                                    }
+
+                                    <td>
+                                        <a href="@Url.Action("Details", "Compra", new { id = item.Id })" class="btn  text-white btn flex-grow-1 pt-2" style="background: var(--color-secondary-variant) ">
+                                            <span class="material-symbols-outlined">
+                                                info
+                                            </span>
+                                        </a>
+                                        @if (item.Estado == 3 && a1 < 0)
+                                        {
+                                            <a href="@Url.Action("EvaluationCompraCliente", "Compra", new { id = item.Id })" class="btnEstado btn  text-white btn flex-grow-1 pt-2" style="background: green ">
+                                                <span class="material-symbols-outlined">
+                                                    star
+                                                </span>
+                                            </a>
+
+                                        }
+                                    </td>
+                                    >
+                                </tr>
+
+
                             }
                         }
 
