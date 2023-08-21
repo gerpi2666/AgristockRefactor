@@ -17,5 +17,10 @@ namespace ApplicationCore.Services
         Usuario Save(Usuario usuario);
 
 
+        void GetTopCincoVendedores(out string etiquetas, out string valores);
+        void GetTopTresPeoresVendedores(out string etiquetas, out string valores);
+
+
+
     }
 }

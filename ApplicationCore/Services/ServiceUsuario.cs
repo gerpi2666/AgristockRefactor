@@ -46,5 +46,26 @@ namespace ApplicationCore.Services
         {
             throw new NotImplementedException();
         }
+
+
+        public void GetTopCincoVendedores(out string etiquetas1, out string valores1)
+        {
+            IRepositoryUsuario repository = new RepositoryUsuario();
+            repository.GetTopCincoVendedores(out string etiquetas, out string valores);
+            etiquetas1 = etiquetas;
+            valores1 = valores;
+        }
+
+
+
+        public void GetTopTresPeoresVendedores(out string etiquetas1, out string valores1)
+        {
+            IRepositoryUsuario repository = new RepositoryUsuario();
+            repository.GetTopTresPeoresVendedores(out string etiquetas, out string valores);
+            etiquetas1 = etiquetas;
+            valores1 = valores;
+        }
+
+
     }
 }

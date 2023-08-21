@@ -16,6 +16,10 @@ namespace Infraestructure.Repository
 
         Usuario GetUsuario(string email, string password);
 
+        void GetTopCincoVendedores(out string etiquetas, out string valores);
+
+
+        void GetTopTresPeoresVendedores(out string etiquetas, out string valores);
 
     }
 }

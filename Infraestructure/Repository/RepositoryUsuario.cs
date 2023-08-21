@@ -26,7 +26,7 @@ namespace Infraestructure.Repository
                     usuario = ctx.Usuario
                         .Where(p => p.Id == id)
                         .Include(c => c.Perfil)
-                        .Include(a=> a.Direccion)
+                        .Include(a => a.Direccion)
                         .FirstOrDefault<Usuario>();
 
                 }
@@ -146,12 +146,12 @@ namespace Infraestructure.Repository
                 {
                     ctx.Usuario.Add(usuario);
                     ctx.Entry(usuario).State = EntityState.Modified;
-           
+
                 }
 
                 retorno = ctx.SaveChanges();
 
-            } 
+            }
 
             if (retorno >= 0)
                 oUsuario = GetUsuarioById(usuario.Id);
@@ -159,5 +159,117 @@ namespace Infraestructure.Repository
             return oUsuario;
 
         }
+
+        public void GetTopCincoVendedores(out string etiquetas, out string valores)
+        {
+            String varEtiquetas = "";
+            String varValores = "";
+            try
+            {
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+
+                    var resultado = ctx.Evaluacion
+                                       .Join(ctx.Usuario, e => e.idVendedor, u => u.Id, (e, u) => new { Evaluacion = e, Usuario = u })
+                                       .GroupBy(eu => new { eu.Usuario.Id, eu.Usuario.Nombre })
+                                       .Select(grp => new
+                                       {
+                                           idVendedor = grp.Key.Id,
+                                           NombreVendedor = grp.Key.Nombre,
+                                           PromedioCalificacion = grp.Average(eu => eu.Evaluacion.calificacionACliente)
+                                       })
+                                       .OrderByDescending(item => item.PromedioCalificacion)
+                                       .Take(5)
+                                       .ToList();
+
+                    foreach (var item in resultado)
+                    {
+                        varEtiquetas += item.NombreVendedor + ",";
+                        varValores += item.PromedioCalificacion + ",";
+                    }
+                }
+
+                // Eliminar la última coma de las cadenas
+                if (!string.IsNullOrEmpty(varEtiquetas))
+                    varEtiquetas = varEtiquetas.Substring(0, varEtiquetas.Length - 1);
+
+                if (!string.IsNullOrEmpty(varValores))
+                    varValores = varValores.Substring(0, varValores.Length - 1);
+
+                // Asignar valores de salida
+                etiquetas = varEtiquetas;
+                valores = varValores;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+        }
+
+
+
+        public void GetTopTresPeoresVendedores(out string etiquetas, out string valores)
+        {
+            String varEtiquetas = "";
+            String varValores = "";
+            try
+            {
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+
+                    var resultado = ctx.Evaluacion
+                                      .Join(ctx.Usuario, e => e.idVendedor, u => u.Id, (e, u) => new { Evaluacion = e, Usuario = u })
+                                      .GroupBy(eu => new { eu.Usuario.Id, eu.Usuario.Nombre })
+                                      .Select(grp => new {
+                                          idVendedor = grp.Key.Id,
+                                          NombreVendedor = grp.Key.Nombre,
+                                          PromedioCalificacion = grp.Average(eu => eu.Evaluacion.calificacionACliente)
+                                      })
+                                      .OrderBy(item => item.PromedioCalificacion)
+                                      .Take(3)
+                                      .ToList();
+
+                    foreach (var item in resultado)
+                    {
+                        varEtiquetas += item.NombreVendedor + ",";
+                        varValores += item.PromedioCalificacion + ",";
+                    }
+                }
+
+                // Eliminar la última coma de las cadenas
+                if (!string.IsNullOrEmpty(varEtiquetas))
+                    varEtiquetas = varEtiquetas.Substring(0, varEtiquetas.Length - 1);
+
+                if (!string.IsNullOrEmpty(varValores))
+                    varValores = varValores.Substring(0, varValores.Length - 1);
+
+                // Asignar valores de salida
+                etiquetas = varEtiquetas;
+                valores = varValores;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+        }
+
     }
 }

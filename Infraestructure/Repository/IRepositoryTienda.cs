@@ -14,5 +14,10 @@ namespace Infraestructure.Repository
         Tienda SaveProveedor(Tienda tienda);
         Tienda GetByVendedor(int vendorID);
 
+        Producto GetProductoMasVendidoVendedor(int idUsuarioVendedor);
+
+        Usuario GetClienteMasCompras(int idVendedor);
+
+
     }
 }

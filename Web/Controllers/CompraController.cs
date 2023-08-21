@@ -161,7 +161,10 @@ namespace Web.Controllers
                 IServiceCompra serviceCompra = new ServiceCompra();
                 serviceCompra.Crear(compra, listaDetalle);
 
-                return RedirectToAction("Index");
+            // Limpia el Carrito de compras
+            Carrito.Instancia.EliminarCarrito();
+
+            return RedirectToAction("Index");
            
         }
 
@@ -229,6 +232,7 @@ namespace Web.Controllers
         {
             IServiceTienda serviceTienda = new ServiceTienda();
             Usuario usuario = Session["User"] as Usuario;
+            
             Tienda tienda = serviceTienda.GetByVendedor(usuario.Id);
             ViewBag.idTienda = tienda.Id;
             IServiceCompra serviceCompra = new ServiceCompra();
