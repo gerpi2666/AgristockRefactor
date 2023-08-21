@@ -57,7 +57,12 @@ namespace Infraestructure.Repository
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    chat = ctx.ChatProducto.Find(id);
+                    chat = ctx.ChatProducto
+                               .Include(c => c.Producto)
+                               .Include(c => c.Mensaje)
+                               .Include(p => p.Mensaje.Select(m => m.Usuario))
+                               .Include(c => c.Tienda)
+                               .FirstOrDefault(c => c.Id == id);
 
                 }
                 return chat;
@@ -84,7 +89,12 @@ namespace Infraestructure.Repository
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    chats = ctx.ChatProducto.Where(U => U.IdProducto == idProducto).Include("Producto").ToList();
+                    chats = ctx.ChatProducto
+                                .Where(chat => chat.IdProducto == idProducto)
+                                .Include(chat => chat.Producto)
+                                .Include(chat => chat.Mensaje)
+                               .Include(p => p.Mensaje.Select(m => m.Usuario))
+                                .ToList();
 
                 }
                 return chats;
@@ -111,7 +121,12 @@ namespace Infraestructure.Repository
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    chats = ctx.ChatProducto.Where(U => U.IdTienda == idTienda).Include("Tienda").ToList();
+                    chats = ctx.ChatProducto
+                                .Where(chat => chat.IdTienda == idTienda)
+                                .Include(chat => chat.Producto)
+                                .Include(chat => chat.Mensaje)
+                               .Include(p => p.Mensaje.Select(m => m.Usuario))
+                                .ToList();
 
                 }
                 return chats;

@@ -12,28 +12,74 @@ namespace Infraestructure.Repository
 {
     public class RepositoryEvaluacion : IRepositoryEvaluacion
     {
-        public async Task<Evaluacion> Add(Evaluacion eva)
+        public async Task<Evaluacion> Add(int compraId, int idVendedor, int evaluacion1, string comentario,int idCliente)
         {
             int rows1 = 0;
             try
             {
-                Evaluacion evaluacion = null;
-                if (eva != null)
+                Evaluacion evaluacion = null;   
+                //evaluacion = eva;
+                using (MyContext ctx = new MyContext())
                 {
-                   evaluacion = eva;
-                   using (MyContext ctx = new MyContext())
+                    //// Verificar si la compra y la tienda existen en la base de datos
+                    //Compra compra = await ctx.Compra.FindAsync(eva.idCompra);
+                    //Tienda tienda = await ctx.Tienda.FindAsync(eva.idVendedor);
+                    //Usuario usuario = await ctx.Usuario.FindAsync(eva.idCliente);
+
+                    //if (compra != null && tienda != null)
+                    //{
+                    //    if (ctx.Entry(compra).State == EntityState.Detached)
+                    //        ctx.Compra.Attach(compra);
+
+                    //    if (ctx.Entry(tienda).State == EntityState.Detached)
+                    //        ctx.Tienda.Attach(tienda);
+                    //    if (ctx.Entry(usuario).State == EntityState.Detached)
+                    //        ctx.Usuario.Attach(usuario);
+                    //    ctx.Evaluacion.Add(eva);
+                    //    rows1= await ctx.SaveChangesAsync();
+
+                    //    //Retorna la evaluación con el ID actualizado
+
+
+                    //}
+                    Usuario usuario = await ctx.Usuario.FindAsync(compraId);
+                    Compra compra = await ctx.Compra.FindAsync(compraId);
+                    Tienda tienda = await ctx.Tienda.FindAsync(idVendedor);
+
+                    if (compra != null && tienda != null && usuario != null)
                     {
-                        ctx.Configuration.LazyLoadingEnabled = false;
-                        ctx.Compra.Attach(eva.Compra);
-                       // ctx.Tienda.Attach(eva.Tienda);
-                        ctx.Usuario.Attach(eva.Usuario);
-                        ctx.Evaluacion.Add(evaluacion);
-                        rows1 = await ctx.SaveChangesAsync();
+                        if (ctx.Entry(compra).State == EntityState.Detached)
+                            ctx.Compra.Attach(compra);
+
+                        if (ctx.Entry(tienda).State == EntityState.Detached)
+                            ctx.Tienda.Attach(tienda);
+
+                        if (ctx.Entry(usuario).State == EntityState.Detached)
+                            ctx.Usuario.Attach(usuario);
+
+                        Evaluacion eva = new Evaluacion
+                        {
+                            idCompra = compraId,
+                            idVendedor = idVendedor,
+                            calificacionACliente = 0,
+                            comentarioACliente = "",
+                            comentarioAVendedor = comentario,
+                            calificacionAVendedor = evaluacion1,
+                            Compra = compra,
+                            Tienda = tienda,
+                            Usuario = usuario,
+                            idCliente = usuario.Id,
+                            calificacionFinal = 0
+                        };
+
+                        ctx.Evaluacion.Add(eva);
+                        await ctx.SaveChangesAsync();
+                        return eva;
                     }
                 }
-
                 return evaluacion;
             }
+
             catch (DbUpdateException dbEx)
             {
                 string mensaje = "";
