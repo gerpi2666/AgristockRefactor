@@ -27,5 +27,25 @@ namespace ApplicationCore.Services
             IRepositoryTienda repository = new RepositoryTienda();
             return repository.GetTiendaById(id);
         }
+
+        public void GetTopTresPeoresVendedores(out string etiquetas1, out string valores1)
+        {
+            IRepositoryUsuario repository = new RepositoryUsuario();
+            repository.GetTopTresPeoresVendedores(out string etiquetas, out string valores);
+            etiquetas1 = etiquetas;
+            valores1 = valores;
+        }
+
+        public Producto GetProductoMasVendidoVendedor(int idUsuarioVendedor)
+        {
+            IRepositoryTienda repository = new RepositoryTienda();
+            return repository.GetProductoMasVendidoVendedor(idUsuarioVendedor);
+        }
+
+        public Usuario GetClienteMasCompras(int idVendedor)
+        {
+            IRepositoryTienda repository = new RepositoryTienda();
+            return repository.GetClienteMasCompras(idVendedor);
+        }
     }
 }

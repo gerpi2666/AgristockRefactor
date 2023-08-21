@@ -6,33 +6,119 @@
 @model IEnumerable<Infraestructure.Models.Producto>
 
 
-@*<div class="d-flex flex-column">
-    <canvas id="grafico1"></canvas>
-    <canvas id="grafico2"></canvas>
-</div>*@
+@{
+    Infraestructure.Models.Producto producto = @ViewBag.topProducto;
+    Infraestructure.Models.Usuario usuario = @ViewBag.topClienteVentas;
+
+}
 
 
 
-<div class="item online">
-    <div class="icon">            
-        <span class="material-symbols-outlined">shopping_cart</span>
-    </div>
-    <div class="right">
-        <div class="info">
-            <h3>Ventas</h3>
-            <small class="text-muted">Últimas 24 horas</small>
-        </div>
-        @*<h5 class="success">+40%</h5>*@
-    </div>
-        <span class="tertiary" style="font-weight:600; font-size:1.5rem;">@ViewBag.graficoCountSells</span>
-        
-</div>
+
+@if (Session["User"] != null)
+{
+
+    Infraestructure.Models.Usuario oUsuario;
+
+    List<Infraestructure.Models.Perfil> lista = new List<Infraestructure.Models.Perfil>();
+
+    //Validar si existe en la sesión
+    oUsuario = (Infraestructure.Models.Usuario)Session["User"];
+    if (oUsuario != null)
+    {
+        lista = oUsuario.Perfil.ToList();
+    }
+
+    if (lista != null)
+    {
+        //si no es admin entonces es vendedor
+        bool admin = false;
+
+        foreach (var item in lista)
+        {
+            //if (item.Descripcion == "Vendedor")
+            // si la bandera solo cuenta 1 quiere decir que el usuario es solo Cliente
+            // si cuenta 2 es Cliente y Vendedor a la vez
+
+            if (item.Descripcion == "Administrador")
+            {
+                admin = true;
+            }
+
+            if (item.Descripcion == "Vendedor")
+            {
+                admin = false;
+            }
+
+        }
+        if (admin)
+        {
+
+            <div class="item online">
+                <div class="icon">
+                    <span class="material-symbols-outlined">shopping_cart</span>
+                </div>
+                <div class="right">
+                    <div class="info">
+                        <h3>Ventas</h3>
+                        <small class="text-muted">Últimas 24 horas</small>
+                    </div>
+                    @*<h5 class="success">+40%</h5>*@
+                </div>
+                <span class="tertiary" style="font-weight:600; font-size:1.5rem;">@ViewBag.CountSells</span>
+
+            </div>
 
 
-<div class="top-ventas">
-    @*<div style="width: 500px;"><canvas id="grafico1"></canvas></div>*@
-    <div style="width: 500px; height:350px"><canvas id="grafico2"></canvas></div>
-</div>
+            <div class="top-ventas">
+                @*<div style="width: 500px;"><canvas id="grafico1"></canvas></div>*@
+                <div style="width: 500px; height:330px"><canvas id="grafico2"></canvas></div>
+                <div style="width: 500px; height:330px"><canvas id="grafico3"></canvas></div>
+                <div style="width: 500px; height:330px; margin-top:2rem;"><canvas id="grafico4"></canvas></div>
+            </div>
+
+        }
+        if (!admin)
+        {
+            <div class="d-flex gap-5 w-100">
+
+            <div class="item online">
+                <div class="icon">
+                    <span class="material-symbols-outlined">inventory</span>
+                </div>
+                <div class="right">
+                    <div class="info">
+                        <h3>Ventas</h3>
+                        <small class="text-muted">Producto más vendido</small>
+                    </div>
+                    @*<h5 class="success">+40%</h5>*@
+                </div>
+                <span class="tertiary" style="font-weight:500; font-size:1rem;">@producto.Nombre</span>
+
+            </div>
+
+            <div class="item online">
+                <div class="icon">
+                    <span class="material-symbols-outlined">contacts</span>
+                </div>
+                <div class="right">
+                    <div class="info">
+                        <h3>Ventas</h3>
+                        <small class="text-muted">Usuario con más compras</small>
+                    </div>
+                    @*<h5 class="success">+40%</h5>*@
+                </div>
+                <span class="tertiary" style="font-weight:500; font-size:1rem;">@usuario.Nombre</span>
+
+            </div>
+            </div>
+        }
+    }
+
+}
+
+
+
 
 
 
@@ -57,6 +143,34 @@
         var tituloEtiquetas2 = @Html.Raw(Json.Encode(ViewBag.graficoTopSells.tituloEtiquetas));
         var tipo2 = @Html.Raw(Json.Encode(ViewBag.graficoTopSells.tipo));
 
-        pintarGrafico("grafico2", titulo2, tituloEtiquetas2, tipo2, colores2, etiquetas2, valores2);    
+        pintarGrafico("grafico2", titulo2, tituloEtiquetas2, tipo2, colores2, etiquetas2, valores2);
+
+
+
+        var colores3 = @Html.Raw(Json.Encode(ViewBag.graficoTopSellers.Colores));
+        colores3 = colores3.split(",");
+        var etiquetas3 = @Html.Raw(Json.Encode(ViewBag.graficoTopSellers.Etiquetas));
+        etiquetas3 = etiquetas3.split(",");
+        var valores3 = @Html.Raw(Json.Encode(ViewBag.graficoTopSellers.Valores));
+        valores3 = valores3.split(",");
+        var titulo3 = @Html.Raw(Json.Encode(ViewBag.graficoTopSellers.titulo));
+        var tituloEtiquetas3 = @Html.Raw(Json.Encode(ViewBag.graficoTopSellers.tituloEtiquetas));
+        var tipo3 = @Html.Raw(Json.Encode(ViewBag.graficoTopSellers.tipo));
+
+        pintarGrafico("grafico3", titulo3, tituloEtiquetas3, tipo3, colores3, etiquetas3, valores3);
+
+
+        var colores4 = @Html.Raw(Json.Encode(ViewBag.graficoWorstSellers.Colores));
+        colores4 = colores4.split(",");
+        var etiquetas4 = @Html.Raw(Json.Encode(ViewBag.graficoWorstSellers.Etiquetas));
+        etiquetas4 = etiquetas4.split(",");
+        var valores4 = @Html.Raw(Json.Encode(ViewBag.graficoWorstSellers.Valores));
+        valores4 = valores4.split(",");
+        var titulo4 = @Html.Raw(Json.Encode(ViewBag.graficoWorstSellers.titulo));
+        var tituloEtiquetas4 = @Html.Raw(Json.Encode(ViewBag.graficoWorstSellers.tituloEtiquetas));
+        var tipo4 = @Html.Raw(Json.Encode(ViewBag.graficoWorstSellers.tipo));
+
+        pintarGrafico("grafico4", titulo4, tituloEtiquetas4, tipo4, colores4, etiquetas4, valores4);
+
     </script>
 }

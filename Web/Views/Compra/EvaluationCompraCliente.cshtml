@@ -42,18 +42,9 @@
                             int a = count * 10 + i;
 
 
-                            <label for="rate-@i" class='bx bx-star'></label>
+                            <label for="rate-@a" class='bx bx-star'></label>
                             <input value="@i" type="radio" name="rate" id="rate-@a">
-                            <form action="#">
-                                @*<header></header>*@
-                                <span style="" class="w-100 d-flex justify-content-end"></span>
-                                <div class="textarea mt-1 ">
-                                    <textarea class="comment" cols="30" placeholder="Describe tu experiencia.."></textarea>
-                                </div>
-                                <div class="btn p-0 m-0">
-                                    <button type="submit" data-id="@Html.DisplayFor(p=> Model.Id)" data-vendorId="@item.Producto.Tienda.Id" class="send">Enviar</button>
-                                </div>
-                            </form>
+
                         }
                         <form action="#">
                             @*<header></header>*@
@@ -75,40 +66,36 @@
 
 </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Asegúrate de tener jQuery cargado -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Asegúrate de tener jQuery cargado -->
 
-    <script>
-        $(document).ready(function () {
+<script>
+    $(document).ready(function () {
 
-            $(".send").click(function () {
-                var compraId = $(this).data("id");
-                var tiendaId = $(this).data("vendorid");
-                var valorRadioSeleccionado = $("input[name='rate']:checked").val();
-                var contenidoTextarea = $(this).closest(".star-widget").find(".comment").val();
+        $(".send").click(function () {
+            var compraId = $(this).data("id");
+            var tiendaId = $(this).data("vendorid");
+            var valorRadioSeleccionado = $("input[name='rate']:checked").val();
+            var contenidoTextarea = $(this).closest(".star-widget").find(".comment").val();
 
-                console.log('Valor del radio seleccionado:', valorRadioSeleccionado);
-                console.log('Contenido del textarea:', contenidoTextarea);
-                console.log('Contenido del id:', compraId);
-                console.log('Contenido del vendorid:', tiendaId);
-                event.preventDefault();
-                // Realiza la petición Ajax para eliminar el producto
-                $.ajax({
-                    url: "/Evaluacion/Add",
-                    type: "POST",
-                    data: { compraId: compraId, idVendedor: tiendaId, evaluacion: valorRadioSeleccionado, comentario: contenidoTextarea },
-                    success: function (data) {
-                        // Muestra el resultado de la eliminación en el elemento div
-                        $("#resultado").text(data);
-                        console.log("Producto borrado")
-                    },
-                    error: function () {
-                        $("#resultado").text("Error al eliminar el producto.");
-                    }
-                });
+            console.log('Valor del radio seleccionado:', valorRadioSeleccionado);
+            console.log('Contenido del textarea:', contenidoTextarea);
+            console.log('Contenido del id:', compraId);
+            console.log('Contenido del vendorid:', tiendaId);
+            event.preventDefault();
+            // Realiza la petición Ajax para eliminar el producto
+            $.ajax({
+                url: "/Evaluacion/Add",
+                type: "POST",
+                data: { compraId: compraId, idVendedor: tiendaId, evaluacion: valorRadioSeleccionado, comentario: contenidoTextarea },
+                success: function (data) {
+                    // Muestra el resultado de la eliminación en el elemento div
+                    $("#resultado").text(data);
+                    console.log("Producto borrado")
+                },
+                error: function () {
+                    $("#resultado").text("Error al eliminar el producto.");
+                }
             });
         });
-    </script>
-
-
-
-
+    });
+</script>

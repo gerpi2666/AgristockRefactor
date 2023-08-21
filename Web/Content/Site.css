@@ -1382,33 +1382,33 @@ input#rate-5:checked ~ label {
     text-shadow: 0 0 20px #952;
 }
 
-#rate-1:checked ~ form span:before {
+.rate-1:checked ~ form span:before {
     content: "¡Lo odio!";
 }
 
-#rate-2:checked ~ form span:before {
+.rate-2:checked ~ form span:before {
     content: "¡No me gusta!";
 }
 
-#rate-3:checked ~ form span:before {
+.rate-3:checked ~ form span:before {
     content: "¡Está bien!";
 }
 
-#rate-4:checked ~ form span:before {
+.rate-4:checked ~ form span:before {
     content: "¡Me gusta!";
 }
 
-#rate-5:checked ~ form span:before {
+.rate-5:checked ~ form span:before {
     content: "¡Me encanta!";
-}   
+}  
 
 .container form {
-    display: none;
-}
-
-input:checked ~ form {
     display: block;
 }
+
+/*input:checked ~ form {
+    display: block;
+}*/
 
 form span {
     width: 100%;
@@ -1499,9 +1499,13 @@ form .btn {
 }
 */
 .top-ventas {
-    width: 500px;
+    width: 100%;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    padding: 1rem 6.5rem !important;
+    flex-wrap: wrap;
+    align-items: center;
     background: var(--color-white);
     margin: 2rem 0;
     padding: 1.4rem var(--card-padding);
