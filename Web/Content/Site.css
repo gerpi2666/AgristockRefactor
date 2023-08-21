@@ -1410,7 +1410,7 @@ input#rate-5:checked ~ label {
     display: block;
 }*/
 
-form span {
+.form-evaluacion span {
     width: 100%;
     font-size: 25px;
     color: #fe7;
@@ -1420,13 +1420,13 @@ form span {
     transition: all 0.2s ease;
 }
 
-form .textarea {
+.form-evaluacion .textarea {
     height: 100px;
     width: 100%;
     overflow: hidden;
 }
 
-    form .textarea textarea {
+    .form-evaluacion .textarea textarea {
         height: 100%;
         width: 100%;
         outline: none;
@@ -1442,13 +1442,13 @@ form .textarea {
     border-color: #444;
 }
 
-form .btn {
+.form-evaluacion .btn {
     height: 30px;
     width: 100%;
     margin: 15px 0 !important;
 }
 
-    form .btn button {
+    .form-evaluacion .btn button {
         height: 100%;
         width: 100%;
         border: 1px solid #444;
@@ -1462,7 +1462,7 @@ form .btn {
         transition: all 0.3s ease;
     }
 
-        form .btn button:hover {
+        .form-evaluacion .btn button:hover {
             background: #1b1b1b;
         }
 
