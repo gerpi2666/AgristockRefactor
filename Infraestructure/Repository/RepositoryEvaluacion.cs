@@ -23,17 +23,24 @@ namespace Infraestructure.Repository
                    evaluacion = eva;
                    using (MyContext ctx = new MyContext())
                     {
-                        ctx.Configuration.LazyLoadingEnabled = false;
-                        ctx.Compra.Attach(eva.Compra);
-                       // ctx.Tienda.Attach(eva.Tienda);
-                        ctx.Usuario.Attach(eva.Usuario);
-                        ctx.Evaluacion.Add(evaluacion);
-                        rows1 = await ctx.SaveChangesAsync();
+                        // Verificar si la compra y la tienda existen en la base de datos
+                        Compra compra = await ctx.Compra.FindAsync(eva.idCompra);
+                        Tienda tienda = await ctx.Tienda.FindAsync(eva.idVendedor);
+
+                        if (compra != null && tienda != null)
+                        {
+                            // Agregar la evaluación y guardar los cambios en el contexto
+                            ctx.Evaluacion.Add(eva);
+                            rows1= await ctx.SaveChangesAsync();
+
+                            // Retorna la evaluación con el ID actualizado
+                           
+                        }
+                        
                     }
                 }
-
                 return evaluacion;
-            }
+             }                       
             catch (DbUpdateException dbEx)
             {
                 string mensaje = "";

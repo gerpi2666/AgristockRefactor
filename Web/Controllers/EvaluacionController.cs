@@ -30,7 +30,7 @@ namespace Web.Controllers
             Compra compra = serviceCompra.GetCompraById(compraId);
 
             Evaluacion eva = new Evaluacion();
-            eva.idCompra=compraId;
+            eva.idCompra = compraId;
             eva.idVendedor = idVendedor;
             eva.calificacionACliente = evaluacion;
             eva.comentarioACliente = comentario;
@@ -40,6 +40,7 @@ namespace Web.Controllers
             eva.Tienda = tienda;
             eva.Usuario = usuario;//cliente
             eva.idCliente = usuario.Id;
+            eva.calificacionFinal = 0;
             await serviceEvaluacion.Add(eva);
 
             return View();
